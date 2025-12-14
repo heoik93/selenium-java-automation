@@ -1,0 +1,31 @@
+package com.project.login;
+
+import com.project.base.BaseTest;
+import com.project.page.BasePage;
+import com.project.page.HomePage;
+import com.project.page.LoginPage;
+import config.ConfigReader;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class LogoutTest extends BaseTest {
+
+    @Test(testName = "default login test")
+    public void testLogin() {
+
+        ConfigReader config = new ConfigReader();
+        driver.get(config.getUrl());
+
+        HomePage homePage = new HomePage(driver);
+        homePage.navi.goToLoginPage();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(config.getUsername(), config.getPassword());
+
+        HomePage afterLogin = new HomePage(driver);
+        afterLogin.navi.logout();
+
+        Assert.assertFalse(afterLogin.navi.isLogoutButtonVisible(), "로그아웃 실패: 로그아웃 버튼이 여전히 표시됨");
+    }
+
+}

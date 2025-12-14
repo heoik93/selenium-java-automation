@@ -18,7 +18,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "pwd")
     private WebElement passwordInput;
 
-    @FindBy(className = "btn btn-dark")
+    @FindBy(css = "button[type='submit']")
     private WebElement loginButton;
 
     @FindBy(xpath = "//a[contains(text(),'Sign up')]")
@@ -27,9 +27,12 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//a[normalize-space()='Password?']")
     private WebElement forgotPasswordButton;
 
+
     public void login(String username, String password) {
         sendKeys(usernameInput, username);
         sendKeys(passwordInput, password);
         click(loginButton);
     }
-}
+
+  }
+

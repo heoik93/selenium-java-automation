@@ -7,6 +7,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DriverFactory {
 
     public static WebDriver createDriver(String browser) {
