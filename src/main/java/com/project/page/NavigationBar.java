@@ -21,6 +21,12 @@ public class NavigationBar extends BasePage {
     @FindBy(css = "ul[class='menu1'] a")
     private WebElement logoutLink;
 
+    @FindBy(className = "menu-link1")
+    private WebElement myinfoMenuLink;
+
+    @FindBy(css = "a[href='/LoginInfo/Mypage/MyInfo']")
+    private WebElement myinfoLink;
+
     public void goToLoginPage() {
         click(loginLink);
     }
@@ -46,7 +52,10 @@ public class NavigationBar extends BasePage {
         return isDisplayed(signupLink);
     }
 
-
+    public void goToMyinfoPage() {
+        click(myinfoMenuLink);
+        click(myinfoLink);
+    }
 
 }
 

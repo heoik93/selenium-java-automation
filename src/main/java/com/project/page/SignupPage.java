@@ -1,6 +1,7 @@
 package com.project.page;
 
-import com.project.utils.ScrollUtil;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,6 +76,13 @@ public class SignupPage extends BasePage {
         click(confirmButton);
     }
 
+    //테스트중
+    public void setAgreeTermsCheckbox() {
+        click(agreeTermsCheckbox);
+        scroll.scrollToBottom();
+        click(confirmButton);
+    }
+
     public void inputName(String name) {
         sendKeys(nameInputBox, name);
     }
@@ -124,18 +132,14 @@ public class SignupPage extends BasePage {
                     break;
                 }
             }
-
-
-            //selectContainsText(countryCodeSelectBox, countryKeyword);
-            //selectContainsText(countryCodeSelectBox, "82");
-    }
+        }
     }
 
     public void inputPhone(String phone) {
         sendKeys(phoneInputBox, phone);
     }
 
-    public void SignupInputData(){
+    public void SignupInputData() {
         inputName(testUserData.randomUserName);
         inputEmail(testUserData.randomUserEmail);
         inputUserId(testUserData.randomUserId);
@@ -157,4 +161,20 @@ public class SignupPage extends BasePage {
     public void clickSignupSubmit() {
         click(signupSubmitButton);
     }
+
+    public String getSignupAlertText() {
+        Alert alert = wait.until(driver -> {
+            try {
+                return driver.switchTo().alert();
+            } catch (NoAlertPresentException e) {
+                return null;
+            }
+        });
+        return alert.getText();
+    }
+
+    public void acceptSignupAlert() {
+        driver.switchTo().alert().accept();
+    }
 }
+

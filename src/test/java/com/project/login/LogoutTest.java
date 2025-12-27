@@ -24,8 +24,7 @@ public class LogoutTest extends BaseTest {
 
         HomePage afterLogin = new HomePage(driver);
         afterLogin.navi.logout();
-
-        Assert.assertFalse(afterLogin.navi.isLogoutButtonVisible(), "로그아웃 실패: 로그아웃 버튼이 여전히 표시됨");
-    }
+        Assert.assertTrue(afterLogin.navi.isLoginButtonVisible(),"로그아웃 성공");
+        }
 
 }

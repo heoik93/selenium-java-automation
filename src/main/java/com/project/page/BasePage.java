@@ -37,7 +37,7 @@ public class BasePage {
         element.sendKeys(text);
     }
 
-    protected String getText(WebElement element, String text) {
+    protected String getText(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
         return element.getText();
     }
@@ -68,6 +68,14 @@ public class BasePage {
                 break;
             }
         }
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    public String getPageTitle() {
+       return driver.getTitle();
     }
 }
 
