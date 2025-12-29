@@ -38,7 +38,7 @@ public class BaseTest {
     public void tearDown() {
         if (driver != null) {
            // 테스트기간동안 확인을 위해 비활성화
-            // driver.quit();
+            driver.quit();
         }
     }
 }

@@ -3,9 +3,8 @@ package com.project.page;
 import com.project.utils.JsUtil;
 import com.project.utils.ScrollUtil;
 import com.project.utils.TestUserRandomData;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -42,7 +41,7 @@ public class BasePage {
         return element.getText();
     }
 
-    protected void waitForVisible(WebElement element) {
+    public void waitForVisible(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -76,6 +75,39 @@ public class BasePage {
 
     public String getPageTitle() {
        return driver.getTitle();
+    }
+
+    public void waitForPageLoad() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        wait.until(driver -> ((JavascriptExecutor) driver)
+                .executeScript("return document.readyState").equals("complete"));
+    }
+
+    protected void hover(WebElement element) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
+    }
+
+    public Alert waitForAlert() {
+        WebDriverWait alertWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        return alertWait.until(ExpectedConditions.alertIsPresent());
+    }
+
+    public String alertGetText() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        try {
+            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            return alert.getText();
+        } catch (TimeoutException e) {
+            System.out.println("설정한 시간 내에 알림창이 표시되지 않았습니다.");
+            return "";
+        }
+    }
+
+    public void alertAccept() {
+        driver.switchTo().alert().accept();
     }
 }
 

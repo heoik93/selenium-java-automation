@@ -1,17 +1,27 @@
 package com.project.page.myinfo;
 
 import com.project.page.BasePage;
+import com.project.page.NavigationBar;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MyinfoPage  extends BasePage {
+
+    public NavigationBar navi;
 
     public MyinfoPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
+        this.navi = new NavigationBar(driver);
     }
+
+    @FindBy(css = ".active")
+    public WebElement myinfoTab;
 
     @FindBy(xpath = "//tbody/tr[2]/td")
     private WebElement useridField;
@@ -62,13 +72,14 @@ public class MyinfoPage  extends BasePage {
             click(withdrawButton);
     }
 
-    public String WithdrawAlertgetText() {
-        driver.switchTo().alert().getText();
-        return null;
+    public Map<String, String> getAllUserInfo() {
+        Map<String, String> info = new HashMap<>();
+        info.put("userId", getUserId());
+        info.put("address", getAddress());
+        info.put("email", getEmail());
+        info.put("phone", getPhone());
+        return info;
     }
 
-    public void WithdrawAlertAccept() {
-        driver.switchTo().alert().accept();
-    }
 
 }

@@ -21,7 +21,7 @@ public class NavigationBar extends BasePage {
     @FindBy(css = "ul[class='menu1'] a")
     private WebElement logoutLink;
 
-    @FindBy(className = "menu-link1")
+    @FindBy(xpath = "//a[contains(text(),'마이페이지')]")
     private WebElement myinfoMenuLink;
 
     @FindBy(css = "a[href='/LoginInfo/Mypage/MyInfo']")
@@ -53,8 +53,14 @@ public class NavigationBar extends BasePage {
     }
 
     public void goToMyinfoPage() {
+        hover(myinfoMenuLink);
         click(myinfoMenuLink);
         click(myinfoLink);
+    }
+
+    public void clickLogoutLink() {
+        hover(logoutLink);
+        click(logoutLink);
     }
 
 }
