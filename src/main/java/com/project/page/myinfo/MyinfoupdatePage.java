@@ -1,11 +1,16 @@
 package com.project.page.myinfo;
 
 import com.project.page.BasePage;
+import config.ConfigReader;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +51,12 @@ public class MyinfoupdatePage extends BasePage {
     @FindBy(css = "button[type='submit']")
     private WebElement saveButton;
 
+    @FindBy(id = "profileImage")
+    private WebElement profileImageUploadInput;
+
+    @FindBy(css = "input[type='file']")
+    private WebElement realFileInput;
+
     public void clickProfileImage() {
         profileImage.click();
     }
@@ -58,7 +69,7 @@ public class MyinfoupdatePage extends BasePage {
         return emailField.getText();
     }
 
-    public  String getPostcode() {
+    public String getPostcode() {
         return postcodeField.getText();
     }
 
@@ -80,6 +91,10 @@ public class MyinfoupdatePage extends BasePage {
 
     public void clickSaveButton() {
         saveButton.click();
+    }
+
+    public void clickProfileImageUploadInput() {
+        profileImageUploadInput.click();
     }
 
     public Boolean isEnableuserIdField() {
@@ -105,14 +120,6 @@ public class MyinfoupdatePage extends BasePage {
         extraAddressField.sendKeys(extraAddress);
     }
 
-    public String infoUpdateAlertgetText() {
-        return driver.switchTo().alert().getText();
-    }
-
-    public void infoUpdateAlertAccept() {
-        driver.switchTo().alert().accept();
-    }
-
     public Map<String, String> getAllUserInfo() {
         Map<String, String> info = new HashMap<>();
         info.put("userId", userIdField.getAttribute("value"));
@@ -135,4 +142,39 @@ public class MyinfoupdatePage extends BasePage {
         return info;
     }
 
+    public void uploadProfileImage() {
+        ConfigReader config = new ConfigReader();
+
+        File uploadFile = new File(System.getProperty("user.dir"), config.getProperty("profileImagePath"));
+        String absolutePath = uploadFile.getAbsolutePath();
+
+        if (!uploadFile.exists()) {
+            throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
+        }
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible';", realFileInput);
+
+        realFileInput.sendKeys(absolutePath);
+    }
+
+    public String getProfileImageSrc() {
+        return profileImage.getAttribute("src");
+    }
+
+    public void backupProfileImage() {
+        ConfigReader config = new ConfigReader();
+
+        File backupFile = new File(System.getProperty("user.dir"), config.getProperty("profileImageBackupPath"));
+        String absolutePath = backupFile.getAbsolutePath();
+
+        if (!backupFile.exists()) {
+            throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
+        }
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible';", realFileInput);
+
+        realFileInput.sendKeys(absolutePath);
+    }
 }

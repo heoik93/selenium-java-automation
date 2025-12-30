@@ -74,7 +74,7 @@ public class BasePage {
     }
 
     public String getPageTitle() {
-       return driver.getTitle();
+        return driver.getTitle();
     }
 
     public void waitForPageLoad() {
@@ -107,8 +107,22 @@ public class BasePage {
     }
 
     public void alertAccept() {
-        driver.switchTo().alert().accept();
+        try {
+            Alert alert = new WebDriverWait(driver, Duration.ofSeconds(3))
+                    .until(ExpectedConditions.alertIsPresent());
+            alert.accept();
+        } catch (Exception e) {
+            System.out.println("처리할 알림창이 없습니다.");
+        }
     }
+
+    public boolean isTabActive(WebElement tabElement) {
+        String classValue = tabElement.getAttribute("class");
+        return classValue.contains("active") || classValue.contains("on");
+    }
+
+
 }
+
 
 

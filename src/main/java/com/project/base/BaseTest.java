@@ -34,6 +34,11 @@ public class BaseTest {
         loginPage.login(config.getUsername(), config.getPassword());
     }
 
+    public void connectToUrl() {
+        ConfigReader config = new ConfigReader();
+        driver.get(config.getUrl());
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

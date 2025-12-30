@@ -27,6 +27,21 @@ public class NavigationBar extends BasePage {
     @FindBy(css = "a[href='/LoginInfo/Mypage/MyInfo']")
     private WebElement myinfoLink;
 
+    @FindBy(xpath = "//a[contains(text(),'브랜드소개')]")
+    private WebElement brandintroMenuLink;
+
+    @FindBy(css = "a[href='/Corporation/Brand']")
+    private WebElement comintroLink;
+
+    @FindBy(css = "a[href='/Corporation/History']")
+    private WebElement historyLink;
+
+    @FindBy(css = "a[href='/Corporation/Startup']")
+    private WebElement startupLink;
+
+    @FindBy(xpath = "//button[contains(text(),'회사소개')]")
+    private WebElement comintroButton;
+
     public void goToLoginPage() {
         click(loginLink);
     }
@@ -43,13 +58,8 @@ public class NavigationBar extends BasePage {
         return isDisplayed(logoutLink);
     }
 
-
     public void goToSignupPage() {
         click(signupLink);
-    }
-
-   public boolean isSignupButtonVisible() {
-        return isDisplayed(signupLink);
     }
 
     public void goToMyinfoPage() {
@@ -61,6 +71,24 @@ public class NavigationBar extends BasePage {
     public void clickLogoutLink() {
         hover(logoutLink);
         click(logoutLink);
+    }
+
+    public void goToComintroPage() {
+        hover(brandintroMenuLink);
+        click(brandintroMenuLink);
+        click(comintroLink);
+    }
+
+    public void goToHistoryPage() {
+        hover(brandintroMenuLink);
+        click(brandintroMenuLink);
+        click(historyLink);
+    }
+
+    public void goToStartupPage() {
+        hover(brandintroMenuLink);
+        click(brandintroMenuLink);
+        click(startupLink);
     }
 
 }
