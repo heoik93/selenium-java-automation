@@ -27,7 +27,7 @@ public class ScrollUtil {
     // 특정 요소까지 스크롤
     public void scrollToElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", element);
+        js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest' });", element);
     }
 
     // 페이지 맨 아래로

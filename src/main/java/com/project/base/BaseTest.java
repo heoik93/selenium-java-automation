@@ -3,6 +3,7 @@ package com.project.base;
 import com.project.page.HomePage;
 import com.project.page.LoginPage;
 import config.ConfigReader;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -18,7 +19,8 @@ public class BaseTest {
 
         driver = DriverFactory.createDriver(browser);
 
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         driver.manage().deleteAllCookies();
 
 

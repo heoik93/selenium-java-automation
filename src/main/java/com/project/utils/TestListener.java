@@ -2,6 +2,7 @@ package com.project.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
@@ -18,6 +19,7 @@ public class TestListener implements ITestListener {
     private static ExtentReports extent = ExtentManager.getInstance();
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
+
     @Override
     public void onTestStart(ITestResult result) {
         ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName());
@@ -26,6 +28,10 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult result) {
+        Object currentClass = result.getInstance();
+        WebDriver driver = ((BaseTest) currentClass).getDriver();
+        String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+
         test.get().log(Status.PASS, "테스트가 성공적으로 통과되었습니다.");
     }
 
@@ -57,8 +63,13 @@ public class TestListener implements ITestListener {
             System.out.println("리포트 저장 완료. 메일 전송을 시작합니다...");
 
             System.out.println("테스트코드 작성중에는 비활성화");
+
+            String suiteName = context.getSuite().getName();
+            int passed = context.getPassedTests().size();
+            int failed = context.getFailedTests().size();
+            int skipped = context.getSkippedTests().size();
             //테스트시에는 비활성화
-            //EmailUtil.sendReport();
+            //EmailUtil.sendReport(suiteName, passed, failed, skipped);
         } catch (Exception e) {
             e.printStackTrace();
         }

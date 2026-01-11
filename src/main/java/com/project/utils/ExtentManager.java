@@ -1,13 +1,14 @@
 package com.project.utils;
 
 import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.aventstack.extentreports.reporter.configuration.ViewName;
 
 public class ExtentManager {
     private static ExtentReports extent;
-
+    private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
     public static ExtentReports getInstance() {
         if (extent == null) {
             String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
@@ -34,4 +35,11 @@ public class ExtentManager {
         }
         return extent;
     }
+
+
+
+    public static ExtentTest getTest() {
+        return extentTest.get();
+    }
+
 }

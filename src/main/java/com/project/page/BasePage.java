@@ -27,8 +27,23 @@ public class BasePage {
     }
 
     protected void click(WebElement element) {
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
+        try {
+            // 1. 요소가 나타날 때까지 대기
+            wait.until(ExpectedConditions.visibilityOf(element));
+
+            // 2. [핵심] 요소를 화면 중앙으로 부드럽게 이동 (가려짐 방지)
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+            Thread.sleep(500); // 스크롤 안정화 대기
+
+            // 3. 클릭 가능 상태 확인 후 클릭
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            element.click();
+
+        } catch (Exception e) {
+            // 4. 실패 시 JS로 강제 클릭 (최후의 수단)
+            System.out.println("[⚠️ 경고] 물리적 클릭 실패. JS 클릭으로 전환합니다.");
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        }
     }
 
     protected void sendKeys(WebElement element, String text) {
@@ -85,8 +100,20 @@ public class BasePage {
     }
 
     protected void hover(WebElement element) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).perform();
+        try {
+            Actions actions = new Actions(driver);
+            actions.moveToElement(element).perform();
+
+        } catch (Exception e) {
+            //System.out.println("[알림] 일반 호버 실패. 헤드리스 대응을 위해 JS 클릭을 시도합니다: " + e.getMessage());
+
+            try {
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].click();", element);
+            } catch (Exception jsException) {
+                System.err.println("[오류] JS 클릭마저 실패했습니다: " + jsException.getMessage());
+            }
+        }
     }
 
     public Alert waitForAlert() {

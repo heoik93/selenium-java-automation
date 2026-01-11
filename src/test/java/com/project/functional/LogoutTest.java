@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class LogoutTest extends BaseTest {
 
-    @Test(testName = "default login test")
+    @Test(testName = "default logout test")
     public void testLogin() {
 
         ConfigReader config = new ConfigReader();
