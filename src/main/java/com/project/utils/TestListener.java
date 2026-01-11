@@ -69,7 +69,7 @@ public class TestListener implements ITestListener {
             int failed = context.getFailedTests().size();
             int skipped = context.getSkippedTests().size();
             //테스트시에는 비활성화
-            //EmailUtil.sendReport(suiteName, passed, failed, skipped);
+            EmailUtil.sendReport(suiteName, passed, failed, skipped);
         } catch (Exception e) {
             e.printStackTrace();
         }
