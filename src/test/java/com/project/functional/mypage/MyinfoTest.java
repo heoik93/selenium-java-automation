@@ -113,8 +113,11 @@ public class MyinfoTest extends BaseTest {
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
 
+        try { Thread.sleep(3000); } catch (InterruptedException e) { e.printStackTrace(); }
+        driver.navigate().refresh();
+
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        Assert.assertNotEquals(befoeSrc, afterSrc);
+        Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1]);
         Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
     }
 
