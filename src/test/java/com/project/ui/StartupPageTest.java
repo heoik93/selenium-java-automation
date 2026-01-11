@@ -48,7 +48,7 @@ public class StartupPageTest extends BaseTest {
     }
 
     //라벨 문구체크
-    @Test(testName = "Startup page label text test")
+    @Test(testName = "Startup page label text test", retryAnalyzer = com.project.utils.Retry.class)
     public void startupPageLabelTextTest() {
         StartupPage startuppage = new StartupPage(driver);
         startuppage.waitForPageLoad();

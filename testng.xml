@@ -1,0 +1,27 @@
+<suite name="MyTestSuite">
+    <listeners>
+        <listener class-name="com.project.utils.AnnotationTransformer" />
+        <listener class-name="com.project.utils.TestListener" />
+    </listeners>
+
+    <test name="TabTests">
+        <classes>
+<!--            <class name="com.project.functional.LoginTest"/>-->
+<!--            <class name="com.project.functional.LogoutTest"/>-->
+<!--            <class name="com.project.functional.SignupTest"/>-->
+
+<!--            <class name="com.project.functional.brandinfopage.BarndInfoPageTabTest"/>-->
+<!--            <class name="com.project.functional.mypage.MyinfoTest"/>-->
+<!--            <class name="com.project.functional.mypage.MypageButtonTest"/>-->
+
+<!--            <class name="com.project.ui.ComintroTest"/>-->
+<!--            <class name="com.project.ui.HistoryPageTest"/>-->
+            <class name="com.project.ui.StartupPageTest">
+                    <methods>
+                        <include name="startupPageLabelTextTest"/>
+                    </methods>
+            </class>
+
+        </classes>
+    </test>
+</suite>

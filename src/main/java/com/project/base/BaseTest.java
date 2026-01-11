@@ -18,9 +18,11 @@ public class BaseTest {
 
         driver = DriverFactory.createDriver(browser);
 
-        // 3) 공통 설정
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
+
+
+
     }
 
     public void loginAsDefaultUser() {
@@ -46,4 +48,9 @@ public class BaseTest {
             driver.quit();
         }
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
 }

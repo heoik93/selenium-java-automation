@@ -93,6 +93,7 @@ public class StartupPage extends BasePage {
     }
 
     public String getLabelText(WebElement labelName) {
+        scroll.scrollToElement(labelName);
         return getText(labelName);
     }
 
