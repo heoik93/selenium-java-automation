@@ -38,4 +38,4 @@ jobs:
         with:
 
           name: Extent-Report-${{ github.run_number }}
-          path: test-output/
+          path: "**/index.html"
