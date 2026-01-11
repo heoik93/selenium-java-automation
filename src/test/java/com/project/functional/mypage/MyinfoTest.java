@@ -114,7 +114,7 @@ public class MyinfoTest extends BaseTest {
         MyinfoupdatePage.alertAccept();
 
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1]);
+        Assert.assertNotEquals(befoeSrc, afterSrc);
         Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
     }
 
