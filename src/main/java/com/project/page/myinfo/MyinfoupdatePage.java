@@ -150,18 +150,20 @@ public class MyinfoupdatePage extends BasePage {
         File uploadFile = new File(System.getProperty("user.dir"), config.getProperty("profileImagePath"));
         String absolutePath = uploadFile.getAbsolutePath();
 
-        //디버그
-        System.out.println("DEBUG: GitHub Actions File Path: " + absolutePath);
 
         if (!uploadFile.exists()) {
             throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
         }
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible';", realFileInput);
+        js.executeScript(
+                "arguments[0].style.display='block';" +
+                        "arguments[0].style.visibility='visible';" +
+                        "arguments[0].style.opacity='1';" +
+                        "arguments[0].style.width='100px';" +
+                        "arguments[0].style.height='100px';", realFileInput);
 
-        new WebDriverWait(driver, Duration.ofMillis(500))
-                .until(ExpectedConditions.elementToBeClickable(realFileInput));
+        try { Thread.sleep(1000); } catch (InterruptedException e) {}
 
         realFileInput.sendKeys(absolutePath);
     }
