@@ -9,8 +9,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -148,12 +150,18 @@ public class MyinfoupdatePage extends BasePage {
         File uploadFile = new File(System.getProperty("user.dir"), config.getProperty("profileImagePath"));
         String absolutePath = uploadFile.getAbsolutePath();
 
+        //디버그
+        System.out.println("DEBUG: GitHub Actions File Path: " + absolutePath);
+
         if (!uploadFile.exists()) {
             throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
         }
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible';", realFileInput);
+
+        new WebDriverWait(driver, Duration.ofMillis(500))
+                .until(ExpectedConditions.elementToBeClickable(realFileInput));
 
         realFileInput.sendKeys(absolutePath);
     }
@@ -168,12 +176,18 @@ public class MyinfoupdatePage extends BasePage {
         File backupFile = new File(System.getProperty("user.dir"), config.getProperty("profileImageBackupPath"));
         String absolutePath = backupFile.getAbsolutePath();
 
+        //디버그
+        System.out.println("DEBUG: GitHub Actions File Path: " + absolutePath);
+
         if (!backupFile.exists()) {
             throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
         }
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible';", realFileInput);
+
+        new WebDriverWait(driver, Duration.ofMillis(500))
+                .until(ExpectedConditions.elementToBeClickable(realFileInput));
 
         realFileInput.sendKeys(absolutePath);
     }
