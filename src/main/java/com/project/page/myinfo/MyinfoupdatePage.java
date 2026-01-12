@@ -149,17 +149,14 @@ public class MyinfoupdatePage extends BasePage {
         File uploadFile = new File(System.getProperty("user.dir"), config.getProperty("profileImagePath"));
         String absolutePath = uploadFile.getAbsolutePath();
 
+        System.out.println("DEBUG - 리눅스 실제 파일 경로: " + absolutePath);
+
         if (!uploadFile.exists()) {
             throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
         }
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript(
-                "arguments[0].style.display='block';" +
-                        "arguments[0].style.visibility='visible';" +
-                        "arguments[0].style.opacity='1';" +
-                        "arguments[0].style.height='auto';" +
-                        "arguments[0].style.width='auto';", realFileInput);
+        js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible'; arguments[0].style.opacity='1';", realFileInput);
 
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
 

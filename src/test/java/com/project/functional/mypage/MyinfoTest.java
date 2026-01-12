@@ -114,6 +114,7 @@ public class MyinfoTest extends BaseTest {
         System.out.println("DEBUG - 업로드 시도 전 현재 SRC: " + befoeSrc);
 
         MyinfoupdatePage.uploadProfileImage();
+        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
 
@@ -125,15 +126,12 @@ public class MyinfoTest extends BaseTest {
             throw e; // 에러를 던져서 실패 원인을 리포트에 남김
         }
 
-        //디버깅요소
-        String currentSrc = MyinfoupdatePage.getProfileImageSrc();
-        System.out.println("DEBUG - 업로드 시도 후 현재 SRC: " + currentSrc);
-        
-        String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        //Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1],"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
 
-        //디버깅
-        Assert.assertNotEquals(befoeSrc, afterSrc,"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
+        String afterSrc = MyinfoupdatePage.getProfileImageSrc();
+        //디버깅요소
+        System.out.println("DEBUG - 업로드 시도 후 현재 SRC: " + afterSrc);
+
+        Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1],"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
         Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
     }
 
