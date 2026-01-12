@@ -8,6 +8,7 @@ import com.project.page.myinfo.MyinfoPage;
 import com.project.page.myinfo.MyinfoupdatePage;
 import config.ConfigReader;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -113,8 +114,8 @@ public class MyinfoTest extends BaseTest {
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
 
-        try { Thread.sleep(3000); } catch (InterruptedException e) { e.printStackTrace(); }
-        driver.navigate().refresh();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.not(ExpectedConditions.attributeContains(By.id("profileImage"), "src", "beforeprofile.jpg")));
 
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
         Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1]);
