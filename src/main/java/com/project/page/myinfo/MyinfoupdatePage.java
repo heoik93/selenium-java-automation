@@ -146,17 +146,24 @@ public class MyinfoupdatePage extends BasePage {
 
     public void uploadProfileImage() {
         ConfigReader config = new ConfigReader();
-
         File uploadFile = new File(System.getProperty("user.dir"), config.getProperty("profileImagePath"));
         String absolutePath = uploadFile.getAbsolutePath();
-
 
         if (!uploadFile.exists()) {
             throw new RuntimeException("파일을 찾을 수 없습니다. 경로를 확인하세요: " + absolutePath);
         }
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].style.display='block'; arguments[0].style.visibility='visible';", realFileInput);
+        js.executeScript(
+                "arguments[0].style.display='block';" +
+                        "arguments[0].style.visibility='visible';" +
+                        "arguments[0].style.opacity='1';" +
+                        "arguments[0].style.position='fixed';" + // 화면 상단 고정
+                        "arguments[0].style.top='0';" +
+                        "arguments[0].style.left='0';" +
+                        "arguments[0].style.width='100px';" +
+                        "arguments[0].style.height='100px';" +
+                        "arguments[0].style.zIndex='10000';", realFileInput);
 
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
 

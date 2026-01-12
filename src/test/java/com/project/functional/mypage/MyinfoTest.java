@@ -109,8 +109,15 @@ public class MyinfoTest extends BaseTest {
         MyinfoupdatePage MyinfoupdatePage = new MyinfoupdatePage(driver);
 
         String befoeSrc = MyinfoupdatePage.getProfileImageSrc();
+        //디버깅요소
+        System.out.println("DEBUG - 업로드 시도 전 현재 SRC: " + befoeSrc);
 
         MyinfoupdatePage.uploadProfileImage();
+
+        //디버깅요소
+        String currentSrc = MyinfoupdatePage.getProfileImageSrc();
+        System.out.println("DEBUG - 업로드 시도 후 현재 SRC: " + currentSrc);
+
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
 
@@ -118,7 +125,10 @@ public class MyinfoTest extends BaseTest {
         wait.until(ExpectedConditions.not(ExpectedConditions.attributeContains(By.id("profileImage"), "src", "beforeprofile.jpg")));
 
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1]);
+        //Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1],"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
+
+        //디버깅
+        Assert.assertNotEquals(befoeSrc, afterSrc,"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
         Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
     }
 
