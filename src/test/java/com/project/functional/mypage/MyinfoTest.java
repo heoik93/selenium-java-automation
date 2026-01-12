@@ -124,7 +124,7 @@ public class MyinfoTest extends BaseTest {
             throw e; }
 
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1],"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
+        Assert.assertNotEquals(befoeSrc, afterSrc,"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
         Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
     }
 
