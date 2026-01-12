@@ -113,12 +113,12 @@ public class MyinfoTest extends BaseTest {
         System.out.println("DEBUG - 업로드 시도 전 현재 SRC: " + befoeSrc);
 
         MyinfoupdatePage.uploadProfileImage();
+        MyinfoupdatePage.clickSaveButton();
 
         //디버깅요소
         String currentSrc = MyinfoupdatePage.getProfileImageSrc();
         System.out.println("DEBUG - 업로드 시도 후 현재 SRC: " + currentSrc);
 
-        MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
