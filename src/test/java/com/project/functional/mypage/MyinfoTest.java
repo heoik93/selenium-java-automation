@@ -110,10 +110,8 @@ public class MyinfoTest extends BaseTest {
         MyinfoupdatePage MyinfoupdatePage = new MyinfoupdatePage(driver);
 
         String befoeSrc = MyinfoupdatePage.getProfileImageSrc();
-        //디버깅요소
-        System.out.println("DEBUG - 업로드 시도 전 현재 SRC: " + befoeSrc);
-
         MyinfoupdatePage.uploadProfileImage();
+
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
@@ -123,14 +121,9 @@ public class MyinfoTest extends BaseTest {
             wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(By.id("profileImage"), "src", befoeSrc)));
         } catch (TimeoutException e) {
             System.out.println("⚠️ 타임아웃 발생: 이미지가 바뀌지 않았습니다. 현재 SRC: " + MyinfoupdatePage.getProfileImageSrc());
-            throw e; // 에러를 던져서 실패 원인을 리포트에 남김
-        }
-
+            throw e; }
 
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        //디버깅요소
-        System.out.println("DEBUG - 업로드 시도 후 현재 SRC: " + afterSrc);
-
         Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1],"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
         Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
     }
@@ -197,11 +190,21 @@ public class MyinfoTest extends BaseTest {
         myinfoPage.clickModifyButton();
         MyinfoupdatePage MyinfoupdatePage = new MyinfoupdatePage(driver);
 
+        String befoeSrc = MyinfoupdatePage.getProfileImageSrc();
         MyinfoupdatePage.backupProfileImage();
-        System.out.println("프로필 이미지 원복 완료.");
 
+        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(By.id("profileImage"), "src", befoeSrc)));
+        } catch (TimeoutException e) {
+            System.out.println("⚠️ 타임아웃 발생: 이미지가 바뀌지 않았습니다. 현재 SRC: " + MyinfoupdatePage.getProfileImageSrc());
+            throw e; }
+
+        System.out.println("프로필 이미지 원복 완료.");
     }
 
 
