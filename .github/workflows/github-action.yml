@@ -53,12 +53,18 @@ jobs:
           path: |
             target/ExtentReports/
             **/index.html
+            
+
+      - name: Prepare Report for GitHub Pages
+        if: always()
+        run: |
+          cp ./test-output/Report_*.html ./test-output/index.html
 
       - name: Deploy to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/ExtentReports/
+          publish_dir: ./test-output/
           force_orphan: true # 이전 기록을 덮어쓰기
             
