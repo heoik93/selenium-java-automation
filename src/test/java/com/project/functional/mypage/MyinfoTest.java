@@ -9,6 +9,7 @@ import com.project.page.myinfo.MyinfoupdatePage;
 import config.ConfigReader;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -114,16 +115,20 @@ public class MyinfoTest extends BaseTest {
 
         MyinfoupdatePage.uploadProfileImage();
         MyinfoupdatePage.clickSaveButton();
+        MyinfoupdatePage.alertAccept();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(By.id("profileImage"), "src", befoeSrc)));
+        } catch (TimeoutException e) {
+            System.out.println("⚠️ 타임아웃 발생: 이미지가 바뀌지 않았습니다. 현재 SRC: " + MyinfoupdatePage.getProfileImageSrc());
+            throw e; // 에러를 던져서 실패 원인을 리포트에 남김
+        }
 
         //디버깅요소
         String currentSrc = MyinfoupdatePage.getProfileImageSrc();
         System.out.println("DEBUG - 업로드 시도 후 현재 SRC: " + currentSrc);
-
-        MyinfoupdatePage.alertAccept();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.not(ExpectedConditions.attributeContains(By.id("profileImage"), "src", "beforeprofile.jpg")));
-
+        
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
         //Assert.assertNotEquals(befoeSrc.split("_")[1], afterSrc.split("_")[1],"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
 

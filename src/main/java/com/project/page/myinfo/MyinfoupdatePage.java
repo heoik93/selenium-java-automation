@@ -158,16 +158,14 @@ public class MyinfoupdatePage extends BasePage {
                 "arguments[0].style.display='block';" +
                         "arguments[0].style.visibility='visible';" +
                         "arguments[0].style.opacity='1';" +
-                        "arguments[0].style.position='fixed';" + // 화면 상단 고정
-                        "arguments[0].style.top='0';" +
-                        "arguments[0].style.left='0';" +
-                        "arguments[0].style.width='100px';" +
-                        "arguments[0].style.height='100px';" +
-                        "arguments[0].style.zIndex='10000';", realFileInput);
+                        "arguments[0].style.height='auto';" +
+                        "arguments[0].style.width='auto';", realFileInput);
 
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
 
         realFileInput.sendKeys(absolutePath);
+        //디버깅
+        System.out.println("DEBUG - input value: " + realFileInput.getAttribute("value"));
     }
 
     public String getProfileImageSrc() {
