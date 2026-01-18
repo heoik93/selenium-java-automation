@@ -1,0 +1,65 @@
+# 🛒 Laundry365 테스트 자동화 프로젝트
+
+[![Selenium Automated Test](https://github.com/heoik93/selenium-java-automation/actions/workflows/github-action.yml/badge.svg)](https://github.com/heoik93/selenium-java-automation/actions/workflows/github-action.yml)
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Selenium](https://img.shields.io/badge/Selenium-4.x-green)
+
+## 📋 1. 프로젝트 개요
+* **목표:** 'Laundry365' 웹사이트의 핵심 기능 회귀 테스트 자동화
+* **성과:** GitHub Actions를 통한 **테스트 자동화 및 리포팅** 시스템 구축
+
+## 🛠 2. 기술 스택
+| 분류 | 기술 |
+| :--- | :--- |
+| **Language** | Java 17 |
+| **Framework** | Selenium WebDriver, TestNG |
+| **CI/CD** | GitHub Actions |
+| **Reporting** | ExtentReports |
+
+---
+
+## 🚀 3. 트러블슈팅 (Troubleshooting)
+
+### 3-1. 페이지 객체 모델(POM) 도입을 통한 유지보수성 향상
+* **현상:** 서비스 UI 변경 시(버전 업데이트 등) 관련된 모든 테스트 코드를 일일이 수정해야 하는 번거로움 발생
+* **원인:** 테스트 시나리오와 UI 요소 제어 로직이 결합되어 있어 작은 변화에도 전체 테스트 슈트가 깨지는 높은 의존성 문제
+* **해결:** **POM 디자인 패턴**을 적용하여 UI 요소와 행위 로직을 별도 클래스로 분리, 유지보수 효율성 및 코드 재사용성 극대화
+
+### 3-2. CI 서버 리소스 경합으로 인한 빌드 중단
+* **현상:** GitHub Actions 서버에서 테스트 실행 중 로그가 멈추고 타임아웃 발생
+* **원인:** 2-core CPU 환경에서 Maven 병렬 빌드와 TestNG 멀티 스레드가 충돌하여 **교착 상태(Deadlock)** 발생
+* **해결:** 병렬 옵션을 제거하고 단일 스레드 순차 실행으로 전환하여 안정성 확보
+
+### 3-3. 리눅스 Headless 모드 파일 업로드 및 제어 실패
+* **현상:** 헤드리스 환경에서 `sendKeys`를 통한 이미지 업로드 기능이 무시되거나 세션이 응답하지 않음
+* **원인:** OS 파일 탐색기 사용 불가 및 CDP 버전 불일치로 인한 브라우저-드라이버 간 통신 불안정
+* **해결:** `JavascriptExecutor`로 요소를 강제 노출 후 경로 주입, `WebDriverWait`를 적용하여 성공률 100% 달성
+
+### 3-4. 리포트 파일명 불일치 (404 에러)
+* **현상:** GitHub Pages 배포 시 `index.html`을 찾지 못해 404 에러 발생
+* **원인:** 이메일용 가변 파일명(Timestamp)과 웹 배포용 고정 파일명이 상충됨
+* **해결:** 배포 직전 Shell Script를 통해 최신 리포트를 `index.html`로 복사하는 이원화 프로세스 구축
+
+---
+
+## 📊 4. 테스트 결과
+
+### 4-1. 테스트 수행 요약
+* **대상 서비스:** Laundry365 (Web)
+* **주요 시나리오:**    
+* **테스트 환경 (Cross-Platform)**
+  - **Local:** Windows 10/11, Chrome (GUI 모드 - 디버깅 및 시나리오 검증용)
+  - **CI/CD:** GitHub Actions Ubuntu-latest, Headless Chrome (자동화 빌드용)
+* **수행 결과:** (현재테스트작성중)
+
+### 4-2. 테스트 결과 리포트 (Dashboard)
+테스트 결과 대시보드를 아래 링크에서 확인하실 수 있습니다.
+* **[👉 실시간 테스트 리포트 확인하기] https://heoik93.github.io/selenium-java-automation/#**
+* *(※ GitHub Actions 빌드 완료 시 자동으로 최신 결과가 반영됩니다.)*
+
+---
+
+## 🚀 5. 향후 발전 방향 (Future Plans)
+* **Docker 도입:** 테스트 환경의 완전한 격리 및 일관성 확보를 위한 컨테이너화 추진
+* **Jenkins 연동:** 현재의 GitHub Actions를 넘어 On-premise 환경에서의 CI 구축 실습
+* **Selenium Grid:** 대규모 테스트 수행을 위한 병렬 실행 인프라 확장
