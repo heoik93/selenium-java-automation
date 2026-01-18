@@ -33,7 +33,10 @@ public class DriverFactory {
                     options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"); // 봇 탐지 회피
                     System.out.println("Chrome 헤드리스 모드로 실행합니다.");
                 } else {
-                    options.addArguments("--start-maximized");
+                    //options.addArguments("--start-maximized");
+                    options.addArguments("--window-size=1920,1080");
+                    options.addArguments("--force-device-scale-factor=1");
+                    System.out.println("Chrome 윈도우 모드로 실행합니다.");
                 }
 
                 return new ChromeDriver(options);

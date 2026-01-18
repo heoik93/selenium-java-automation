@@ -39,8 +39,21 @@ public class NavigationBar extends BasePage {
     @FindBy(css = "a[href='/Corporation/Startup']")
     private WebElement startupLink;
 
+    @FindBy(xpath = "//a[contains(text(),'이용안내')]")
+    private  WebElement useguideMenuLink;
+
+    @FindBy(css = "a[href='/Guide/PriceGuide']")
+    private  WebElement priceGuideLink;
+
+    @FindBy(css = "a[href='/Guide/AreaGuide']")
+    private WebElement areaGuideLink;
+
+    //네비게이션바 버튼
     @FindBy(xpath = "//button[contains(text(),'회사소개')]")
     private WebElement comintroButton;
+
+    @FindBy(xpath = "//button[contains(text(),'가격안내')]")
+    private  WebElement priceGuideButton;
 
     public void goToLoginPage() {
         click(loginLink);
@@ -89,6 +102,18 @@ public class NavigationBar extends BasePage {
         hover(brandintroMenuLink);
         click(brandintroMenuLink);
         click(startupLink);
+    }
+
+    public void goToPriceGuidePage(){
+        hover(useguideMenuLink);
+        click(useguideMenuLink);
+        click(priceGuideLink);
+    }
+
+    public void goToAreaGuidePage(){
+        hover(useguideMenuLink);
+        click(useguideMenuLink);
+        click(areaGuideLink);
     }
 
 }
