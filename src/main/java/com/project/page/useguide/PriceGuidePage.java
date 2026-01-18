@@ -6,6 +6,7 @@ import com.project.page.NavigationBar;
 import com.project.utils.ExcelUtil;
 import config.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -123,7 +124,16 @@ public class PriceGuidePage extends BasePage {
         WebElement targetBtn = categoryMap.get(categoryName);
 
         if (targetBtn != null) {
+            WebElement oldData = driver.findElement(By.cssSelector("tbody tr:nth-child(1)"));
+
             this.click(targetBtn);
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            try {
+                wait.until(ExpectedConditions.stalenessOf(oldData));
+            } catch (TimeoutException e) {
+                System.out.println("이미 데이터가 갱신되었거나 변경 사항이 없습니다.");
+            }
         } else {
             throw new RuntimeException("카테고리 이름을 확인해주세요: " + categoryName);
         }
