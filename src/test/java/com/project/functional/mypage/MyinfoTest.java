@@ -211,7 +211,6 @@ public class MyinfoTest extends BaseTest {
     private void myInfopageLogout() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.navi.logout();
-
     }
 }
 

@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class ComintroTest extends BaseTest {
+public class ComintroPageTest extends BaseTest {
 
     @BeforeMethod
     public void goToComintroPage() {

@@ -9,14 +9,26 @@
             <class name="com.project.functional.LoginTest"/>
             <class name="com.project.functional.LogoutTest"/>
             <class name="com.project.functional.SignupTest"/>
+
             <class name="com.project.functional.brandinfopage.BarndInfoPageTabTest"/>
+
             <class name="com.project.functional.mypage.MyinfoTest"/>
             <class name="com.project.functional.mypage.MypageButtonTest"/>
-            <class name="com.project.ui.ComintroTest"/>
+
+            <class name="com.project.functional.useguide.UseGuidePageTabTest"/>
+
+            <class name="com.project.functional.bookingpage.BookingInfoPageSelectboxTest"/>
+            <class name="com.project.functional.bookingpage.BookingCategoryTest"/>
+            <class name="com.project.functional.bookingpage.BookingPaymentTest"/>
+
             <class name="com.project.ui.HistoryPageTest"/>
             <class name="com.project.ui.StartupPageTest"/>
-            <class name="com.project.ui.AreaGuideTest"/>
+            <class name="com.project.ui.AreaGuidePageTest"/>
             <class name="com.project.ui.PriceGuideTest"/>
+            <class name="com.project.ui.BookingInfoPageTest"/>
+            <class name="com.project.ui.BookingCategoryPageTest"/>
+            <class name="com.project.ui.BookingPaymentPageTest"/>
+
             </classes>
     </test>
 </suite>

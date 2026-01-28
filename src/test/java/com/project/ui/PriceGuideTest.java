@@ -88,8 +88,8 @@ public class PriceGuideTest extends BaseTest {
         priceGuidePage.waitForPageLoad();
         priceGuidePage.clickCategory(categoryName);
 
-        ConfigReader conifg = new ConfigReader();
-        String PriceGuideData_path = conifg.getProperty("PriceGuideDataPath");
+        ConfigReader config = new ConfigReader();
+        String PriceGuideData_path = config.getProperty("PriceGuideDataPath");
         List<Map<String, String>> allData = ExcelUtil.getTestData(PriceGuideData_path, "Item");
 
         List<Map<String, String>> clothingData = new ArrayList<>();

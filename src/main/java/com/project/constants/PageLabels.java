@@ -74,8 +74,8 @@ public class PageLabels {
     public static final String startupPage_step6_Label = "STEP.6\n" + "매장오픈";
 
     //이용안내 탭
-    public static final String priceTabLabel = "가격안내";
-    public static final String areaTabLabel = "지역안내";
+    public static final String priceTabLabel = "가격 안내";
+    public static final String areaTabLabel = "지역 안내";
 
 
     //지역안내 라벨
@@ -111,9 +111,66 @@ public class PageLabels {
     public static final String PricePage_item_Name = "품목";
     public static final String PricePage_item_Price = "가격";
 
+    //예약안내 라벨
+    public static final String bookingPage_TitleText = "예약안내";
+    public static final String bookingPage_ClothesText = "좋은 세제와 향기를\n" + "고객분들에게 다가갑니다.";
+    public static final String bookingPage_BeddingText = "다양한 이불들을\n" + "저렴한 세탁으로 만나보세요.";
+    public static final String bookingPage_ShoesText = "세탁하기 번거로운\n" + "운동화를 깨끗하게!";
+    public static final String bookingPage_LivingText = "미세먼지 없는\n" + "집안생활은 리빙세탁으로!";
+    public static final String bookingPage_ClothesTitleText = "생활빨래";
+    public static final String bookingPage_BeddingTitleText = "침구류";
+    public static final String bookingPage_ShoesTitleText = "운동화,구두";
+    public static final String bookingPage_LivingTitleText = "리빙";
+
+    //예약상품페이지 라벨(공통)
+    public static final String bookingPage_Category_Title = "예약안내";
+    public static final String bookingPage_Category_SubTitle = "step02 상품선택";
+    public static final String bookingPage_Category_productBuyLabel = "상품 구매";
+    public static final String bookingPage_Category_productNameLabel = "상품명";
+    public static final String bookingPage_Category_productOptionLabel = "옵션";
+    public static final String bookingPage_Category_productBookingdateLabel = "예약날짜";
+    public static final String bookingPage_Category_productAmountLabel = "총 상품 금액";
+    public static final String bookingPage_Category_productBookingButton = "예약하기";
+    public static final String bookingPage_Category_explainTitle = "수거 및 배송 안내";
+    public static final String bookingPage_Category_explainText_1 = "수거";
+    public static final String bookingPage_Category_explainText_2 = "세탁 및 건조";
+    public static final String bookingPage_Category_explainText_3 = "배송";
+    public static final String bookingPage_Category_explainFooterText = "Laundry365에서\n"+"깨끗하고 안전하게! 배송해드리겠습니다!";
+
+    //예약상품페이지 라벨(카테고리별)
+    public static final String bookingPage_Clothes_productName = "생활빨래";
+    public static final String bookingPage_Bedding_productName = "침구류";
+    public static final String bookingPage_Shoes_productName = "운동화·구두";
+    public static final String bookingPage_Living_productName = "리빙";
+
+    //예약결제페이지 라벨
+    public static final String bookingPage_Payment_pageTitle = "예약안내";
+    public static final String bookingPage_Payment_pageSubTitle = "Step03 결제창";
+    public static final String bookingPage_Payment_productInfoLabel = "상품정보";
+    public static final String bookingPage_Payment_userIdLabel = "주문자 아이디";
+    public static final String bookingPage_Payment_productCountLabel = "상품, 수량";
+    public static final String bookingPage_Payment_amountLabel = "총 주문가격";
+    public static final String bookingPage_Payment_bookingDateLabel = "수거날짜";
+    public static final String bookingPage_Payment_bookingAddressLabel = "배송지정보";
+    public static final String bookingPage_Payment_oldAddressLabel = "기존배송지";
+    public static final String bookingPage_Payment_newAddressLabel = "신규배송지";
+    public static final String bookingPage_Payment_addressLabel = "주소";
+    public static final String bookingPage_Payment_requestLabel = "요청사항";
+    public static final String bookingPage_Payment_requestInputBoxPlaceholder = "요청사항을 직접 입력합니다.(최대 200자)";
+    public static final String bookingPage_Payment_emailLabel = "결제 정보 이메일";
+    public static final String bookingPage_Payment_emailInputBoxPlaceholder = "Laundry@naver.com";
+    public static final String bookingPage_Payment_paymentMethodLabel = "결제수단";
+    public static final String bookingPage_Payment_paymentButton = "카드결제";
+
+
 
     //URl 탭 타이틀
     public static final String myinfoupdatePageTabTitle = "회원정보 수정";
     public static final String changePasswordPageTabTitle = "비밀번호 수정";
+    public static final String bookingInfoPageTitle = "예약안내"; //추후 DF해소후 변경가능성 있음
+    public static final String bookingCategoryPageTitle = "상품선택";  //추후 DF해소후 변경가능성 있음
+    public static final String bookingPaymentPageTitle = "결제화면";
+
+
 
 }

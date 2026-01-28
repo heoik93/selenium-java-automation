@@ -48,6 +48,12 @@ public class NavigationBar extends BasePage {
     @FindBy(css = "a[href='/Guide/AreaGuide']")
     private WebElement areaGuideLink;
 
+    @FindBy(xpath = "//a[@class='menu-link1'][contains(text(),'예약안내')]")
+    private WebElement bookinginfoMenuLink;
+
+    @FindBy(xpath = "//a[@href='/Reserve/ReserveSelect']")
+    private WebElement bookinginfoLink;
+
     //네비게이션바 버튼
     @FindBy(xpath = "//button[contains(text(),'회사소개')]")
     private WebElement comintroButton;
@@ -115,6 +121,14 @@ public class NavigationBar extends BasePage {
         click(useguideMenuLink);
         click(areaGuideLink);
     }
+
+    public void goToBookingInfoPage(){
+        hover(bookinginfoMenuLink);
+        click(bookinginfoMenuLink);
+        click(bookinginfoLink);
+    }
+
+    //네이게이션 바로 각 페이지로 이동시 url/타이틀이 유효한지 테스트를 추가할 것
 
 }
 

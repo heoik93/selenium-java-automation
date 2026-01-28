@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AreaGuideTest extends BaseTest {
+public class AreaGuidePageTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void goToCAreaGuidePage() {
