@@ -1,4 +1,4 @@
-<suite name="Regression_Suite">
+<suite name="Full Regression_Suite">
     <listeners>
         <listener class-name="com.project.utils.AnnotationTransformer" />
         <listener class-name="com.project.utils.TestListener" />
@@ -6,28 +6,44 @@
 
     <test name="Regression">
         <classes>
+            <!--Functional Test-->
+<!--            <class name="com.project.functional.BookingTest"/>-->
             <class name="com.project.functional.LoginTest"/>
             <class name="com.project.functional.LogoutTest"/>
             <class name="com.project.functional.SignupTest"/>
 
-            <class name="com.project.functional.brandinfopage.BarndInfoPageTabTest"/>
+                <!--bookingpage-->
+            <class name="com.project.functional.booking.BookingCategoryTest"/>
+            <class name="com.project.functional.booking.BookingInfoPageSelectboxTest"/>
+            <class name="com.project.functional.booking.BookingPaymentTest"/>
 
+                <!--brandinfopage-->
+            <class name="com.project.functional.brandInfo.BrandInfoPageTabTest"/>
+
+                <!--customerSupport-->
+            <class name="com.project.functional.customerSupport.CustomerSupportPageTabTest"/>
+
+                <!--mypage-->
             <class name="com.project.functional.mypage.MyinfoTest"/>
             <class name="com.project.functional.mypage.MypageButtonTest"/>
+            <class name="com.project.functional.useGuide.UseGuidePageTabTest"/>
 
-            <class name="com.project.functional.useguide.UseGuidePageTabTest"/>
 
-            <class name="com.project.functional.bookingpage.BookingInfoPageSelectboxTest"/>
-            <class name="com.project.functional.bookingpage.BookingCategoryTest"/>
-            <class name="com.project.functional.bookingpage.BookingPaymentTest"/>
+                <!--useguide-->
+            <class name="com.project.functional.useGuide.UseGuidePageTabTest"/>
 
-            <class name="com.project.ui.HistoryPageTest"/>
-            <class name="com.project.ui.StartupPageTest"/>
-            <class name="com.project.ui.AreaGuidePageTest"/>
-            <class name="com.project.ui.PriceGuideTest"/>
-            <class name="com.project.ui.BookingInfoPageTest"/>
-            <class name="com.project.ui.BookingCategoryPageTest"/>
-            <class name="com.project.ui.BookingPaymentPageTest"/>
+
+            <!--UI Test-->
+            <class name="com.project.ui.useGuide.AreaGuidePageTest"/>
+            <class name="com.project.ui.booking.BookingCategoryPageTest"/>
+            <class name="com.project.ui.booking.BookingInfoPageTest"/>
+            <class name="com.project.ui.booking.BookingPaymentPageTest"/>
+            <class name="com.project.ui.brandInfo.ComintroPageTest"/>
+            <class name="com.project.ui.brandInfo.HistoryPageTest"/>
+            <class name="com.project.ui.mypage.MyinfoPageTest"/>
+            <class name="com.project.ui.useGuide.PriceGuideTest"/>
+            <class name="com.project.ui.brandInfo.StartupPageTest"/>
+            <class name="com.project.ui.mypage.UseHistoryPageTest"/>
 
             </classes>
     </test>

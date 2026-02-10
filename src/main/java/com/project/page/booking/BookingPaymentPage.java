@@ -2,7 +2,9 @@ package com.project.page.booking;
 
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
+import config.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -261,6 +263,67 @@ public class BookingPaymentPage extends BasePage {
             driver.switchTo().window(mainWindow);
         }
         return false;
+    }
+
+    private JavascriptExecutor js = (JavascriptExecutor) driver;
+    private By popupCloseArea = By.xpath("/html/body/map/area[1]");
+
+    public void bypassPayment() {
+        String merchantUid = "T_ORDER_" + System.currentTimeMillis();
+        js.executeScript("$('#merchant_uid').val('" + merchantUid + "');");
+        js.executeScript("$('#imp_uid').val('imp_mock_selenium');");
+        js.executeScript("$('form').submit();");
+        System.out.println("[INFO] 결제 우회 완료: " + merchantUid);
+    }
+
+
+    public void closePopupIfPresent() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+            WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(popupCloseArea));
+            js.executeScript("arguments[0].click();", closeBtn);
+            System.out.println("[INFO] 광고 팝업 제거 완료");
+        } catch (Exception e) {
+            System.out.println("[INFO] 광고 팝업 없음");
+        }
+    }
+
+    public void simulatePaymentFailure() {
+
+        String errorMessage = "테스트용 결재실패 시뮬레이션";
+
+        js.executeScript(
+                "var rsp = { success: false, error_msg: '" + errorMessage + "' }; " +
+                        "alert('결제 실패: ' + rsp.error_msg); " +
+                        "console.log('테스트 목적의 결제 실패 시뮬레이션 실행됨');"
+        );
+
+        System.out.println("[INFO] 결제 실패 시나리오 실행: " + errorMessage);
+    }
+
+    public void inputNewAddress() {
+        ConfigReader config = new ConfigReader();
+        String script =
+                "var setVal = function(id, val) {" +
+                        "  var el = document.getElementById(id);" +
+                        "  if(el) {" +
+                        "    el.value = val;" +
+                        "    el.dispatchEvent(new Event('input', { bubbles: true }));" + // 입력 이벤트 발생
+                        "    el.dispatchEvent(new Event('change', { bubbles: true }));" + // 변경 이벤트 발생
+                        "  }" +
+                        "};" +
+                        "setVal('postcode', '" + config.getProperty("NewTestAddress.postcode") + "');" +
+                        "setVal('address', '" + config.getProperty("NewTestAddress.mainAddr") + "');" +
+                        "setVal('detailAddress', '" + config.getProperty("NewTestAddress.detailAddr") + "');"+
+                        "setVal('extraAddress', '" + config.getProperty("NewTestAddress.extraAddr") + "');";
+
+        try {
+            js.executeScript(script);
+            System.out.println("[INFO] 주소 데이터 강제 주입 성공: ");
+
+        } catch (Exception e) {
+            System.err.println("[ERROR] 주소 주입 중 오류 발생: " + e.getMessage());
+        }
     }
 
 }

@@ -56,7 +56,7 @@ public class MypageButtonTest extends BaseTest {
         Assert.assertEquals(PageTittle, PageLabels.changePasswordPageTabTitle);
     }
 
-    @Test(testName = "camgePassword clearButton test")
+    @Test(testName = "changePassword clearButton test")
     public void changePasswordClearButtonTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.clickChangePasswordButton();

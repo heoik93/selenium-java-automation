@@ -19,7 +19,6 @@ public class BaseTest {
 
         driver = DriverFactory.createDriver(browser);
 
-        //driver.manage().window().maximize();
         driver.manage().window().setSize(new Dimension(1920, 1080));
         driver.manage().deleteAllCookies();
 
@@ -38,15 +37,41 @@ public class BaseTest {
         loginPage.login(config.getUsername(), config.getPassword());
     }
 
+    public void loginAsAdminUser() {
+        ConfigReader config = new ConfigReader();
+        driver.get(config.getUrl());
+
+        HomePage homePage = new HomePage(driver);
+        homePage.navi.goToLoginPage();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(config.getProperty("adminusername"), config.getProperty("adminpassword"));
+    }
+
+    public void loginAsAnotherUser() {
+        ConfigReader config = new ConfigReader();
+        driver.get(config.getUrl());
+
+        HomePage homePage = new HomePage(driver);
+        homePage.navi.goToLoginPage();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(config.getProperty("anotherusername"), config.getProperty("anotheruserpassword"));
+    }
+
     public void connectToUrl() {
         ConfigReader config = new ConfigReader();
         driver.get(config.getUrl());
     }
 
+    public void debugResult(String expected, String result) {
+        System.out.println("기대값: " + expected+"   실제값: " + result);
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {
-           // 테스트기간동안 확인을 위해 비활성화
+
             driver.quit();
         }
     }

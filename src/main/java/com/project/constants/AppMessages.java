@@ -19,5 +19,15 @@ public class AppMessages {
     //결제페이지 결제버튼클릭시 alert
     public static final String bookingPaymentPage_EmailEmpty_AlertMsg = "이메일을 입력해주세요";
     public static final String bookingPaymentPage_AddressEmpty_AlertMsg = "배송지를 입력해주세요";
+    public static final String bookingPaymentPage_PatmentFailMsg = "결제 실패:";
+    public static final String bookingPaymentPage_PatmentSuccessMsg = "결제 성공:";
+
+    //후기게시판 alert
+    public static final String reviewDetailPage_Modify_AlertMsg = "후기가 수정되었습니다.";
+    public static final String reviewDetailPage_delect_AlertMsg = "정말 삭제하시겠습니까?";
+    public static final String reviewDetailPage_delect_Success_AlertMsg = "후기가 삭제되었습니다.";
+    public static final String reviewDetailPage_crate_AlertMsg = "후기가 저장되었습니다!";
+
+
 
 }

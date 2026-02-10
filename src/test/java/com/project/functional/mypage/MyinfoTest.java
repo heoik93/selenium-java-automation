@@ -2,6 +2,7 @@ package com.project.functional.mypage;
 
 import com.project.base.BaseTest;
 import com.project.constants.AppMessages;
+import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.myinfo.ChangePasswordPage;
 import com.project.page.myinfo.MyinfoPage;
@@ -16,6 +17,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -35,10 +37,56 @@ public class MyinfoTest extends BaseTest {
     private Map<String, String> backupInfo;
     private final ConfigReader config = new ConfigReader();
 
+    @Test(testName = "MyinfoPage tab active test")
+    public void MyinfoPage_TabActiveTest() {
+        MyinfoPage myinfoPage = new MyinfoPage(driver);
+        myinfoPage.waitForPageLoad();
+
+        Assert.assertTrue(myinfoPage.isMyInfoTabActive(), "회원정보 탭이 활성화 되어 있지 않습니다.");
+    }
+
+    @Test(testName = "MyinfoPage tab test1")
+    public void MyinfoPage_TabTest1() {
+        MyinfoPage myinfoPage = new MyinfoPage(driver);
+        myinfoPage.waitForPageLoad();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        myinfoPage.clickMyInfoTab();
+
+        String currentUrl = myinfoPage.getCurrentUrl();
+        String pageTitle = myinfoPage.getPageTitle();
+
+        softAssert.assertEquals(currentUrl, config.getProperty("MyInfoPageURL"), "MyinfoPage URL이 일치하지 않습니다.");
+        softAssert.assertEquals(pageTitle, PageLabels.myinfoPageTitle, "MyinfoPage 타이틀이 일치하지 않습니다.");
+
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "MyinfoPage tab test2")
+    public void MyinfoPage_TabTest2() {
+        MyinfoPage myinfoPage = new MyinfoPage(driver);
+        myinfoPage.waitForPageLoad();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        myinfoPage.clickUseHistoryTab();
+
+        String currentUrl = myinfoPage.getCurrentUrl();
+        String pageTitle = myinfoPage.getPageTitle();
+
+        softAssert.assertEquals(currentUrl, config.getProperty("UseHistoryPageURL"), "UseHistoryPag URL이 일치하지 않습니다.");
+        softAssert.assertEquals(pageTitle, PageLabels.useHistoryPageTittle, "UseHistoryPag 타이틀이 일치하지 않습니다."); //현재 DF있음
+
+        softAssert.assertAll();
+    }
+
+
+
     @Test(testName = "Myinfo updateFlow test")
     public void MyinfoUpdateFlowTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
-        myinfoPage.waitForVisible(myinfoPage.myinfoTab);
+        myinfoPage.waitForPageLoad();
         beforeInfo = myinfoPage.getAllUserInfo();
 
         myinfoPage.clickModifyButton();

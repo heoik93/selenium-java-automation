@@ -27,6 +27,9 @@ public class NavigationBar extends BasePage {
     @FindBy(css = "a[href='/LoginInfo/Mypage/MyInfo']")
     private WebElement myinfoLink;
 
+    @FindBy(xpath = "(//a[contains(text(),'신청내역확인')])[1]")
+    private WebElement usehistoryLink;
+
     @FindBy(xpath = "//a[contains(text(),'브랜드소개')]")
     private WebElement brandintroMenuLink;
 
@@ -53,6 +56,21 @@ public class NavigationBar extends BasePage {
 
     @FindBy(xpath = "//a[@href='/Reserve/ReserveSelect']")
     private WebElement bookinginfoLink;
+
+    @FindBy(xpath = "//a[contains(text(),'고객지원')]")
+    private WebElement customerSupportMenuLink;
+
+    @FindBy(xpath = "(//a[contains(text(),'후기게시판')])[1]")
+    private WebElement ReviewBoardLink;
+
+    @FindBy(xpath = "(//a[contains(text(),'질문게시판')])[1]")
+    private WebElement FAQBoardLink;
+
+    @FindBy(xpath = "(//a[contains(text(),'1:1 문의')])[1]")
+    private WebElement QnABoardLink;
+
+    @FindBy(xpath = "(//a[contains(text(),'공지사항')])[1]")
+    private WebElement NoticeLink;
 
     //네비게이션바 버튼
     @FindBy(xpath = "//button[contains(text(),'회사소개')]")
@@ -85,6 +103,12 @@ public class NavigationBar extends BasePage {
         hover(myinfoMenuLink);
         click(myinfoMenuLink);
         click(myinfoLink);
+    }
+
+    public void gotoUseHistoryPage(){
+        hover(myinfoMenuLink);
+        click(myinfoMenuLink);
+        click(usehistoryLink);
     }
 
     public void clickLogoutLink() {
@@ -127,6 +151,31 @@ public class NavigationBar extends BasePage {
         click(bookinginfoMenuLink);
         click(bookinginfoLink);
     }
+
+    public void goToReviewBoardPage(){
+        hover(customerSupportMenuLink);
+        click(customerSupportMenuLink);
+        click(ReviewBoardLink);
+    }
+
+    public void goToQnABoardPage(){
+        hover(customerSupportMenuLink);
+        click(customerSupportMenuLink);
+        click(QnABoardLink);
+    }
+
+    public void goToFAQBoardPage(){
+        hover(customerSupportMenuLink);
+        click(customerSupportMenuLink);
+        click(FAQBoardLink);  //현재 버그로 해당요소 없음
+    }
+
+    public void goToNoticePage(){
+        hover(customerSupportMenuLink);
+        click(customerSupportMenuLink);
+        click(NoticeLink);
+    }
+
 
     //네이게이션 바로 각 페이지로 이동시 url/타이틀이 유효한지 테스트를 추가할 것
 

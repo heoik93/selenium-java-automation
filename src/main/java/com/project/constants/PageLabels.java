@@ -1,5 +1,8 @@
 package com.project.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class PageLabels {
 
     //회사소개 탭
@@ -74,8 +77,8 @@ public class PageLabels {
     public static final String startupPage_step6_Label = "STEP.6\n" + "매장오픈";
 
     //이용안내 탭
-    public static final String priceTabLabel = "가격 안내";
-    public static final String areaTabLabel = "지역 안내";
+    public static final String priceTabLabel = "가격안내";
+    public static final String areaTabLabel = "지역안내";
 
 
     //지역안내 라벨
@@ -162,15 +165,112 @@ public class PageLabels {
     public static final String bookingPage_Payment_paymentMethodLabel = "결제수단";
     public static final String bookingPage_Payment_paymentButton = "카드결제";
 
+    //마이페이지 탭
+    public static final String useHistoryPage_MyInfoTabLabel = "회원정보";
+    public static final String useHistoryPage_UseHistoryTabLabel = "신청내역확인";
+
+    //신청내역확인 라벨
+    public static final String useHistoryPage_OrderNumberLabel = "주문번호";
+    public static final String useHistoryPage_OderDetailLabel = "주문상세정보";
+    public static final String useHistoryPage_OderPriceLabel = "주문가격";
+    public static final String useHistoryPage_AddressLabel = "배송지";
+    public static final String useHistoryPage_BookingDateLabel = "예약일";
+    public static final String useHistoryPage_RetrieveDateLabel = "수거일";
+    public static final String useHistoryPage_StatusLabel = "처리상태";
+    public static final String useHistoryPage_ReviewLabel = "후기작성";
+
+    //회원정보 라벨
+    public static final String myinfoPage_myinfoTab = "회원정보";
+    public static final String myinfoPage_useHistoryTab = "신청내역확인";
+    public static final String myinfoPage_profileLabel = "프로필 이미지";
+    public static final String myinfoPage_userIdLabel = "아이디";
+    public static final String myinfoPage_addressLabel = "주소";
+    public static final String myinfoPage_emailLabel = "이메일";
+    public static final String myinfoPage_phoneLabel = "전화번호";
+    public static final String myinfoPage_signupDateLabel = "가입일";
+    public static final String myinfoPage_profileTextLabel = "회원님을 알릴 수 있는 사진을 등록해 주세요.\n" +
+                                                             "등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.";
+    public static final String myinfoPage_modifyButton = "개인정보 수정";
+    public static final String myinfoPage_changePasswordButton = "비밀번호 수정";
+    public static final String myinfoPage_withdrawButton = "탈퇴";
+
+    //고객지원 탭
+    public static final String reviewBoardPage_reviewBoardTab = "후기게시판";
+    public static final String reviewBoardPage_FAQBoardTab = "질문게시판";
+    public static final String reviewBoardPage_QnABoardTab = "1:1 문의";
+    public static final String reviewBoardPage_NoticeTab = "공지사항";
+
+    //후기게시판 라벨
+    public static final String reviewBoardPage_reviewNumberLabel = "글번호";
+    public static final String reviewBoardPage_reviewUserLabel = "작성자";
+    public static final String reviewBoardPage_reviewTitleLabel = "제목";
+    public static final String reviewBoardPage_reviewHitsLabel = "조회수";
+    public static final String reviewBoardPage_reviewDateLabel = "등록일";
+    public static final String reviewBoardPage_reviewPointLabel = "평점";
+    public static final String reviewBoardPage_searchConditionSelect1 = "제목+내용";
+    public static final String reviewBoardPage_searchConditionSelect2 = "제목";
+    public static final String reviewBoardPage_searchConditionSelect3 = "작성자";
+    public static final String reviewBoardPage_searchButton = "검색";
+
+    //후기작성 라벨
+    public static final String reviewDetailPage_TitleLabel = "제목";
+    public static final String reviewDetailPage_OderNumberLabel = "주문번호";
+    public static final String reviewDetailPage_ItemLabel = "품목";
+    public static final String reviewDetailPage_StarLabel = "평점";
+    public static final String reviewDetailPage_ContentLabel = "내용";
+    public static final String reviewDetailPage_modifyButton = "수정";
+    public static final String reviewDetailPage_delectButton = "삭제";
+    public static final String reviewDetailPage_listButton = "목록";
+    
+    //주문상세 라벨
+    public static final String oderDetailPage_userInfo_Title = "고객정보";
+    public static final String oderDetailPage_userInfo_IdLabel = "아이디";
+    public static final String oderDetailPage_userInfo_NameLabel = "이름";
+    public static final String oderDetailPage_userInfo_PhoneLabel = "전화번호";
+    public static final String oderDetailPage_userInfo_AddressLabel = "주소";
+    public static final String oderDetailPage_oderInfo_Title = "주문정보";
+    public static final String oderDetailPage_oderInfo_NumberLabel = "주문번호";
+    public static final String oderDetailPage_oderInfo_statusLabel = "주문상태";
+    public static final String oderDetailPage_oderInfo_bookingDateLabel = "주문일";
+    public static final String oderDetailPage_oderInfo_retrieveDateLabel = "수거 요청일";
+    public static final String oderDetailPage_oderInfo_addressLabel = "배송지";
+    public static final String oderDetailPage_oderInfo_requestLabel = "요청내용";
+    public static final String oderDetailPage_oderInfo_retrieveNumberLabel = "수거용 송장번호";
+    public static final String oderDetailPage_oderInfo_returnNumberLabel = "반환용 송장번호";
+    public static final String oderDetailPage_oderProduct_Title = "주문품목";
+    public static final String oderDetailPage_oderProduct_No = "NO";
+    public static final String oderDetailPage_oderProduct_Item = "품목명";
+    public static final String oderDetailPage_oderProduct_Price = "가격";
+    public static final String oderDetailPage_oderProduct_Number = "주문수량";
+    public static final String oderDetailPage_oderProduct_Amount = "총 금액 : ";
+    public static final String oderDetailPage_oderInfo_retrieveCheckButton = "배송조회";
+    public static final String oderDetailPage_oderInfo_returnCheckButton = "배송조회";
+    public static final String oderDetailPage_listButton = "목록";
 
 
-    //URl 탭 타이틀
+
+
+    //URl 타이틀
     public static final String myinfoupdatePageTabTitle = "회원정보 수정";
     public static final String changePasswordPageTabTitle = "비밀번호 수정";
-    public static final String bookingInfoPageTitle = "예약안내"; //추후 DF해소후 변경가능성 있음
+    public static final String bookingInfoPageTitle = "예약 안내"; //추후 DF해소후 변경가능성 있음
     public static final String bookingCategoryPageTitle = "상품선택";  //추후 DF해소후 변경가능성 있음
     public static final String bookingPaymentPageTitle = "결제화면";
+    public static final String priceGuidePageTitle = "가격 안내";
+    public static final String areaGuidePageTitle = "지역 안내";
+    public static final String useHistoryPageTittle = "신청내역확인";
+    public static final String myinfoPageTitle = "회원정보";
+    public static final String orderDetailPageTitle = "주문 상세";
+
+    public static final String noticePageTitle = "공지사항";
+    public static final String FAQBoardPageTitle = "자주묻는질문";
+    public static final String QnABoardPageTitle = "1:1 문의";
+    public static final String reviewBoardPageTitle = "후기게시판";
 
 
-
+    //후기게시판 평점리스트
+    public static final List<String> reviewBoard_starOptions =
+            Arrays.asList("★☆☆☆☆", "★★☆☆☆", "★★★☆☆", "★★★★☆","★★★★★");
 }
+
+
