@@ -59,9 +59,9 @@
 
 ---
 
-## ✅ 5. CI/CD 및 인프라 구축 성과 (Completed)
+## ✅ 5. CI/CD 및 인프라 구축 
 
-단순한 테스트 실행을 넘어, **On-premise(Jenkins)**와 **Cloud(GitHub Actions)**를 결합한 하이브리드 CI 환경을 구축하여 운영 안정성을 확보했습니다.
+ **On-premise(Jenkins)**와 **Cloud(GitHub Actions)**를 결합한 하이브리드 CI 환경을 구축하여 운영 안정성을 확보
 
 ### 5-1. Jenkins 기반 Local CI 환경 최적화
 * **인프라 안정화:** Windows 환경의 한글 인코딩(`UTF-8`) 이슈 해결 및 전원 관리 설정을 통해 24/7 중단 없는 테스트 환경 구축
