@@ -9,12 +9,12 @@
 * **성과:** GitHub Actions를 통한 **테스트 자동화 및 리포팅** 시스템 구축
 
 ## 🛠 2. 기술 스택
-| 분류 | 기술 |
-| :--- | :--- |
-| **Language** | Java 17 |
+| 분류 | 기술                         |
+| :--- |:---------------------------|
+| **Language** | Java 17                    |
 | **Framework** | Selenium WebDriver, TestNG |
-| **CI/CD** | GitHub Actions |
-| **Reporting** | ExtentReports |
+| **CI/CD** | GitHub Actions, Jenkins           |
+| **Reporting** | ExtentReports              |
 
 ---
 
@@ -59,7 +59,19 @@
 
 ---
 
-## 🚀 5. 향후 발전 방향 (Future Plans)
+## ✅ 5. CI/CD 및 인프라 구축 성과 (Completed)
+
+단순한 테스트 실행을 넘어, **On-premise(Jenkins)**와 **Cloud(GitHub Actions)**를 결합한 하이브리드 CI 환경을 구축하여 운영 안정성을 확보했습니다.
+
+### 5-1. Jenkins 기반 Local CI 환경 최적화
+* **인프라 안정화:** Windows 환경의 한글 인코딩(`UTF-8`) 이슈 해결 및 전원 관리 설정을 통해 24/7 중단 없는 테스트 환경 구축
+* **알림 자동화:** 테스트 완료 즉시 상세 결과 보고서를 **이메일(E-mail)로 자동 발송**하는 Notification 체계 구축
+
+### 5-2. Cloud CI (GitHub Actions) 연동 및 시각화
+* **Headless 최적화:** 리눅스 환경에서 `Headless Chrome` 모드 및 결함 없는 리포트 생성
+* **결과 호스팅:** 테스트 결과(Extent Report)를 **GitHub Pages**에 자동 호스팅하여 별도 툴 없이 웹에서 실시간 리포트 확인 가능
+
+---
+## 🚀 6. 향후 발전 방향 (Future Plans)
 * **Docker 도입:** 테스트 환경의 완전한 격리 및 일관성 확보를 위한 컨테이너화 추진
-* **Jenkins 연동:** 현재의 GitHub Actions를 넘어 On-premise 환경에서의 CI 구축 실습
-* **Selenium Grid:** 대규모 테스트 수행을 위한 병렬 실행 인프라 확장
+
