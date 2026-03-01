@@ -34,26 +34,37 @@ public class CustomerSupportPageTabTest extends BaseTest {
     public void setup(Method method) {
         softAssert = new ScreenshotSoftAssert(driver);
         String methodName = method.getName().toLowerCase();
+
+        System.out.println("[INFO] ===== Setup Start: " + methodName + " =====");
+
         loginAsDefaultUser();
 
         HomePage afterLogin = new HomePage(driver);
         afterLogin.navi.waitForPageLoad();
 
         if (methodName.contains("tabtest")) {
-
-            if (methodName.contains("qna")) {
-                afterLogin.navi.goToQnABoardPage();
-            }
-            else if (methodName.contains("faq")) {
-                afterLogin.navi.goToFAQBoardPage();
-            }
-            else if (methodName.contains("review")) {
-                afterLogin.navi.goToReviewBoardPage();
-            }
-            else if (methodName.contains("notice")) {
-                afterLogin.navi.goToNoticePage();
+            try {
+                if (methodName.startsWith("qnaboardpage")) {
+                    afterLogin.navi.goToQnABoardPage();
+                }
+                else if (methodName.startsWith("faqboardpage")) {
+                    afterLogin.navi.goToFAQBoardPage();
+                }
+                else if (methodName.startsWith("reviewboardpage")) {
+                    afterLogin.navi.goToReviewBoardPage();
+                }
+                else if (methodName.startsWith("noticepage")) {
+                    afterLogin.navi.goToNoticePage();
+                } else {
+                    System.out.println("[WARN] 라우팅 조건에 맞는 페이지가 없습니다: " + methodName);
+                }
+            } catch (Exception e) {
+                System.out.println("[ERROR] 탭 진입 실패 : " + e.getMessage());
+                throw e;
             }
         }
+
+        System.out.println("[INFO] ===== Setup Completed: " + methodName + " =====");
     }
 
     //ReviewBoard

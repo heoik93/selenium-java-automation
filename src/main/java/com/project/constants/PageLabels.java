@@ -364,7 +364,7 @@ public class PageLabels {
     public static final String homePageTitle = "Laundry365";
     public static final String myinfoupdatePageTabTitle = "회원정보 수정";
     public static final String changePasswordPageTabTitle = "비밀번호 수정";
-    public static final String bookingInfoPageTitle = "예약 안내";
+    public static final String bookingInfoPageTitle = "예약안내";
     public static final String bookingCategoryPageTitle = "상품선택";
     public static final String bookingPaymentPageTitle = "결제화면";
     public static final String priceGuidePageTitle = "가격 안내";

@@ -87,6 +87,9 @@ public class FAQBoardPage extends BasePage {
     @FindBy(xpath = "//tr[@class='question']")
     private List<WebElement> FAQBoradList;
 
+    @FindBy(xpath = "//tr[@class='question']")
+    private WebElement FAQBorad;
+
     @FindBy(xpath = "//i[@class='bi bi-chevron-down']")
     private List<WebElement> FAQFoldButton;
 
@@ -237,18 +240,22 @@ public class FAQBoardPage extends BasePage {
 
     public void clickFilterServiceButton() {
         click(boardFilterServiceButton);
+        waitForVisible(FAQBorad);
     }
 
     public void clickFilterOrderButton() {
         click(boardFilterOrderButton);
+        waitForVisible(FAQBorad);
     }
 
     public void clickFilterMemberButton() {
         click(boardFilterMemberButton);
+        waitForVisible(FAQBorad);
     }
 
     public void clickFilterEtcButton() {
         click(boardFilterEtcButton);
+        waitForVisible(FAQBorad);
     }
 
     public void clickQnAButton(){
