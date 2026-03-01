@@ -10,7 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class PriceGuideTest extends BaseTest {
     public void priceGuidePageButtonTextTest() {
         PriceGuidePage priceGuidePage = new PriceGuidePage(driver);
         priceGuidePage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String buttonText_Clothes = priceGuidePage.getTextClothesButton();
         softAssert.assertEquals(buttonText_Clothes,PageLabels.PricePage_ClothesButton);
@@ -60,7 +60,7 @@ public class PriceGuideTest extends BaseTest {
     public void priceGuidePageTableLabelTextTest(){
         PriceGuidePage priceGuidePage = new PriceGuidePage(driver);
         priceGuidePage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String tableLabel_No = priceGuidePage.getTextItem_No();
         softAssert.assertEquals(tableLabel_No, PageLabels.PricePage_item_No);

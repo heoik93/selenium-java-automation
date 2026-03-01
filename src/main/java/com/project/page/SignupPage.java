@@ -8,6 +8,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SignupPage extends BasePage {
 
     public SignupPage(WebDriver driver) {
@@ -139,14 +142,18 @@ public class SignupPage extends BasePage {
         sendKeys(phoneInputBox, phone);
     }
 
-    public void SignupInputData() {
+    public List<String> SignupInputData() {
+        String userId = testUserData.randomUserId;
+        String userPassword = testUserData.randomUserPassword;
+
         inputName(testUserData.randomUserName);
         inputEmail(testUserData.randomUserEmail);
-        inputUserId(testUserData.randomUserId);
-        inputPassword(testUserData.randomUserPassword);
+        inputUserId(userId);
+        inputPassword(userPassword);
         inputConfirmPassword(testUserData.randomUserPassword);
         selectCountry(testUserData.randomUserCountry);
         inputPhone(testUserData.randomUserPhone);
+        return Arrays.asList(userId,userPassword);
     }
 
     public void enterAddress(String zipcode, String address, String detail, String extra) {

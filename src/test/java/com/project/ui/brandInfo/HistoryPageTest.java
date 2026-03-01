@@ -7,7 +7,7 @@ import com.project.page.brandinfo.HistoryPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class HistoryPageTest extends BaseTest {
 
@@ -33,7 +33,7 @@ public class HistoryPageTest extends BaseTest {
     public void historyPageTabTextTest() {
         HistoryPage historypage = new HistoryPage(driver);
         historypage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String comintroTab_Label = historypage.getComintroTabText();
         softAssert.assertEquals(comintroTab_Label, PageLabels.comintroTabLabel);
@@ -52,7 +52,7 @@ public class HistoryPageTest extends BaseTest {
     public void historyPageLabelTextTest() {
         HistoryPage historypage = new HistoryPage(driver);
         historypage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String main_Label = historypage.getLabelText(historypage.history_main_Label);
         softAssert.assertEquals(main_Label, PageLabels.historyPageLabel_main);

@@ -11,14 +11,14 @@ import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 import java.lang.reflect.Method;
 
 public class CustomerSupportPageTabTest extends BaseTest {
 
     private final ConfigReader config = new ConfigReader();
-    private SoftAssert softAssert;
+    private ScreenshotSoftAssert softAssert;
 
     private void verifyTabPage(String expectedUrlKey, String expectedTitle) {
         String currentUrl = driver.getCurrentUrl();
@@ -32,7 +32,7 @@ public class CustomerSupportPageTabTest extends BaseTest {
 
     @BeforeMethod
     public void setup(Method method) {
-        softAssert = new SoftAssert();
+        softAssert = new ScreenshotSoftAssert(driver);
         String methodName = method.getName().toLowerCase();
         loginAsDefaultUser();
 

@@ -10,7 +10,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
+
+import java.util.List;
 
 public class ReviewDetailPageTest extends BaseTest {
 
@@ -44,7 +46,7 @@ public class ReviewDetailPageTest extends BaseTest {
         ReviewDetailPage reviewDetailPage = new ReviewDetailPage(driver);
         reviewDetailPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         String ReviewDetailPage_Img_src =  reviewDetailPage.getSrc_ReviewDetailPage();
@@ -60,7 +62,7 @@ public class ReviewDetailPageTest extends BaseTest {
         ReviewDetailPage reviewDetailPage = new ReviewDetailPage(driver);
         reviewDetailPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         if (loginUser.equals("Admin")) {
             softAssert.assertTrue(reviewDetailPage.ModifyButton_displayCheck());
@@ -76,19 +78,19 @@ public class ReviewDetailPageTest extends BaseTest {
         ReviewDetailPage reviewDetailPage = new ReviewDetailPage(driver);
         reviewDetailPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String reviewBoardTab_TextLabel=reviewDetailPage.getLabel(ReviewDetailPage.ReviewDetailPageLabel.REVIEWBOARDTAB);
-        softAssert.assertEquals(reviewBoardTab_TextLabel, PageLabels.reviewBoardPage_reviewBoardTab);
+        softAssert.assertEquals(reviewBoardTab_TextLabel, PageLabels.customerSupportPage_reviewBoardTab);
 
         String FAQBoardTab_TextLabel=reviewDetailPage.getLabel(ReviewDetailPage.ReviewDetailPageLabel.FAQBOARDTAB);
-        softAssert.assertEquals(FAQBoardTab_TextLabel,PageLabels.reviewBoardPage_FAQBoardTab);
+        softAssert.assertEquals(FAQBoardTab_TextLabel,PageLabels.customerSupportPage_FAQBoardTab);
 
         String QnABoardTab_TextLabel=reviewDetailPage.getLabel(ReviewDetailPage.ReviewDetailPageLabel.QNABOARDTAB);
-        softAssert.assertEquals(QnABoardTab_TextLabel,PageLabels.reviewBoardPage_QnABoardTab);
+        softAssert.assertEquals(QnABoardTab_TextLabel,PageLabels.customerSupportPage_QnABoardTab);
 
         String NoticeTab_TextLabel=reviewDetailPage.getLabel(ReviewDetailPage.ReviewDetailPageLabel.NOTICETAB);
-        softAssert.assertEquals(NoticeTab_TextLabel,PageLabels.reviewBoardPage_NoticeTab);
+        softAssert.assertEquals(NoticeTab_TextLabel,PageLabels.customerSupportPage_NoticeTab);
 
         String ReviewDetail_TitleLabel = reviewDetailPage.getLabel(ReviewDetailPage.ReviewDetailPageLabel.TITLELABEL);
         softAssert.assertEquals(ReviewDetail_TitleLabel,PageLabels.reviewDetailPage_TitleLabel);
@@ -115,6 +117,22 @@ public class ReviewDetailPageTest extends BaseTest {
 
         String ReviewDetailPage_listButton = reviewDetailPage.getLabel(ReviewDetailPage.ReviewDetailPageLabel.LISTBUTTON);
         softAssert.assertEquals(ReviewDetailPage_listButton,PageLabels.reviewDetailPage_listButton);
+
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "ReviewDetail StarListBox Test", dataProvider ="loginUser")
+    public void ReviewDetailPage_StarListBoxTest(String loginUser) {
+        ReviewDetailPage reviewDetailPage = new ReviewDetailPage(driver);
+        reviewDetailPage.waitForPageLoad();
+
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
+
+        List<String> actualOptions = reviewDetailPage.getAllSearchOptions();
+        List<String> expectedOptions = PageLabels.reviewBoard_starOptions;
+
+        softAssert.assertEquals(actualOptions.size(), expectedOptions.size());
+        softAssert.assertEquals(actualOptions, expectedOptions, "평점리스트 구성이나 순서가 잘못되었습니다.");
 
         softAssert.assertAll();
     }

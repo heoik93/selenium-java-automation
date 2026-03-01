@@ -17,7 +17,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -50,7 +50,7 @@ public class MyinfoTest extends BaseTest {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         myinfoPage.clickMyInfoTab();
 
@@ -68,7 +68,7 @@ public class MyinfoTest extends BaseTest {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         myinfoPage.clickUseHistoryTab();
 

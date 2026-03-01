@@ -11,7 +11,7 @@ import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -59,7 +59,7 @@ public class BookingPaymentPageTest extends BaseTest {
     public void bookingPaymentPage_TextTest(){
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         //라벨체크
         String Payment_PageTitle = bookingPaymentPage.getLabel(BookingPaymentPage.BookingPaymentLabel.PAGETITLE);
@@ -116,7 +116,7 @@ public class BookingPaymentPageTest extends BaseTest {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String requestPlaceholder = bookingPaymentPage.getPlaceholder_requestInputBox();
         softAssert.assertEquals(requestPlaceholder, PageLabels.bookingPage_Payment_requestInputBoxPlaceholder);
@@ -133,7 +133,7 @@ public class BookingPaymentPageTest extends BaseTest {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         //신규배송지 선택
         bookingPaymentPage.clickNewAddressCheckbox();

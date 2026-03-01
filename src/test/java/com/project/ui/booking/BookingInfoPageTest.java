@@ -8,7 +8,7 @@ import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 
 public class BookingInfoPageTest extends BaseTest {
@@ -26,7 +26,7 @@ public class BookingInfoPageTest extends BaseTest {
     public void bookingInfoPage_TextTest() {
         BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);
         bookingInfoPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String TitleText = bookingInfoPage.getBookingPageTitleText();
         softAssert.assertEquals(TitleText, PageLabels.bookingPage_TitleText);
@@ -65,7 +65,7 @@ public class BookingInfoPageTest extends BaseTest {
         bookingInfoPage.waitForPageLoad();
 
         ConfigReader config = new ConfigReader();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String clothes_Img_src = bookingInfoPage.getClothesImgSrc();
         softAssert.assertEquals(clothes_Img_src, config.getProperty("clothes_Img_src"));

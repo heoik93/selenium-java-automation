@@ -36,7 +36,7 @@ public class ExtentManager {
         return extent;
     }
 
-
+    public static ExtentReports getExtentReports() {  return extent;  }
 
     public static ExtentTest getTest() {
         return extentTest.get();

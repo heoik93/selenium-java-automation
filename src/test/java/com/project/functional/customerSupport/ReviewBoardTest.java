@@ -9,7 +9,7 @@ import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class ReviewBoardTest extends BaseTest {
 
@@ -26,7 +26,7 @@ public class ReviewBoardTest extends BaseTest {
     public void reviewBoardPage_SearchTest(){
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         //검색결과 없음
         reviewBoardPage.searchKeyword("1234!@#");
@@ -41,7 +41,7 @@ public class ReviewBoardTest extends BaseTest {
         reviewBoardPage_2rd.waitForPageLoad();
 
         //검색결과 있음
-        reviewBoardPage_2rd.searchKeyword("후기테스트");
+        reviewBoardPage_2rd.searchKeyword("후기");
         ReviewBoardPage afterSearchPage_2nd = new ReviewBoardPage(driver);
         afterSearchPage_2nd.waitForPageLoad();
 
@@ -56,12 +56,12 @@ public class ReviewBoardTest extends BaseTest {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         //제목검색
         reviewBoardPage.selectOption(1);
-        reviewBoardPage.searchKeyword("후기테스트");
+        reviewBoardPage.searchKeyword("후기");
         ReviewBoardPage afterSearchPage = new ReviewBoardPage(driver);
         afterSearchPage.waitForPageLoad();
 
@@ -73,7 +73,7 @@ public class ReviewBoardTest extends BaseTest {
         reviewBoardPage_2rd.waitForPageLoad();
 
         //작성자검색
-        reviewBoardPage.selectOption(2);
+        reviewBoardPage_2rd.selectOption(2);
         reviewBoardPage_2rd.searchKeyword(config.getProperty("username"));
         ReviewBoardPage afterSearchPage_2nd = new ReviewBoardPage(driver);
         afterSearchPage_2nd.waitForPageLoad();
@@ -88,7 +88,7 @@ public class ReviewBoardTest extends BaseTest {
     public void reviewBoardPage_ListCountTest(){
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         int index = reviewBoardPage.selectRandomReview();
         int beforeCount = reviewBoardPage.getReviewCount(index);
@@ -112,7 +112,7 @@ public class ReviewBoardTest extends BaseTest {
     public void reviewBoardPage_DataLinkTest(){
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         int index = reviewBoardPage.selectRandomReview();
         String expectTitle =reviewBoardPage.getReviewTitle(index);
@@ -135,7 +135,7 @@ public class ReviewBoardTest extends BaseTest {
     public void reviewBoardPage_ListMaxTest(){
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         int currentListNumber = reviewBoardPage.ListNumber();
         if (currentListNumber == 0) {

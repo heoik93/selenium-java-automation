@@ -3,13 +3,13 @@ package com.project.page.myinfo;
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
 import config.ConfigReader;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -96,34 +96,35 @@ public class UseHistoryPage extends BasePage {
     //통합 텍스트 추출 메서드
     public String getLabel(UseHistoryPageLabel labelType) {
         switch (labelType) {
-            case MYINFOTAB:           return getText(myInfoTab);
-            case USEHISTORYTAB:       return getText(useHistoryTab);
-            case ODERNUMBERLABEL:     return getText(oderNumber);
-            case ODERDETAILLABEL:     return getText(oderDetail);
-            case ODERPRICELABEL:      return getText(oderPrice);
-            case ADDRESSLABEL:        return getText(address);
-            case BOKKINGDATELABEL:    return getText(bookingDate);
-            case RETRIEVEDATELABEL:   return getText(retrieveDate);
-            case STATUSLABEL:         return getText(status);
-            case REVIEWLABEL:         return getText(review);
+            case MYINFOTAB:              return getText(myInfoTab);
+            case USEHISTORYTAB:          return getText(useHistoryTab);
+            case ODERNUMBERLABEL:        return getText(oderNumber);
+            case ODERDETAILLABEL:        return getText(oderDetail);
+            case ODERPRICELABEL:         return getText(oderPrice);
+            case ADDRESSLABEL:           return getText(address);
+            case BOKKINGDATELABEL:       return getText(bookingDate);
+            case RETRIEVEDATELABEL:      return getText(retrieveDate);
+            case STATUSLABEL:            return getText(status);
+            case REVIEWLABEL:            return getText(review);
 
-            default:  throw new IllegalArgumentException("정의되지 않은 라벨 타입입니다: " + labelType);
+            default:
+                throw new IllegalArgumentException("정의되지 않은 라벨 타입입니다: " + labelType);
         }
     }
 
     //탭 메서드
-    public void clickMyInfoTab(){
+    public void clickMyInfoTab() {
         hover(myInfoTab);
         click(myInfoTab);
     }
 
-    public void clickUseHistoryTab(){
+    public void clickUseHistoryTab() {
         hover(useHistoryTab);
         click(useHistoryTab);
     }
 
     //액티브탭확인
-    public boolean isUseHistoryTabActive(){
+    public boolean isUseHistoryTabActive() {
         return isTabActive(useHistoryTab);
     }
 
@@ -249,11 +250,11 @@ public class UseHistoryPage extends BasePage {
         return driver.getCurrentUrl();
     }
 
-    public int ListNumber(){
+    public int ListNumber() {
         return oderNumberList.size();
     }
 
-    public boolean pageNaviDisplayCheck(){
+    public boolean pageNaviDisplayCheck() {
         return pageNaviList.get(1).isDisplayed();
     }
 
@@ -279,13 +280,13 @@ public class UseHistoryPage extends BasePage {
     public WebElement findOrderDetailByOrderNumber(String targetOrderNum) {
         int listSize = oderNumberList.size();
 
-            //리스트 순회하며 주문번호 매칭
-            for (int i = 0; i < listSize; i++) {
-                String currentOrderNum = oderNumberList.get(i).getText().trim();
-                if (currentOrderNum.equals(targetOrderNum)) {
-                        System.out.println("[INFO] 주문번호 '" + targetOrderNum + "'를 찾았습니다. (Index: " + i + ")");
-                        return oderDetailList.get(i);
-                }
+        //리스트 순회하며 주문번호 매칭
+        for (int i = 0; i < listSize; i++) {
+            String currentOrderNum = oderNumberList.get(i).getText().trim();
+            if (currentOrderNum.equals(targetOrderNum)) {
+                System.out.println("[INFO] 주문번호 '" + targetOrderNum + "'를 찾았습니다. (Index: " + i + ")");
+                return oderDetailList.get(i);
+            }
             //현재 페이지에 없으면 다음 페이지로 이동
             if (!clickNextPage()) {
                 break;
@@ -319,9 +320,87 @@ public class UseHistoryPage extends BasePage {
         return false;
     }
 
-    public void clickTestOderList(WebElement TestOder){
+    public void clickTestOderList(WebElement TestOder) {
         hover(TestOder);
         click(TestOder);
+    }
+
+    public int[] foundOrderStatus(String status) {
+        int totalPages = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li")).size();
+
+        for (int p = 0; p < totalPages; p++) {
+            String findStatus = status.replace("\"", "");
+            List<WebElement> currentStatusList = driver.findElements(By.xpath("//td[7]"));
+            List<WebElement> currentOrderNumList = driver.findElements(By.xpath("//td[1]"));
+            List<WebElement> currentDetailBtnList = driver.findElements(By.xpath("//td[2]"));
+
+            for (int i = 0; i < currentStatusList.size(); i++) {
+                if (currentStatusList.get(i).getText().trim().equals(findStatus)) {
+                    int orderNum = Integer.parseInt(currentOrderNumList.get(i).getText().trim());
+
+                    System.out.println("[INFO] " + (p + 1) + "페이지에서 주문번호 " + orderNum + " 발견");
+                    click(currentDetailBtnList.get(i));
+
+                    return new int[]{p, i, orderNum};
+                }
+            }
+
+            if (p < totalPages - 1) {
+                System.out.println("[INFO] " + (p + 1) + "페이지에 없음. 다음 페이지로 이동.");
+                List<WebElement> currentNavi = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+                click(currentNavi.get(p + 1));
+                waitForPageLoad();
+            }
+        }
+        System.out.println("[WARN] " + status + " 상태의 주문을 찾을 수 없습니다.");
+        return new int[]{-1, -1};
+    }
+
+    public void movePage(int pageIndex) {
+        List<WebElement> pages = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+        if (pageIndex < pages.size()) {
+            click(pages.get(pageIndex));
+            waitForPageLoad();
+        }
+    }
+
+    public boolean checkTargetStatus(int index, String status) {
+        String findStatus = status.replace("\"", "").trim();
+        if (statusList.get(index).getText().trim().equals(findStatus)) {
+            return true;
+        }
+        String actual = statusList.get(index).getText().trim();
+        System.out.println("[FAIL] 상태 불일치 - 기대값: " + findStatus + ", 실제값: " + actual);
+        return false;
+    }
+
+    public void inToTargetOderDetail(String index) {
+        int totalPages = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li")).size();
+
+        for (int p = 0; p < totalPages; p++) {
+            List<WebElement> currentStatusList = driver.findElements(By.xpath("//td[7]"));
+            List<WebElement> currentOrderNumList = driver.findElements(By.xpath("//td[1]"));
+            List<WebElement> currentDetailBtnList = driver.findElements(By.xpath("//td[2]"));
+
+            for (int i = 0; i < currentStatusList.size(); i++) {
+                String targetIndex = index.replace("\"", "");
+                if (currentOrderNumList.get(i).getText().trim().equals(targetIndex)) {
+                    String targetOrderNum = currentOrderNumList.get(i).getText();
+                    System.out.println("[INFO] " + (p + 1) + "페이지에서 주문번호 " + targetOrderNum + " 발견");
+
+                    click(currentDetailBtnList.get(i));
+                    return;
+                }
+            }
+
+            if (p < totalPages - 1) {
+                System.out.println("[INFO] " + (p + 1) + "페이지에 없음. 다음 페이지로 이동.");
+                List<WebElement> currentNavi = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+                click(currentNavi.get(p + 1));
+                waitForPageLoad();
+            }
+        }
+        System.out.println("[WARN] 주문번호 " + index + " 을/를 찾을 수 없습니다.");
     }
 
 }

@@ -7,7 +7,7 @@ import com.project.constants.PageLabels;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class ComintroPageTest extends BaseTest {
 
@@ -34,7 +34,7 @@ public class ComintroPageTest extends BaseTest {
     public void comintroPageTabTextTest() {
         ComintroPage comintropage = new ComintroPage(driver);
         comintropage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String comintroTab_Label = comintropage.getComintroTabText();
         softAssert.assertEquals(comintroTab_Label, PageLabels.comintroTabLabel);
@@ -54,7 +54,7 @@ public class ComintroPageTest extends BaseTest {
     public void comintroPageLabelTextTest() {
         ComintroPage comintropage = new ComintroPage(driver);
         comintropage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String h1_Label = comintropage.getComintro_h1_LabelText();
         softAssert.assertEquals(h1_Label, PageLabels.comintroPageLabel_h1);

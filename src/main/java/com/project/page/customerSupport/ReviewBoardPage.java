@@ -204,8 +204,16 @@ public class ReviewBoardPage extends BasePage {
         return reviewBoardList.size();
     }
 
-    public boolean pageNaviDisplayCheck(){
-        return pageNaviList.get(1).isDisplayed();
+    public boolean pageNaviDisplayCheck() {
+        if (pageNaviList.isEmpty()) {
+            return false;
+        }
+
+        if (pageNaviList.size() > 1) {
+            return pageNaviList.get(1).isDisplayed();
+        }
+
+        return pageNaviList.get(0).isDisplayed();
     }
 
 }

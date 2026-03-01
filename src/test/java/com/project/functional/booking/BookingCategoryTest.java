@@ -9,15 +9,12 @@ import com.project.page.booking.BookingInfoPage;
 import com.project.page.booking.BookingPaymentPage;
 import com.project.utils.ExcelUtil;
 import config.ConfigReader;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +46,7 @@ public class BookingCategoryTest extends BaseTest {
     public void bookingCategoryPage_AreaDisplayTest(String categoryName, String configKey) {
         BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);
         bookingInfoPage.waitForPageLoad();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         bookingInfoPage.clickCategoryBox(categoryName);
 
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
@@ -56,9 +54,9 @@ public class BookingCategoryTest extends BaseTest {
         ConfigReader config = new ConfigReader();
 
         //에리어 비표시 확인
-        Assert.assertFalse(bookingCategoryPage.areaDisplayCheck_Name());
-        Assert.assertFalse(bookingCategoryPage.areaDisplayCheck_Number());
-        Assert.assertFalse(bookingCategoryPage.areaDisplayCheck_Amount());
+        softAssert.assertFalse(bookingCategoryPage.areaDisplayCheck_Name(),"[FAIL]선택한 옵션상세의 상품명이 표시되어있습니다.");
+        softAssert.assertFalse(bookingCategoryPage.areaDisplayCheck_Number(),"[FAIL]선택한 옵션상세의 상품숫자가 표시되어있습니다.");
+        softAssert.assertFalse(bookingCategoryPage.areaDisplayCheck_Amount(),"[FAIL]선택한 옵션상세의 가격이 표시되어있습니다.");
 
         String PriceGuideData_path = config.getProperty("PriceGuideDataPath");
         List<Map<String, String>> testData = ExcelUtil.getTestData(PriceGuideData_path, "Item");
@@ -73,9 +71,11 @@ public class BookingCategoryTest extends BaseTest {
         bookingCategoryPage.selectProductByName(pickedItem);
 
         //에리어 표시확인
-        Assert.assertTrue(bookingCategoryPage.areaDisplayCheck_Name());
-        Assert.assertTrue(bookingCategoryPage.areaDisplayCheck_Number());
-        Assert.assertTrue(bookingCategoryPage.areaDisplayCheck_Amount());
+        softAssert.assertTrue(bookingCategoryPage.areaDisplayCheck_Name(),"[FAIL]선택한 옵션상세의 상품명이 비표시입니다.");
+        softAssert.assertTrue(bookingCategoryPage.areaDisplayCheck_Number(),"[FAIL]선택한 옵션상세의 상품숫자가 비표시입니다.");
+        softAssert.assertTrue(bookingCategoryPage.areaDisplayCheck_Amount(),"[FAIL]선택한 옵션상세의 가격이 비표시입니다.");
+
+        softAssert.assertAll();
     }
 
 
@@ -89,7 +89,7 @@ public class BookingCategoryTest extends BaseTest {
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
         bookingCategoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         List<Map<String, String>> testData = ExcelUtil.getTestData(config.getProperty("PriceGuideDataPath"), "Item");
@@ -112,9 +112,9 @@ public class BookingCategoryTest extends BaseTest {
             String actualPrice = actualPriceRaw.replaceAll("[^0-9]", "");
 
             // 3. 검증
-            softAssert.assertEquals(actualName, expectedName, "화면에 노출된 상품명이 기대값과 다릅니다.");
-            softAssert.assertEquals(actualNumber, "1", expectedName + " 의 기본 수량이 1이 아닙니다.");
-            softAssert.assertEquals(actualPrice, expectedPrice, expectedName + " 상품의 가격이 일치하지 않습니다.");
+            softAssert.assertEquals(actualName, expectedName, "[FAIL]화면에 노출된 상품명이 기대값과 다릅니다.");
+            softAssert.assertEquals(actualNumber, "1","[FAIL]"+ expectedName + " 의 기본 수량이 1이 아닙니다.");
+            softAssert.assertEquals(actualPrice, expectedPrice, "[FAIL]"+expectedName + " 상품의 가격이 일치하지 않습니다.");
         }
 
         softAssert.assertAll();
@@ -130,7 +130,7 @@ public class BookingCategoryTest extends BaseTest {
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
         bookingCategoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         List<Map<String, String>> testData = ExcelUtil.getTestData(config.getProperty("PriceGuideDataPath"), "Item");
@@ -185,7 +185,7 @@ public class BookingCategoryTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    //예약하기버튼 (1~3 : Alert)
+    //예약하기버튼 (Alert)
     @Test(testName = "Booking Category Page BookingButton Test", dataProvider = "categoryProvider")
     public void bookingCategoryPage_BookingButtonTest(String categoryName, String configKey){
         BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);
@@ -195,7 +195,7 @@ public class BookingCategoryTest extends BaseTest {
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
         bookingCategoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         List<Map<String, String>> testData = ExcelUtil.getTestData(config.getProperty("PriceGuideDataPath"), "Item");
@@ -203,42 +203,19 @@ public class BookingCategoryTest extends BaseTest {
                 .filter(d -> categoryName.equals(d.get("Category")))
                 .collect(Collectors.toList());
 
-        //1. 옵션과 날짜 미선택 클릭 검증
-        bookingCategoryPage.clickBookingButton();
-
-        softAssert.assertEquals(bookingCategoryPage.alertGetText(), AppMessages.bookingCategoryPage_NoDate_AlertMsg);
-        bookingCategoryPage.alertAccept();
-
-        //2. 예약날짜만 넣고 클릭 검증
-        driver.navigate().refresh();
-        bookingCategoryPage.waitForPageLoad();
-
-        LocalDateTime today = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String strToday = today.format(formatter);
-        bookingCategoryPage.inputBookingDate(strToday);
+        //1. 옵션 미선택 클릭 검증
         bookingCategoryPage.clickBookingButton();
 
         softAssert.assertEquals(bookingCategoryPage.alertGetText(), AppMessages.bookingCategoryPage_NoOption_AlertMsg);
         bookingCategoryPage.alertAccept();
 
-        //3. 옵션만 넣고 클릭 검증
+
+        //2. 옵션 선택 클릭 검증
         driver.navigate().refresh();
         bookingCategoryPage.waitForPageLoad();
 
         String pickedItem = categoryItems.get(1).get("Item_Name");
         bookingCategoryPage.clickSelectBox();
-        bookingCategoryPage.selectProductByName(pickedItem);
-        bookingCategoryPage.clickBookingButton();
-
-        softAssert.assertEquals(bookingCategoryPage.alertGetText(), AppMessages.bookingCategoryPage_NoDate_AlertMsg);
-        bookingCategoryPage.alertAccept();
-
-        //4. 모두넣고 클릭 검증
-        driver.navigate().refresh();
-        bookingCategoryPage.waitForPageLoad();
-
-        bookingCategoryPage.inputBookingDate(strToday);
         bookingCategoryPage.selectProductByName(pickedItem);
         bookingCategoryPage.clickBookingButton();
 
@@ -255,57 +232,33 @@ public class BookingCategoryTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    //예약날짜 테스트(과거불가/현재/미래) ==> 현재 과거여도 넘어가지는 DF로 인한 코드작성 불가
-//    @Test(testName = "Booking Category Page DateInputBox Test", dataProvider = "categoryProvider")
-//    public void bookingCategoryPage_DateInputBoxTest(String categoryName, String configKey){
-//        BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);
-//        bookingInfoPage.waitForPageLoad();
-//        bookingInfoPage.clickCategoryBox(categoryName);
-//
-//        BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
-//        bookingCategoryPage.waitForPageLoad();
-//
-//        SoftAssert softAssert = new SoftAssert();
-//        ConfigReader config = new ConfigReader();
-//
-//        List<Map<String, String>> testData = ExcelUtil.getTestData(config.getProperty("PriceGuideDataPath"), "Item");
-//        List<Map<String, String>> categoryItems = testData.stream()
-//                .filter(d -> categoryName.equals(d.get("Category")))
-//                .collect(Collectors.toList());
-//
-//        LocalDate today = LocalDate.now();
-//        LocalDate yesterday = today.minusDays(1);
-//        LocalDate tomorrow = today.plusDays(1);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
-//        String strYesterday = yesterday.format(formatter);
-//        String strToday = today.format(formatter);
-//        String strTomorrow = tomorrow.format(formatter);
-//        String pickedItem = categoryItems.get(1).get("Item_Name");
-//
-//        bookingCategoryPage.clickSelectBox();
-//        bookingCategoryPage.selectProductByName(pickedItem);
-//
-//        //과거날짜
-//        bookingCategoryPage.inputBookingDate(strYesterday);
-//
-//        BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
-//        bookingPaymentPage.waitForPageLoad();
-//        String currentUrl = bookingPaymentPage.getCurrentUrl();
-//        String PageTittle = bookingPaymentPage.getPageTitle();
-//
-//
-//        softAssert.assertEquals(currentUrl,config.getProperty("BoolingPaymentURL"));
-//        softAssert.assertEquals(PageTittle, PageLabels.bookingPaymentPageTitle);
-//
-//        driver.navigate().back();
-//
-//
-//        //현재날짜
-//        bookingCategoryPage.inputBookingDate(strToday);
-//
-//        //미래날짜
-//        bookingCategoryPage.inputBookingDate(strTomorrow);
-//    }
+    //상품삭제버튼
+    @Test(testName = "Booking Category Page ItemDeleteButton Test", dataProvider = "categoryProvider")
+    public void bookingCategoryPage_ItemDeleteButtonTest(String categoryName, String configKey){
+        BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);
+        bookingInfoPage.waitForPageLoad();
+        bookingInfoPage.clickCategoryBox(categoryName);
+
+        BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
+        bookingCategoryPage.waitForPageLoad();
+
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
+        ConfigReader config = new ConfigReader();
+
+        List<Map<String, String>> testData = ExcelUtil.getTestData(config.getProperty("PriceGuideDataPath"), "Item");
+        List<Map<String, String>> categoryItems = testData.stream()
+                .filter(d -> categoryName.equals(d.get("Category")))
+                .collect(Collectors.toList());
+        String pickedItem = categoryItems.get(1).get("Item_Name");
+        bookingCategoryPage.clickSelectBox();
+        bookingCategoryPage.selectProductByName(pickedItem);
+
+        softAssert.assertTrue(bookingCategoryPage.areaDisplayCheck_Name(),"[FAIL]선택한 옵션상세의 상품명이 비표시입니다.");
+        bookingCategoryPage.clickDeleteButton(0);
+        softAssert.assertFalse(bookingCategoryPage.areaDisplayCheck_Name(), "[FAIL]선택한 옵션상세의 상품명이 삭제되지 않았습니다."); ;
+
+        softAssert.assertAll();
+    }
 
 
     @AfterMethod

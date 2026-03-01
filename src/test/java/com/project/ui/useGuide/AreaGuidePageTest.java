@@ -9,7 +9,7 @@ import config.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class AreaGuidePageTest extends BaseTest {
 
@@ -34,7 +34,7 @@ public class AreaGuidePageTest extends BaseTest {
     public void areaGuidePageTabTextTest() {
         AreaGuidePage areaGuidePage = new AreaGuidePage(driver);
         areaGuidePage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String areaTabLabel = areaGuidePage.getAreaGuideTabText();
         softAssert.assertEquals(areaTabLabel, PageLabels.areaTabLabel);
@@ -50,7 +50,7 @@ public class AreaGuidePageTest extends BaseTest {
     public void areaPageLabelTextTest() {
         AreaGuidePage areaGuidePage = new AreaGuidePage(driver);
         areaGuidePage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String areaTitle = areaGuidePage.getLabel(AreaLabel.SERVICE_TITLE);
         softAssert.assertEquals(areaTitle, PageLabels.areaPage_AreaTitle);

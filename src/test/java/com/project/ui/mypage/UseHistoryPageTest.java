@@ -7,7 +7,7 @@ import com.project.page.myinfo.UseHistoryPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class UseHistoryPageTest extends BaseTest {
 
@@ -24,7 +24,7 @@ public class UseHistoryPageTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String myInfoTabText = useHistoryPage.getLabel(UseHistoryPage.UseHistoryPageLabel.MYINFOTAB);
         softAssert.assertEquals(myInfoTabText, PageLabels.useHistoryPage_MyInfoTabLabel);

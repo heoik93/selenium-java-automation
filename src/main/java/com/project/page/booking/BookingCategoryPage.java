@@ -2,17 +2,17 @@ package com.project.page.booking;
 
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class BookingCategoryPage extends BasePage {
@@ -96,14 +96,17 @@ public class BookingCategoryPage extends BasePage {
     private WebElement productBuydetailArea;
 
     //옵션 선택전에는 비활성화
-    @FindBy(xpath = "//div[@class='container']//li")
+    @FindBy(css = ".name")
     private List<WebElement> productBuydetailArea_Name;
 
-    @FindBy(xpath = "//input[@name='num']")
+    @FindBy(xpath = "//input[contains(@id,'num')]")
     private List<WebElement> productBuydetailArea_Number;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[3]/main[1]/div[2]/div[1]/div[1]/div[1]/span")
+    @FindBy(xpath = "//div[contains(@class,'price in num')]")
     private List<WebElement> productBuydetailArea_Amount;
+
+    @FindBy(css = "button[aria-label='삭제']")
+    private List<WebElement> itemDeleteButton;
 
     //관리용 텍스트그룹
     public enum BookingCategoryLabel {
@@ -152,8 +155,14 @@ public class BookingCategoryPage extends BasePage {
     public void clickBookingButton(){  click(productBookingButton); }
     public void clickSelectBox(){  click(productOptionSelectBox); }
     public void inputBookingDate(String date){
-        productBookingdateInputbox.clear();
-        productBookingdateInputbox.sendKeys(date + Keys.ENTER);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("$(arguments[0]).val('" + date + "').change();", productBookingdateInputbox);
+        System.out.println("[INFO] JS 주입을 통해 날짜 입력 완료: " + date);
+    }
+    public void clickDeleteButton(int index){
+        if(index >= 0 && index < itemDeleteButton.size()){
+            click(itemDeleteButton.get(index));
+        }
     }
 
 
@@ -184,6 +193,7 @@ public class BookingCategoryPage extends BasePage {
     public void selectProductByName(String itemName) {
         Select select = new Select(productOptionSelectBox);
         select.selectByVisibleText(itemName);
+
     }
 
     // 상품명 텍스트 가져오기
@@ -215,7 +225,7 @@ public class BookingCategoryPage extends BasePage {
 
     public void setLastProductQuantity(int count) {
         // 상품 리스트 중 가장 마지막 요소의 수량 Input 혹은 SelectBox를 찾음
-        List<WebElement> quantityInputs = driver.findElements(By.xpath("//input[@name='num']"));
+        List<WebElement> quantityInputs = driver.findElements(By.xpath("//input[contains(@id,'num')]"));
         if (!quantityInputs.isEmpty()) {
             WebElement lastInput = quantityInputs.get(quantityInputs.size() - 1);
             lastInput.clear();

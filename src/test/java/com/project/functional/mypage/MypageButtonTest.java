@@ -69,19 +69,6 @@ public class MypageButtonTest extends BaseTest {
         Assert.assertTrue(ChangePasswordPage.newPwd2Field.getText().isEmpty());
     }
 
-    /*회원탈퇴가 아직 구현이 되지 않기에 추후코딩 예정
-    @Test(testName = "clickWithdrawButton test")
-    public void clickWithdrawButtonTest() {
-        MyinfoPage myinfoPage = new MyinfoPage(driver);
-        String userId = myinfoPage.getUserId();
-        myinfoPage.clickWithdrawButton();
-
-        String alertText = myinfoPage.WithdrawAlertgetText();
-
-        Assert.assertEquals(alertText, userId+"님 탈퇴 하시겠습니까?");
-        myinfoPage.WithdrawAlertAccept();
-    }*/
-
     @Test(testName = "myinfoUpatePage SaveButton test")
     public void myinfoUpdatePageSaveButtonTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);

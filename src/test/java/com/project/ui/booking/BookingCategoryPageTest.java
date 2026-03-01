@@ -12,7 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 import java.util.List;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class BookingCategoryPageTest extends BaseTest {
 
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
         bookingCategoryPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String Category_Title = bookingCategoryPage.getLabel(BookingCategoryLabel.PAGE_TITLE);
         softAssert.assertEquals(Category_Title, PageLabels.bookingPage_Category_Title);
@@ -103,7 +103,7 @@ public class BookingCategoryPageTest extends BaseTest {
 
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
         bookingCategoryPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         String getImgSrc_productImg = bookingCategoryPage.getImgSrc_productImg();
@@ -133,7 +133,7 @@ public class BookingCategoryPageTest extends BaseTest {
         BookingCategoryPage bookingCategoryPage = new BookingCategoryPage(driver);
         bookingCategoryPage.waitForPageLoad();
         ConfigReader config = new ConfigReader();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String PriceGuideData_path = config.getProperty("PriceGuideDataPath");
         List<Map<String, String>> testData = ExcelUtil.getTestData(PriceGuideData_path, "Item");

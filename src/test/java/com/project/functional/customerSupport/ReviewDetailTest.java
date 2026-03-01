@@ -12,9 +12,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
-import java.util.List;
 import java.util.Objects;
 
 public class ReviewDetailTest extends BaseTest {
@@ -59,31 +58,10 @@ public class ReviewDetailTest extends BaseTest {
         ReviewDetailPage reviewDetailPage = new ReviewDetailPage(driver);
         reviewDetailPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         softAssert.assertFalse(reviewDetailPage.check_OderNumberFiledEnable());
         softAssert.assertFalse(reviewDetailPage.check_ItemFiledEnable());
-
-        softAssert.assertAll();
-    }
-
-    @Test(testName = "ReviewDetail StarListBox Test", dataProvider ="DefaultUsers")
-    public void ReviewDetailPage_StarListBoxTest(String loginUser) {
-        ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
-        reviewBoardPage.waitForPageLoad();
-
-        reviewBoardPage.clickRandomReview();
-
-        ReviewDetailPage reviewDetailPage = new ReviewDetailPage(driver);
-        reviewDetailPage.waitForPageLoad();
-
-        SoftAssert softAssert = new SoftAssert();
-
-        List<String> actualOptions = reviewDetailPage.getAllSearchOptions();
-        List<String> expectedOptions = PageLabels.reviewBoard_starOptions;
-
-        softAssert.assertEquals(actualOptions.size(), expectedOptions.size());
-        softAssert.assertEquals(actualOptions, expectedOptions, "평점리스트 구성이나 순서가 잘못되었습니다.");
 
         softAssert.assertAll();
     }
@@ -93,7 +71,7 @@ public class ReviewDetailTest extends BaseTest {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config  = new ConfigReader();
 
         reviewBoardPage.selectOption(2);
@@ -138,7 +116,7 @@ public class ReviewDetailTest extends BaseTest {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         ConfigReader config = new ConfigReader();
 
         reviewBoardPage.selectOption(2);
@@ -166,11 +144,11 @@ public class ReviewDetailTest extends BaseTest {
                 return;}
 
             reviewDetailPage.clickDeleteButton();
-            softAssert.assertEquals(reviewDetailPage.alertGetText(), AppMessages.reviewDetailPage_delect_AlertMsg);
+            softAssert.assertEquals(reviewDetailPage.alertGetText(), AppMessages.reviewDetailPage_Delect_AlertMsg);
             reviewDetailPage.alertAccept();
 
             ReviewBoardPage reviewBoardPage_2nd = new ReviewBoardPage(driver);
-            softAssert.assertEquals(reviewBoardPage_2nd.alertGetText(), AppMessages.reviewDetailPage_delect_Success_AlertMsg);
+            softAssert.assertEquals(reviewBoardPage_2nd.alertGetText(), AppMessages.reviewDetailPage_Delect_Success_AlertMsg);
             reviewBoardPage_2nd.alertAccept();
             reviewBoardPage_2nd.waitForPageLoad();
 
@@ -207,7 +185,7 @@ public class ReviewDetailTest extends BaseTest {
                 reviewDetailPage_Create.waitForPageLoad();
 
                 reviewDetailPage_Create.CreateReview(reviewTitle, reviewStar, reviewContent);
-                softAssert.assertEquals(reviewDetailPage_Create.alertGetText(), AppMessages.reviewDetailPage_crate_AlertMsg);
+                softAssert.assertEquals(reviewDetailPage_Create.alertGetText(), AppMessages.reviewDetailPage_Create_AlertMsg);
                 reviewDetailPage_Create.alertAccept();
 
         }

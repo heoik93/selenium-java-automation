@@ -18,6 +18,7 @@ import org.testng.ITestResult;
 public class TestListener implements ITestListener {
     private static ExtentReports extent = ExtentManager.getInstance();
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    public static ExtentTest getTest() {  return test.get();  }
 
 
     @Override
@@ -37,7 +38,11 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        test.get().skip(MarkupHelper.createLabel("TEST SKIPPED", ExtentColor.ORANGE));
+        ExtentTest currentTest = test.get();
+        ExtentManager.getExtentReports().removeTest(currentTest);
+        ExtentTest newSkipTest = ExtentManager.getInstance().createTest(result.getMethod().getMethodName());
+        test.set(newSkipTest);
+        test.get().skip(MarkupHelper.createLabel("TEST SKIPPED (Retrying...)", ExtentColor.ORANGE));
         test.get().skip(result.getThrowable());
     }
 
@@ -51,7 +56,7 @@ public class TestListener implements ITestListener {
 
         if (driver != null) {
             String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-            test.get().addScreenCaptureFromBase64String(base64Screenshot, "실패 시점 스크린샷");
+            test.get().addScreenCaptureFromBase64String(base64Screenshot, "[최종 실패] 테스트 종료 시점 화면");
         }
     }
 

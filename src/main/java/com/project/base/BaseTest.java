@@ -7,6 +7,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
 public class BaseTest {
 
@@ -46,6 +47,17 @@ public class BaseTest {
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(config.getProperty("adminusername"), config.getProperty("adminpassword"));
+    }
+
+    public void loginAsAdminUser_2() {
+        ConfigReader config = new ConfigReader();
+        driver.get(config.getUrl());
+
+        HomePage homePage = new HomePage(driver);
+        homePage.navi.goToLoginPage();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(config.getProperty("adminusername2"), config.getProperty("adminpassword2"));
     }
 
     public void loginAsAnotherUser() {

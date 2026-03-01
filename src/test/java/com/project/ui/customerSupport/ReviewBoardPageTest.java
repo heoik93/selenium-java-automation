@@ -3,13 +3,11 @@ package com.project.ui.customerSupport;
 import com.project.base.BaseTest;
 import com.project.constants.PageLabels;
 import com.project.page.HomePage;
-import com.project.page.booking.BookingPaymentPage;
 import com.project.page.customerSupport.ReviewBoardPage;
-import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class ReviewBoardPageTest extends BaseTest {
 
@@ -25,19 +23,19 @@ public class ReviewBoardPageTest extends BaseTest {
     public void ReviewBoardPage_TextTest(){
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String reviewBoardTab_TextLabel=reviewBoardPage.getLabel(ReviewBoardPage.ReviewBoardPageLabel.REVIEWBOARDTAB);
-        softAssert.assertEquals(reviewBoardTab_TextLabel, PageLabels.reviewBoardPage_reviewBoardTab);
+        softAssert.assertEquals(reviewBoardTab_TextLabel, PageLabels.customerSupportPage_reviewBoardTab);
 
         String FAQBoardTab_TextLabel=reviewBoardPage.getLabel(ReviewBoardPage.ReviewBoardPageLabel.FAQBOARDTAB);
-        softAssert.assertEquals(FAQBoardTab_TextLabel,PageLabels.reviewBoardPage_FAQBoardTab);
+        softAssert.assertEquals(FAQBoardTab_TextLabel,PageLabels.customerSupportPage_FAQBoardTab);
 
         String QnABoardTab_TextLabel=reviewBoardPage.getLabel(ReviewBoardPage.ReviewBoardPageLabel.QNABOARDTAB);
-        softAssert.assertEquals(QnABoardTab_TextLabel,PageLabels.reviewBoardPage_QnABoardTab);
+        softAssert.assertEquals(QnABoardTab_TextLabel,PageLabels.customerSupportPage_QnABoardTab);
 
         String NoticeTab_TextLabel=reviewBoardPage.getLabel(ReviewBoardPage.ReviewBoardPageLabel.NOTICETAB);
-        softAssert.assertEquals(NoticeTab_TextLabel,PageLabels.reviewBoardPage_NoticeTab);
+        softAssert.assertEquals(NoticeTab_TextLabel,PageLabels.customerSupportPage_NoticeTab);
 
         String reviewNumberLabel_TextLabel=reviewBoardPage.getLabel(ReviewBoardPage.ReviewBoardPageLabel.REVIEWNUMBERLABEL);
         softAssert.assertEquals(reviewNumberLabel_TextLabel,PageLabels.reviewBoardPage_reviewNumberLabel);

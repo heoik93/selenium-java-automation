@@ -10,9 +10,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
-public class BookingInfoPageSelectboxTest extends BaseTest {
+public class BookingInfoPageSelectBoxTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void goToBooking_InfoPage() {
@@ -33,8 +33,7 @@ public class BookingInfoPageSelectboxTest extends BaseTest {
         String PageTittle = bookingInfoPage.getPageTitle();
 
         Assert.assertEquals(currentUrl,config.getProperty("BookinginfoPageURL") );
-        //현재 DF로 인해 비활성화
-        // Assert.assertEquals(PageTittle, PageLabels.bookingInfoPageTabTitle);
+        Assert.assertEquals(PageTittle, PageLabels.bookingInfoPageTitle);
     }
 
     @DataProvider(name = "categoryURL")
@@ -54,7 +53,7 @@ public class BookingInfoPageSelectboxTest extends BaseTest {
         BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);
         bookingInfoPage.waitForPageLoad();
         ConfigReader config = new ConfigReader();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         switch(category) {
             case "clothes": bookingInfoPage.clickClothesBox(); break;

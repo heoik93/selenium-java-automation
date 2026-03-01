@@ -10,7 +10,7 @@ import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class UseHistoryTest extends BaseTest {
 
@@ -37,7 +37,7 @@ public class UseHistoryTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         useHistoryPage.clickMyInfoTab();
 
@@ -55,7 +55,7 @@ public class UseHistoryTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         useHistoryPage.clickUseHistoryTab();
 
@@ -73,7 +73,7 @@ public class UseHistoryTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         String selectOrderNum = useHistoryPage.clickOderDetailButton();
 
         if (selectOrderNum == null) {
@@ -95,7 +95,7 @@ public class UseHistoryTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
         String selectOrderNum = useHistoryPage.clickReviewCreateButton();
 
         if (selectOrderNum == null) {
@@ -117,7 +117,7 @@ public class UseHistoryTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         int currentListNumber = useHistoryPage.ListNumber();
         if (currentListNumber == 0) {
@@ -156,7 +156,7 @@ public class UseHistoryTest extends BaseTest {
         UseHistoryPage useHistoryPage = new UseHistoryPage(driver);
         useHistoryPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         //리뷰 작성하기버튼 룰체크
         softAssert.assertTrue(useHistoryPage.ReviewButtonRuleCheck(), "후기작성 버튼 노출 규칙이 일치하지 않습니다.");

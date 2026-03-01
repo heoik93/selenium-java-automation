@@ -6,8 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
+import java.time.Duration;
+import java.util.*;
 
 public class OderDetailPage extends BasePage {
 
@@ -94,13 +97,13 @@ public class OderDetailPage extends BasePage {
     @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[6]/th[1]")
     private WebElement oderInfo_requestLabel;
 
-    @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[7]/td[1]")
+    @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[7]/td[1]/span")
     private WebElement oderInfo_retrieveNumber;
 
     @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[7]/th[1]")
     private WebElement oderInfo_retrieveNumberLabel;
 
-    @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[8]/td[1]")
+    @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[8]/td[1]/span")
     private WebElement oderInfo_returnNumber;
 
     @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[8]/th[1]")
@@ -126,19 +129,25 @@ public class OderDetailPage extends BasePage {
     @FindBy(tagName = "h4")
     private WebElement oderProduct_Amount;
 
+    @FindBy(xpath = "//h4/span")
+    private WebElement oderProduct_AmountPrice;
+
     @FindBy(xpath = "//div[2]/table[1]/tbody[1]/tr[1]/td")
     private List<WebElement> oderProduct_List;
 
 
     //버튼
-    @FindBy(css = "button[data-courier='kr.logen']")
+    @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[7]/td[1]/button")
     private WebElement oderInfo_retrieveCheckButton;
 
-    @FindBy(css = "button[data-courier='kr.epost']")
+    @FindBy(xpath = "//div[2]/div[1]/table[1]/tbody[1]/tr[8]/td[1]/button")
     private WebElement oderInfo_returnCheckButton;
 
     @FindBy(css = ".btn.btn-lg.btn-dark")
     private WebElement listButton;
+
+    @FindBy(css = "button[type='submit']")
+    private WebElement refundButton;
 
     //관리용 텍스트그룹
     public enum OderDetailPageLabel {
@@ -202,8 +211,66 @@ public class OderDetailPage extends BasePage {
         }
     }
 
+    public void clickListButton() {
+            hover(listButton);
+            click(listButton);
+        }
 
+    public void clickRefundButton() {
+        hover(refundButton);
+        click(refundButton);
+    }
 
+    public void clickRetrieveCheckButton() {
+        hover(oderInfo_retrieveCheckButton);
+        click(oderInfo_retrieveCheckButton);
+    }
 
+    public void clickReturnCheckButton() {
+        hover(oderInfo_returnCheckButton);
+        click(oderInfo_returnCheckButton);
+    }
+
+    public Map<String, String> getDeliveryTrackingInfo(String target) {
+        String originalWindow = driver.getWindowHandle();
+
+        if(Objects.equals(target, "Retrieve")){ clickRetrieveCheckButton(); }
+        else if(Objects.equals(target, "Return")){ clickReturnCheckButton(); }
+        else {
+            System.out.println("잘못된 타겟입니다. Retrieve 또는 Return을 입력해주세요.");
+            return null;
+        }
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        Set<String> windowHandles = driver.getWindowHandles();
+        for (String handle : windowHandles) {
+            if (!handle.equals(originalWindow)) {
+                driver.switchTo().window(handle); // 새 창으로 포커스 변경
+                break;
+            }
+        }
+
+        Map<String, String> windowInfo = new HashMap<>();
+        windowInfo.put("url", driver.getCurrentUrl());
+        windowInfo.put("title", driver.getTitle());
+        driver.close();
+        driver.switchTo().window(originalWindow);
+
+        return windowInfo;
+    }
+
+    public List<String> getTargetDetail(){
+        String OderNumber = oderInfo_Number.getText().trim();
+        String UserId = userInfo_Id.getText().trim();
+        String Price = oderProduct_AmountPrice.getText().trim();
+        String Status = oderInfo_status.getText().trim();
+        String BookingDate = oderInfo_bookingDate.getText().trim();
+        String RequestDate = oderInfo_retrieveDate.getText().trim();
+        String GetDeliveryNum = oderInfo_retrieveNumber.getText().trim();
+        String SendDeliveryNum = oderInfo_returnNumber.getText().trim();
+        return Arrays.asList(OderNumber,UserId,Price,Status,BookingDate,RequestDate,GetDeliveryNum,SendDeliveryNum);
+    }
 
 }

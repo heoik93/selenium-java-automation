@@ -10,7 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 public class OderDetailPageTest extends BaseTest {
 
@@ -31,7 +31,7 @@ public class OderDetailPageTest extends BaseTest {
         OderDetailPage oderDetailPage = new OderDetailPage(driver);
         oderDetailPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String myInfoTab = oderDetailPage.getLabel(OderDetailPage.OderDetailPageLabel.MYINFOTAB);
         softAssert.assertEquals(myInfoTab, PageLabels.useHistoryPage_MyInfoTabLabel);
@@ -114,7 +114,7 @@ public class OderDetailPageTest extends BaseTest {
         OderDetailPage oderDetailPage = new OderDetailPage(driver);
         oderDetailPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String oderDetailPage_oderInfo_retrieveCheckButton = oderDetailPage.getLabel(OderDetailPage.OderDetailPageLabel.ODERINFO_RETRIEVECHECKBUTTON);
         softAssert.assertEquals(oderDetailPage_oderInfo_retrieveCheckButton, PageLabels.oderDetailPage_oderInfo_retrieveCheckButton);

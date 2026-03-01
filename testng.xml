@@ -1,4 +1,4 @@
-<suite name="Full Regression_Suite">
+<suite name="Full Regression_Suite" thread-count="3">
     <listeners>
         <listener class-name="com.project.utils.AnnotationTransformer" />
         <listener class-name="com.project.utils.TestListener" />
@@ -7,14 +7,13 @@
     <test name="Regression">
         <classes>
             <!--Functional Test-->
-<!--            <class name="com.project.functional.BookingTest"/>-->
             <class name="com.project.functional.LoginTest"/>
             <class name="com.project.functional.LogoutTest"/>
             <class name="com.project.functional.SignupTest"/>
 
                 <!--bookingpage-->
             <class name="com.project.functional.booking.BookingCategoryTest"/>
-            <class name="com.project.functional.booking.BookingInfoPageSelectboxTest"/>
+            <class name="com.project.functional.booking.BookingInfoPageSelectBoxTest"/>
             <class name="com.project.functional.booking.BookingPaymentTest"/>
 
                 <!--brandinfopage-->
@@ -22,28 +21,50 @@
 
                 <!--customerSupport-->
             <class name="com.project.functional.customerSupport.CustomerSupportPageTabTest"/>
+            <class name="com.project.functional.customerSupport.FAQBoardTest"/>
+            <class name="com.project.functional.customerSupport.FAQCreateTest"/>
+            <class name="com.project.functional.customerSupport.NoticeTest"/>
+            <class name="com.project.functional.customerSupport.QnABoardTest"/>
+            <class name="com.project.functional.customerSupport.ReviewBoardTest"/>
+            <class name="com.project.functional.customerSupport.ReviewDetailTest"/>
 
                 <!--mypage-->
+            <class name="com.project.functional.mypage.AdminUserHistoryTest"/>
+            <class name="com.project.functional.mypage.AdminUserInfoTest"/>
             <class name="com.project.functional.mypage.MyinfoTest"/>
             <class name="com.project.functional.mypage.MypageButtonTest"/>
+            <class name="com.project.functional.mypage.OderDetailTest"/>
             <class name="com.project.functional.useGuide.UseGuidePageTabTest"/>
-
 
                 <!--useguide-->
             <class name="com.project.functional.useGuide.UseGuidePageTabTest"/>
 
 
             <!--UI Test-->
-            <class name="com.project.ui.useGuide.AreaGuidePageTest"/>
             <class name="com.project.ui.booking.BookingCategoryPageTest"/>
             <class name="com.project.ui.booking.BookingInfoPageTest"/>
             <class name="com.project.ui.booking.BookingPaymentPageTest"/>
+
             <class name="com.project.ui.brandInfo.ComintroPageTest"/>
             <class name="com.project.ui.brandInfo.HistoryPageTest"/>
-            <class name="com.project.ui.mypage.MyinfoPageTest"/>
-            <class name="com.project.ui.useGuide.PriceGuideTest"/>
             <class name="com.project.ui.brandInfo.StartupPageTest"/>
+
+            <class name="com.project.ui.customerSupport.FAQBoardPageTest"/>
+            <class name="com.project.ui.customerSupport.FAQCreatePageTest"/>
+            <class name="com.project.ui.customerSupport.NoticePageTest"/>
+            <class name="com.project.ui.customerSupport.QnABoardPageTest"/>
+            <class name="com.project.ui.customerSupport.QnACreatePageTest"/>
+            <class name="com.project.ui.customerSupport.ReviewBoardPageTest"/>
+            <class name="com.project.ui.customerSupport.ReviewDetailPageTest"/>
+
+            <class name="com.project.ui.mypage.AdminUseHistoryPageTest"/>
+            <class name="com.project.ui.mypage.AdminUserInfoPageTest"/>
+            <class name="com.project.ui.mypage.MyinfoPageTest"/>
+            <class name="com.project.ui.mypage.OderDetailPageTest"/>
             <class name="com.project.ui.mypage.UseHistoryPageTest"/>
+
+            <class name="com.project.ui.useGuide.PriceGuideTest"/>
+            <class name="com.project.ui.useGuide.AreaGuidePageTest"/>
 
             </classes>
     </test>

@@ -15,7 +15,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import com.project.utils.ScreenshotSoftAssert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -190,7 +190,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         List<String> expectedParts = new ArrayList<>();
         for (Map<String, Object> product : chosenProducts) {
@@ -219,7 +219,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String actualUserId = bookingPaymentPage.getInputbox_userIdInputBox();
         String actualAddress = bookingPaymentPage.getInputbox_addressInputBox();
@@ -252,7 +252,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
 
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         //1. 배송지 미기입시 alert 테스트
         bookingPaymentPage.clickNewAddressCheckbox();
@@ -273,7 +273,18 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         softAssert.assertEquals(emailAlertMsg, AppMessages.bookingPaymentPage_EmailEmpty_AlertMsg);
         bookingPaymentPage.alertAccept();
 
-        //3. 팝업 표시테스트
+        //3. 이메일 미기입시 alert 테스트
+        driver.navigate().refresh();
+        bookingPaymentPage.waitForPageLoad();
+        bookingPaymentPage.inputEmailInputBox("abc");
+        bookingPaymentPage.clickPaymentButton();
+        bookingPaymentPage.waitForAlert();
+        String noEmail_AlertMsg = bookingPaymentPage.alertGetText();
+
+        softAssert.assertEquals(noEmail_AlertMsg, AppMessages.bookingPaymentPage_NoEmail_AlertMsg);
+        bookingPaymentPage.alertAccept();
+
+        //4. 팝업 표시테스트
         driver.navigate().refresh();
         bookingPaymentPage.waitForPageLoad();
         ConfigReader config = new ConfigReader();
@@ -294,7 +305,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.waitForPageLoad();
 
         ConfigReader config = new ConfigReader();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         bookingPaymentPage.inputEmailInputBox(config.getProperty("useremail"));
         bookingPaymentPage.clickPaymentButton();
@@ -309,9 +320,10 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         String currentUrl = useHistoryPage.getCurrentUrl();
         String PageTittle = useHistoryPage.getPageTitle();
 
-        softAssert.assertTrue(PaymentSuccessMsg.contains(AppMessages.bookingPaymentPage_PatmentSuccessMsg));
+        softAssert.assertTrue(PaymentSuccessMsg.contains(AppMessages.bookingPaymentPage_PaymentSuccessMsg));
+        debugResult(PaymentSuccessMsg,AppMessages.bookingPaymentPage_PaymentSuccessMsg);
         softAssert.assertEquals(currentUrl, config.getProperty("UseHistoryPageURL"));
-        softAssert.assertEquals(PageTittle, PageLabels.useHistoryPageTittle); //현재 DF
+        softAssert.assertEquals(PageTittle, PageLabels.useHistoryPageTittle);
 
         softAssert.assertAll();
     }
@@ -322,7 +334,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.waitForPageLoad();
 
         ConfigReader config = new ConfigReader();
-        SoftAssert softAssert = new SoftAssert();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         bookingPaymentPage.inputEmailInputBox(config.getProperty("useremail"));
         bookingPaymentPage.clickPaymentButton();
@@ -332,7 +344,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.alertAccept();
         bookingPaymentPage.closePopupIfPresent();
 
-        softAssert.assertTrue(PaymentFailMsg.contains(AppMessages.bookingPaymentPage_PatmentFailMsg));
+        softAssert.assertTrue(PaymentFailMsg.contains(AppMessages.bookingPaymentPage_PaymentFailMsg));
 
         softAssert.assertAll();
     }

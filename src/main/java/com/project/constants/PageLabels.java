@@ -195,10 +195,10 @@ public class PageLabels {
     public static final String myinfoPage_withdrawButton = "탈퇴";
 
     //고객지원 탭
-    public static final String reviewBoardPage_reviewBoardTab = "후기게시판";
-    public static final String reviewBoardPage_FAQBoardTab = "질문게시판";
-    public static final String reviewBoardPage_QnABoardTab = "1:1 문의";
-    public static final String reviewBoardPage_NoticeTab = "공지사항";
+    public static final String customerSupportPage_reviewBoardTab = "후기게시판";
+    public static final String customerSupportPage_FAQBoardTab = "질문게시판";
+    public static final String customerSupportPage_QnABoardTab = "1:1 문의";
+    public static final String customerSupportPage_NoticeTab = "공지사항";
 
     //후기게시판 라벨
     public static final String reviewBoardPage_reviewNumberLabel = "글번호";
@@ -242,19 +242,130 @@ public class PageLabels {
     public static final String oderDetailPage_oderProduct_Item = "품목명";
     public static final String oderDetailPage_oderProduct_Price = "가격";
     public static final String oderDetailPage_oderProduct_Number = "주문수량";
-    public static final String oderDetailPage_oderProduct_Amount = "총 금액 : ";
     public static final String oderDetailPage_oderInfo_retrieveCheckButton = "배송조회";
     public static final String oderDetailPage_oderInfo_returnCheckButton = "배송조회";
     public static final String oderDetailPage_listButton = "목록";
 
+    //자주묻는질문 라벨
+    public static final String faqBoardPage_pageTitleLabel = "FAQ";
+    public static final String faqBoardPage_pageTitleUnderTextLabel = "고객님들께서 가장 자주하시는 질문을 모두 모았습니다.";
+    public static final String faqBoardPage_boardFilterServiceButton = "서비스 이용";
+    public static final String faqBoardPage_boardFilterOrderButton = "주문·결제·배송";
+    public static final String faqBoardPage_boardFilterMemberButton = "회원정보";
+    public static final String faqBoardPage_boardFilterEtcButton = "기타";
+    public static final String faqBoardPage_qnaBoardButton = "1:1문의하러 가기";
+    public static final String faqBoardPage_FAQNumberLabel = "NO";
+    public static final String faqBoardPage_FAQCategoryLabel = "카테고리";
+    public static final String faqBoardPage_FAQTitleLabel = "제목";
+    public static final String faqBoardPage_FAQModifyLabel = "수정";
+    public static final String faqBoardPage_FAQDeleteLabel = "삭제";
+    public static final String faqBoardPage_FQACreateButton = "글쓰기";
+
+    //자주묻는질문 작성페이지 라벨
+    public static final String faqCreatePage_PageTitle = "FAQ 등록";
+    public static final String faqCreatePage_CategoryLabel = "카테고리";
+    public static final String faqCreatePage_TitleLabel = "질문";
+    public static final String faqCreatePage_ContentLabel = "답변 내용";
+    public static final String faqCreatePage_submitButton = "저장";
+    public static final String faqCreatePage_cancelButton = "취소";
+
+    //자주묻는질문 수정페이지 라벨
+    public static final String faqModifyPage_PageTitle = "자주 묻는 질문 수정";
+    public static final String faqModifyPage_CategoryLabel = "카테고리";
+    public static final String faqModifyPage_TitleLabel = "질문";
+    public static final String faqModifyPage_ContentLabel = "답변 내용";
+    public static final String faqModifyPage_ModifyButton = "수정 확인";
+    public static final String faqModifyPage_cancelButton = "취소";
+
+    //공자사항 라벨
+    public static final String noticePage_searchButton = "검색";
+    public static final String noticePage_createButton = "작성";
+    public static final String noticePage_ListNumberLabel = "글번호";
+    public static final String noticePage_ListTitleLabel = "제목";
+    public static final String noticePage_ListRegiDateLabel = "등록일";
+
+    //공자사항 작성페이지 라벨
+    public static final String noticeCreatePage_NoticeTitleLabel = "제목";
+    public static final String noticeCreatePage_NoticeTitleRuleText = "제목을 5글자 이상 입력하세요";
+    public static final String noticeCreatePage_ContentLabel = "내용";
+    public static final String noticeCreatePage_SubmitButton = "저장";
+
+    //공지사항 수정페이지 라벨
+    public static final String noticeModifyPage_writerLabel = "작성자";
+    public static final String noticeModifyPage_TitleLabel = "제목";
+    public static final String noticeModifyPage_ContentLabel = "내용";
+    public static final String noticeModifyPage_ModifyButton = "수정확인";
+
+    //공지사항 상세페이지 라벨
+    public static final String noticeDetailPage_ListButton = "목록보기";
+    public static final String noticeDetailPage_ModifyButton = "수정";
+    public static final String noticeDetailPage_DeleteButton = "삭제";
+
+    //1:1문의페이지 라벨
+    public static final String qnaBoardPage_BoardTitle = "1:1 문의";
+    public static final String qnaBoardPage_BoardSubText = "궁금하신 점이나 의견을 남겨주시면 성실히 답변해 드리겠습니다.";
+    public static final String qnaBoardList_ListTitle_Label = "제목";
+    public static final String qnaBoardList_ListCreateDate_Label= "작성일";
+    public static final String qnaBoardList_ListAnswerStatus_Label = "답변여부";
+    public static final String qnaBoardList_CreateButton = "문의하기";
+    public static final String qnaBoardList_ListStatus_wait = "답변대기";
+    public static final String qnaBoardList_ListStatus_complete = "답변완료";
+
+    //1:1문의 작성페이지 라벨
+    public static final String qnaCreatePage_PageTitle = "1:1 문의 작성";
+    public static final String qnaCreatePage_TitleLabel = "제목";
+    public static final String qnaCreatePage_ContentLabel ="내용";
+    public static final String qnaCreatePage_CreateButton ="문의 등록";
+    public static final String qnaCreatePage_CancelButton ="취소";
+
+    //1:1문의 상세페이지 라벨
+    public static final String qnaDetailPage_PageTitle = "1:1 문의 상세";
+    public static final String qnaDetailPage_NumberLabel = "글번호";
+    public static final String qnaDetailPage_WriterLabel = "작성자";
+    public static final String qnaDetailPage_TitleLabel = "제목";
+    public static final String qnaDetailPage_CreateDateLabel = "등록일";
+    public static final String qnaDetailPage_DeleteButton = "글 삭제";
+    public static final String qnaDetailPage_ListButton = "목록보기";
+    public static final String qnaDetailPage_Admin_AnswerBefore_SubmitButton = "답변 등록";
+    public static final String qnaDetailPage_Admin_AnswerAfter_SubmitButton = "수정";
+
+
+    //관리자 고객관리페이지 라벨
+    public static final String adminUserInfoPage_userIdLabel = "아이디";
+    public static final String adminUserInfoPage_userNameLabel = "이름";
+    public static final String adminUserInfoPage_emailLabel = "이메일";
+    public static final String adminUserInfoPage_phoneLabel = "전화번호";
+    public static final String adminUserInfoPage_signUpDateLabel = "가입일";
+    public static final String adminUserInfoPage_userTypeChangeButton = "변경";
+    public static final String adminUserInfoPage_searchButton = "검색";
+    public static final String adminUserInfoPage_deleteButton = "삭제";
+
+    //관리자 주문관리페이지 라벨
+    public static final String adminUseHistoryPage_table_OderNumberLabel = "주문번호";
+    public static final String adminUseHistoryPage_table_UserLabel = "주문자";
+    public static final String adminUseHistoryPage_table_PriceLabel = "주문금액";
+    public static final String adminUseHistoryPage_table_BookingDateLabel = "예약일";
+    public static final String adminUseHistoryPage_table_RequestDateLabel = "요청일";
+    public static final String adminUseHistoryPage_table_GetDeliveryNumLabel = "수거용 송장번호";
+    public static final String adminUseHistoryPage_table_SendDeliveryNumLabel = "반환용 송장번호";
+    public static final String adminUseHistoryPage_table_DetailLabel = "상세";
+    public static final String adminUseHistoryPage_status_ModifyButton = "수정";
+    public static final String adminUseHistoryPage_status_CancelButton = "취소";
+    public static final String adminUseHistoryPage_status_ChangeButton = "확인";
+
+
+    //관리자 마이페이지 탭
+    public static final String adminUserPage_userInfoTab = "고객관리";
+    public static final String adminUserPage_useHistoryTab = "주문관리";
 
 
 
     //URl 타이틀
+    public static final String homePageTitle = "Laundry365";
     public static final String myinfoupdatePageTabTitle = "회원정보 수정";
     public static final String changePasswordPageTabTitle = "비밀번호 수정";
-    public static final String bookingInfoPageTitle = "예약 안내"; //추후 DF해소후 변경가능성 있음
-    public static final String bookingCategoryPageTitle = "상품선택";  //추후 DF해소후 변경가능성 있음
+    public static final String bookingInfoPageTitle = "예약 안내";
+    public static final String bookingCategoryPageTitle = "상품선택";
     public static final String bookingPaymentPageTitle = "결제화면";
     public static final String priceGuidePageTitle = "가격 안내";
     public static final String areaGuidePageTitle = "지역 안내";
@@ -263,14 +374,50 @@ public class PageLabels {
     public static final String orderDetailPageTitle = "주문 상세";
 
     public static final String noticePageTitle = "공지사항";
+    public static final String noticeDetailPageTitle = "공지사항 상세";
+    public static final String noticeCreatePageTitle = "공지사항 등록";
+    public static final String noticeModifyPageTitle = "공지사항 수정";
+
     public static final String FAQBoardPageTitle = "자주묻는질문";
+    public static final String FAQCreatePageTitle = "FAQ 작성";
+    public static final String FAQModifyPageTitle = "FAQ 수정";
+
     public static final String QnABoardPageTitle = "1:1 문의";
+    public static final String QnADetailPageTitle = "1:1 문의 상세";
+    public static final String QnACreatePageTitle = "1:1 문의 작성";
+
     public static final String reviewBoardPageTitle = "후기게시판";
+    public static final String DeliveryTrackerTitle = "Delivery Tracker";
+
+    public static final String adminUserInfoPageTitle = "고객관리";
+    public static final String adminUseHistoryPageTitle = "주문관리";
 
 
     //후기게시판 평점리스트
     public static final List<String> reviewBoard_starOptions =
             Arrays.asList("★☆☆☆☆", "★★☆☆☆", "★★★☆☆", "★★★★☆","★★★★★");
+
+    //FAQ게시판 카테고리리스트
+    public static final List<String> faqBoard_CategoryOptions =
+            Arrays.asList("카테고리 선택", "서비스 이용", "주문·결제·배송", "회원정보","기타");
+
+    //관리자 주문관리 주문상태리스트
+    public static final List<String> adminUseHistory_searchFilterOptions =
+            Arrays.asList("주문번호", "아이디/이름");
+
+    public static final List<String> adminUseHistory_DeliveryCompanyOptions =
+            Arrays.asList("우체국택배","CJ대한통운", "로젠택배", "한진택배", "롯데택배", "대신택배", "KG로지스", "일양로지스", "건영택배",
+                    "EMS (국제우편)", "GS Postbox 편의점택배", "CU 편의점택배", "SLX택배", "합동택배","호남택배","우체국 EMS");
+
+    public static final List<String> adminUseHistory_ModifyStatusOption =
+            Arrays.asList("상태", "결제완료", "수거중","수거완료","세탁중", "세탁완료", "반환중", "반환완료");
+
+    public static final List<String> adminUseHistory_StatusFilterOption =
+            Arrays.asList("상태", "결제완료", "환불완료", "수거중","수거완료","세탁중", "세탁완료", "반환중", "반환완료");
+
+    //관리자 고객관리 리스트
+    public static final List<String> adminUserInfo_SearchFilter = Arrays.asList("아이디", "이름");
+    public static final List<String> adminUserInfo_userTypeFilter = Arrays.asList("전체", "고객", "관리자");
 }
 
 
