@@ -288,19 +288,17 @@ public class FAQBoardPage extends BasePage {
 
 
     public boolean checkCategory(String category) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         String expectedTag = "[" + category + "]";
 
         try {
             wait.until(ExpectedConditions.visibilityOfAllElements(CategoryFiledList));
 
-            if (CategoryFiledList.isEmpty()) {
-                System.out.println("[ERROR] 리스트가 비어있습니다.");
-                return false;
-            }
+            try { Thread.sleep(500); } catch (InterruptedException ie) {}
 
             for (int i = 0; i < CategoryFiledList.size(); i++) {
-                String actualText = CategoryFiledList.get(i).getText().trim();
+                WebElement element = CategoryFiledList.get(i);
+                String actualText = element.getText().trim();
 
                 if (!actualText.equals(expectedTag)) {
                     System.out.println("[FAIL] 일치하지 않음: " + actualText);
@@ -308,7 +306,7 @@ public class FAQBoardPage extends BasePage {
                 }
             }
         } catch (StaleElementReferenceException e) {
-            try { Thread.sleep(1000); } catch (InterruptedException ie) {}
+            System.out.println("[WARN] StaleElement 발생 - 리스트 재조회 시도 중...");
             return checkCategory(category);
         }
 

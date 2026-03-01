@@ -42,18 +42,19 @@ public class FAQBoardTest extends BaseTest {
 
         //펼치기버튼 테스트
         int FoldListCount = faqBoardPage.checkFoldButtonCount();
-        for(int i=0; i==FoldListCount; i++){
+        for(int i=0; i<FoldListCount; i++){
             faqBoardPage.clickFoldButton(i);
             Thread.sleep(500);
             String dataNum = faqBoardPage.getDataNum(i);
             softAssert.assertTrue(faqBoardPage.checkFold(dataNum),"[FAIL] 펼치기 버튼 클릭시 내용이 펼쳐지지 않았습니다. : "+i+"번쨰 게시물");
         }
         driver.navigate().refresh();
-        faqBoardPage.waitForPageLoad();
+        FAQBoardPage faqBoardPage_2nd = new FAQBoardPage(driver);
+        faqBoardPage_2nd.waitForPageLoad();
 
         //카테고리 버튼
         //서비스이용
-        faqBoardPage.clickFilterServiceButton();
+        faqBoardPage_2nd.clickFilterServiceButton();
         FAQBoardPage faqBoardPage_Service = new FAQBoardPage(driver);
         faqBoardPage_Service.waitForPageLoad();
         softAssert.assertTrue(faqBoardPage_Service.checkCategory(PageLabels.faqBoardPage_boardFilterServiceButton));
@@ -78,9 +79,9 @@ public class FAQBoardTest extends BaseTest {
 
         //1:1문의하기버튼
         driver.navigate().refresh();
-        FAQBoardPage faqBoardPage_2nd = new FAQBoardPage(driver);
-        faqBoardPage_2nd.waitForPageLoad();
-        faqBoardPage_2nd.clickQnAButton();
+        FAQBoardPage faqBoardPage_3rd = new FAQBoardPage(driver);
+        faqBoardPage_3rd.waitForPageLoad();
+        faqBoardPage_3rd.clickQnAButton();
 
         QnABoardPage qnaBoardPage = new QnABoardPage(driver);
         qnaBoardPage.waitForPageLoad();
