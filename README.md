@@ -1,8 +1,10 @@
 # 🛒 Laundry365 테스트 자동화 프로젝트
 
 [![Selenium Automated Test](https://github.com/heoik93/selenium-java-automation/actions/workflows/github-action.yml/badge.svg)](https://github.com/heoik93/selenium-java-automation/actions/workflows/github-action.yml)
-![Java](https://img.shields.io/badge/Java-17-orange)
+![Java](https://img.shields.io/badge/Java-21-blue)
 ![Selenium](https://img.shields.io/badge/Selenium-4.x-green)
+![Jenkins](https://img.shields.io/badge/Jenkins-2.x-red)
+![Docker](https://img.shields.io/badge/Docker-Latest-blue)
 
 ## 📋 1. 프로젝트 개요
 * **목표:** 'Laundry365' 웹사이트의 핵심 기능 회귀 테스트 자동화
@@ -59,19 +61,25 @@
 
 ---
 
-## ✅ 5. CI/CD 및 인프라 구축 
+## ✅ 5. 지속적 통합(CI) 및 테스트 결과 자동화
 
- **On-premise(Jenkins)**와 **Cloud(GitHub Actions)**를 결합한 하이브리드 CI 환경을 구축하여 운영 안정성을 확보
+> **On-premise(Jenkins)**와 **Cloud(GitHub Actions)**를 결합한 하이브리드 CI 환경을 구축하여 운영 안정성을 확보했습니다.
 
-### 5-1. Jenkins 기반 Local CI 환경 최적화
-* **인프라 안정화:** Windows 환경의 한글 인코딩(`UTF-8`) 이슈 해결 및 전원 관리 설정을 통해 24/7 중단 없는 테스트 환경 구축
-* **알림 자동화:** 테스트 완료 즉시 상세 결과 보고서를 **이메일(E-mail)로 자동 발송**하는 Notification 체계 구축
+### 🚀 5-1. Jenkins 기반 Local CI 환경 최적화
+* **컨테이너 기반 테스트 환경 (`Docker`)**
+    * 로컬 OS 및 종속성(Java/Maven) 충돌 방지를 위해 **Docker 컨테이너 기반 실행 환경** 구축
+    * 환경 의존성을 완전히 제거하여 테스트의 **환경 독립성** 확보
+* **지속적 통합 (`CI`) 프로세스 표준화**
+    * 수동으로 환경을 세팅하던 비효율을 제거하고, 클릭 한 번으로 빌드-테스트-리포팅이 진행되는 **젠킨스 파이프라인** 정립
+    * 코드 업데이트 시 즉각적인 품질 검증 및 190개 테스트 케이스의 안정적 완주 가능
+* **알림 자동화 (`Notification`)**
+    * 테스트 완료 즉시 상세 보고서를 **이메일(E-mail)로 자동 발송**하는 체계 구축
 
-### 5-2. Cloud CI (GitHub Actions) 연동 및 시각화
-* **Headless 최적화:** 리눅스 환경에서 `Headless Chrome` 모드 및 결함 없는 리포트 생성
-* **결과 호스팅:** 테스트 결과(Extent Report)를 **GitHub Pages**에 자동 호스팅하여 별도 툴 없이 웹에서 실시간 리포트 확인 가능
-
+### ☁️ 5-2. Cloud CI (GitHub Actions) 연동 및 시각화
+* **Headless 최적화**
+    * 리눅스 환경에 최적화된 `Headless Chrome` 모드 설정 및 결함 없는 리포트 생성
+    * 클라우드 환경에서도 로컬과 동일한 테스트 결과 도출
+* **결과 호스팅 (`GitHub Pages`)**
+    * 테스트 결과(Extent Report)를 **GitHub Pages에 자동 호스팅**
+    * 별도 툴 설치 없이 웹 브라우저에서 **실시간 리포트 확인** 가능
 ---
-## 🚀 6. 향후 발전 방향 (Future Plans)
-* **Docker 도입:** 테스트 환경의 완전한 격리 및 일관성 확보를 위한 컨테이너화 추진
-
