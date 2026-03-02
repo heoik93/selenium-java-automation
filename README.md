@@ -11,12 +11,12 @@
 * **성과:** GitHub Actions를 통한 **테스트 자동화 및 리포팅** 시스템 구축
 
 ## 🛠 2. 기술 스택
-| 분류 | 기술                         |
-| :--- |:---------------------------|
-| **Language** | Java 17                    |
-| **Framework** | Selenium WebDriver, TestNG |
-| **CI/CD** | GitHub Actions, Jenkins           |
-| **Reporting** | ExtentReports              |
+| 분류 | 기술                              |
+| :--- |:--------------------------------|
+| **Language** | Java 21                         |
+| **Framework** | Selenium, TestNG                |
+| **CI/CD** | GitHub Actions, Jenkins, Docker |
+| **Reporting** | ExtentReports                   |
 
 ---
 
