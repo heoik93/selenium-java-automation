@@ -1,6 +1,5 @@
 FROM maven:3.8.5-openjdk-17-slim
 
-# 로케일 생성을 위한 패키지 설치 및 한글 설정
 RUN apt-get update && apt-get install -y \
     locales \
     wget gnupg2 unzip fonts-nanum \
