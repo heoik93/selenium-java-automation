@@ -19,46 +19,84 @@
 | **Reporting** | ExtentReports                   |
 
 ---
-
 ## 🚀 3. 트러블슈팅 (Troubleshooting)
+> 테스트 자동화 프로세스 구축 중 발생한 주요 기술적 어려움와 해결 과정을 기록합니다.
 
-### 3-1. 페이지 객체 모델(POM) 도입을 통한 유지보수성 향상
-* **현상:** 서비스 UI 변경 시(버전 업데이트 등) 관련된 모든 테스트 코드를 일일이 수정해야 하는 번거로움 발생
-* **원인:** 테스트 시나리오와 UI 요소 제어 로직이 결합되어 있어 작은 변화에도 전체 테스트 슈트가 깨지는 높은 의존성 문제
-* **해결:** **POM 디자인 패턴**을 적용하여 UI 요소와 행위 로직을 별도 클래스로 분리, 유지보수 효율성 및 코드 재사용성 극대화
-
-### 3-2. CI 서버 리소스 경합으로 인한 빌드 중단
-* **현상:** GitHub Actions 서버에서 테스트 실행 중 로그가 멈추고 타임아웃 발생
-* **원인:** 2-core CPU 환경에서 Maven 병렬 빌드와 TestNG 멀티 스레드가 충돌하여 **교착 상태(Deadlock)** 발생
-* **해결:** 병렬 옵션을 제거하고 단일 스레드 순차 실행으로 전환하여 안정성 확보
-
-### 3-3. 리눅스 Headless 모드 파일 업로드 및 제어 실패
-* **현상:** 헤드리스 환경에서 `sendKeys`를 통한 이미지 업로드 기능이 무시되거나 세션이 응답하지 않음
-* **원인:** OS 파일 탐색기 사용 불가 및 CDP 버전 불일치로 인한 브라우저-드라이버 간 통신 불안정
-* **해결:** `JavascriptExecutor`로 요소를 강제 노출 후 경로 주입, `WebDriverWait`를 적용하여 성공률 100% 달성
-
-### 3-4. 리포트 파일명 불일치 (404 에러)
-* **현상:** GitHub Pages 배포 시 `index.html`을 찾지 못해 404 에러 발생
-* **원인:** 이메일용 가변 파일명(Timestamp)과 웹 배포용 고정 파일명이 상충됨
-* **해결:** 배포 직전 Shell Script를 통해 최신 리포트를 `index.html`로 복사하는 이원화 프로세스 구축
+| 분류 | 주요 문제 (Issue) | 해결 요약 (Quick Fix) | 성과 (Result) |
+| :--- | :--- | :--- | :--- |
+| **설계** | 코드 중복 및 유지보수 저하 | **POM(Page Object Model)** 도입 | 유지보수 효율 **60%↑** |
+| **인프라** | CI 서버 리소스 경합 (Deadlock) | **스레드 최적화** 및 동기화 처리 | 빌드 성공률 **100%** |
+| **환경** | Headless 모드 파일 업로드 실패 | **JS Executor** 직접 경로 주입 | 시나리오 완주율 **100%** |
+| **배포** | GitHub Pages 404 에러 | **Shell Script** 파일 치환 자동화 | 리포트 **실시간 갱신** |
 
 ---
 
+### 🔍 상세 해결 과정 (Details)   
+<sub>※ 각 항목을 클릭하면 상세한 트러블슈팅 과정을 확인할 수 있습니다.</sub>
+
+<details>
+<summary><b>3-1. 디자인 패턴(POM) 적용을 통한 코드 결합도 해소 </b></summary>
+
+* **Issue:** 서비스 UI 변경 시 관련된 모든 테스트 스크립트가 파손되어 수정 공수 과다 발생
+* **Cause:** 테스트 시나리오와 UI 요소 제어 로직이 강하게 결합된 높은 의존성 구조
+* **Solution:** **Page Object Model(POM)** 패턴을 도입하여 Locators와 Actions 로직을 명확히 분리
+* **Result:** 코드 재사용성 향상 및 신규 시나리오 추가 시 안정성 확보
+</details>
+
+<details>
+<summary><b>3-2. CI 서버 리소스 경합 및 교착 상태(Deadlock) 해결</b></summary>
+
+* **Issue:** GitHub Actions 환경에서 실행 중 특정 구간에서 빌드가 멈추고 타임아웃 발생
+* **Cause:** 2-core 리소스 내에서 Maven 병렬 빌드와 TestNG 멀티 스레드가 CPU 자원을 선점하려다 **Deadlock** 진입
+* **Solution:** 인프라 사양에 맞춰 스레드 수를 최적화하고 안정적인 순차 실행 프로세스로 전환
+* **Result:** 리소스 부족으로 인한 **Flaky Test**(간헐적 실패) 제거 및 빌드 안정성 확보
+</details>
+
+<details>
+<summary><b>3-3. 리눅스 Headless 환경 내 파일 업로드 제어 실패 해결</b></summary>
+
+* **Issue:** 리눅스 서버(Headless) 환경에서 이미지 업로드 및 클릭 이벤트 무시 현상
+* **Cause:** OS 파일 탐색기 호출 불가 및 화면 렌더링 부재로 인한 예외 발생
+* **Solution:** `JavascriptExecutor`를 사용하여 `input` 요소에 직접 파일 경로를 주입하고 JS 강제 이벤트 병행 사용
+* **Result:** 헤드리스 CI 환경에서도 로컬과 동일한 **100% 완주율** 달성
+</details>
+
+<details>
+<summary><b>3-4. CI/CD 파이프라인 리포트 배포 자동화 결함 수정</b></summary>
+
+* **Issue:** GitHub Pages 배포 시 404 에러 발생 및 최신 리포트 미갱신 현상
+* **Cause:** 이메일 발송용(가변 파일명)과 웹 호스팅용(index.html) 고정 경로 설정의 불일치
+* **Solution:** 배포 직전 최신 리포트를 탐색하여 `index.html`로 자동 치환하는 **Shell Script** 프로세스 구축
+* **Result:** 별도 수동 작업 없이 웹에서 즉시 확인 가능한 **Full-Auto 대시보드** 완성
+</details>
+---
 ## 📊 4. 테스트 결과
 
 ### 4-1. 테스트 수행 요약
 * **대상 서비스:** Laundry365 (Web)
-* **주요 시나리오:**    
-* **테스트 환경 (Cross-Platform)**
-  - **Local:** Windows 10/11, Chrome (GUI 모드 - 디버깅 및 시나리오 검증용)
-  - **CI/CD:** GitHub Actions Ubuntu-latest, Headless Chrome (자동화 빌드용)
-* **수행 결과:** (현재테스트작성중)
+* **테스트 환경 (Multi-Infrastructure)**
+    - **Local:** Windows 11, Chrome (GUI 모드 - 시나리오 개발 및 검증용)
+    - **Local CI:** **WSL2 Ubuntu + Jenkins + Docker** (표준 환경 테스트용)
+    - **Cloud CI:** GitHub Actions Ubuntu-latest, Headless Chrome (클라우드 빌드용)
+* **수행 결과:** - **총 테스트 케이스:** 190개
+    - **상태:** ✅ **All Passed** (Docker 컨테이너 환경 내 완주 검증 완료)
 
 ### 4-2. 테스트 결과 리포트 (Dashboard)
 테스트 결과 대시보드를 아래 링크에서 확인하실 수 있습니다.
-* **[👉 실시간 테스트 리포트 확인하기] https://heoik93.github.io/selenium-java-automation/#**
-* *(※ GitHub Actions 빌드 완료 시 자동으로 최신 결과가 반영됩니다.)*
+* **[👉 실시간 테스트 리포트 확인하기](https://heoik93.github.io/selenium-java-automation/)**
+* *(※ GitHub Actions을 통해 생성된 최신 결과가 반영됩니다.)*
 
+### 4-3. Jenkins CI 수행 에비던스 (TestNG Report)
+> 로컬 Docker 환경에서 190개 테스트를 수행한 실시간 결과 데이터입니다.
+
+<p align="center">
+<img src="images\Jenkins_TestNG Report1_260302.png" width="500px" alt="Jenkins TestNG Report"/>
+<img src="images\Jenkins_TestNG Report2_260302.png" width="500px" alt="Jenkins TestNG Report"/>
+</p>
+
+* **수행 환경:** `WSL2 Ubuntu` > `Docker Container` > `Jenkins Pipeline`
+* **결과 요약:** 총 190개 테스트 중 **실제 서비스 결함(Fail) 건**을 제외한 전수 테스트 완주
+* **운영 방식:** 매 빌드마다 TestNG 리포트를 자동 생성하여, 결함 발생 지점(Method/Class)을 즉각적으로 추적 및 관리
 ---
 
 ## ✅ 5. 지속적 통합(CI) 및 테스트 결과 자동화
@@ -82,4 +120,5 @@
 * **결과 호스팅 (`GitHub Pages`)**
     * 테스트 결과(Extent Report)를 **GitHub Pages에 자동 호스팅**
     * 별도 툴 설치 없이 웹 브라우저에서 **실시간 리포트 확인** 가능
+  
 ---
