@@ -89,10 +89,8 @@
 ### 4-3. Jenkins CI 수행 에비던스 (TestNG Report)
 > 로컬 Docker 환경에서 190개 테스트를 수행한 실시간 결과 데이터입니다.
 
-<p align="center">
 <img src="images\Jenkins_TestNG Report1_260302.png" width="500px" alt="Jenkins TestNG Report"/>
 <img src="images\Jenkins_TestNG Report2_260302.png" width="500px" alt="Jenkins TestNG Report"/>
-</p>
 
 * **수행 환경:** `WSL2 Ubuntu` > `Docker Container` > `Jenkins Pipeline`
 * **결과 요약:** 총 190개 테스트 중 **실제 서비스 결함(Fail) 건**을 제외한 전수 테스트 완주
