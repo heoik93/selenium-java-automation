@@ -241,7 +241,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
 
         boolean result = bookingPaymentPage.isDaumPostcodePopupDisplayed();
 
-        Assert.assertTrue(result,"다음 주소 찾기 API 창이 정상적으로 표시되지 않았습니다.");
+        Assert.assertTrue(result,"[FAIL] 다음 주소 찾기 API 창이 정상적으로 표시되지 않았습니다.");
 
 
     }
@@ -293,7 +293,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.clickPaymentButton();
         boolean result = bookingPaymentPage.isInicisPaymentPopupDisplayed();
 
-        softAssert.assertTrue(result,"KG이니시스 API 창이 정상적으로 표시되지 않았습니다.");
+        softAssert.assertTrue(result,"[FAIL] KG이니시스 API 창이 정상적으로 표시되지 않았습니다.");
 
 
         softAssert.assertAll();

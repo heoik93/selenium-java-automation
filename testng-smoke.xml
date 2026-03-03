@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Functional_Test_Suite">
+    <listeners>
+        <listener class-name="com.project.utils.AnnotationTransformer" />
+        <listener class-name="com.project.utils.TestListener" />
+    </listeners>
+
+    <test name="Smoke_Test">
+        <classes>
+            <!--Default Functional Test-->
+            <class name="com.project.functional.LoginTest"/>
+            <class name="com.project.functional.LogoutTest"/>
+            <class name="com.project.functional.SignupTest"/>
+
+            <!--Booking Function Test-->
+            <class name="com.project.functional.booking.BookingCategoryTest">
+                <methods>
+                    <include name="bookingCategoryPage_RandomAmountTest"/>
+                    <include name="bookingCategoryPage_BookingButtonTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.booking.BookingPaymentTest">
+                <methods>
+                    <include name="bookingPaymentPage_PaymentButtonTest"/>
+                    <include name="bookingPaymentPage_PaymentSuccessTest"/>
+                </methods>
+            </class>
+
+            <!--CustomerSupport Function Test-->
+            <class name="com.project.functional.customerSupport.FAQBoardTest">
+                <methods>
+                    <include name="FAQBoardPage_AdminFlowTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.customerSupport.NoticeTest">
+                <methods>
+                 <include name="NoticePage_FlowTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.customerSupport.QnABoardTest">
+                <methods>
+                    <include name="QnABoardPage_CreateDeleteTest"/>
+                    <include name="QnABoardPage_AdminTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.customerSupport.ReviewDetailTest">
+                <methods>
+                    <include name="ReviewDetailPage_ReviewDeleteCreateButtonTest"/>
+                </methods>
+            </class>
+
+            <!--MyPage  Function Test-->
+            <class name="com.project.functional.mypage.AdminUserHistoryTest">
+                <methods>
+                    <include name="adminUseHistoryPage_StatusButtonTest"/>
+                    <include name="adminUseHistoryPage_DeliveryNumButtonTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.mypage.AdminUserInfoTest">
+                <methods>
+                    <include name="adminUserInfoPage_ModifyButtonTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.mypage.MyinfoTest">
+                <methods>
+                    <include name="MyinfoUpdateFlowTest"/>
+                    <include name="ChangePasswordFlowTest"/>   <!--버스수정확인-->
+                </methods>
+            </class>
+
+            <class name="com.project.functional.mypage.OderDetailTest">
+                <methods>
+                    <include name="oderDetailPage_RefundButtonTest"/>
+                </methods>
+            </class>
+
+            <class name="com.project.functional.useGuide.UseGuidePageTabTest">
+                <methods>
+                    <include name="useHistoryPage_DetailButtonTest"/>
+                    <include name="useHistoryPage_ReviewButtonTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

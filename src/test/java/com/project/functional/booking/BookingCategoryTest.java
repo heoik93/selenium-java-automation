@@ -178,7 +178,7 @@ public class BookingCategoryTest extends BaseTest {
 
         //검증
         softAssert.assertEquals(actualTotalAmount, expectedTotalAmount,
-                "계산된 총 금액과 화면의 총 금액이 일치하지 않습니다.");
+                "[FAIL] 계산된 총 금액과 화면의 총 금액이 일치하지 않습니다.");
 
         System.out.println(">>> 결과 검증 | 기대값: " + expectedTotalAmount + " | 실제값: " + actualTotalAmount);
 
