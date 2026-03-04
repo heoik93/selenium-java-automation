@@ -1,7 +1,22 @@
 name: Selenium Automated Test
 
 on:
+  push:
+    branches: [ "main", "develop" ]
+  repository_dispatch:
+    types: [ dev-push-event ]
   workflow_dispatch:
+    inputs:
+      test_type:
+        description: '실행할 테스트 타입을 선택하세요'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - full-regression
+          - functional
+          - ui
 
 jobs:
   test:
@@ -9,6 +24,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      # [전략 설정] 현재 루트에 있는 파일명에 맞춰 정확히 매칭
+      - name: Determine Test Suite
+        id: suite_selector
+        run: |
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "suite=testng-smoke.xml" >> $GITHUB_OUTPUT
+            echo "mode=Smoke (Dev Repository Push)" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "suite=testng-smoke.xml" >> $GITHUB_OUTPUT
+            echo "mode=Smoke (Test Code Push)" >> $GITHUB_OUTPUT
+          else
+            # 수동 실행 시 입력값에 따라 파일명 결정
+            case "${{ github.event.inputs.test_type }}" in
+              "smoke") echo "suite=testng-smoke.xml" >> $GITHUB_OUTPUT ;;
+              "full-regression") echo "suite=testng-full-regression.xml" >> $GITHUB_OUTPUT ;;
+              "functional") echo "suite=testng-functional.xml" >> $GITHUB_OUTPUT ;;
+              "ui") echo "suite=testng-ui.xml" >> $GITHUB_OUTPUT ;;
+            esac
+            echo "mode=${{ github.event.inputs.test_type }} (Manual)" >> $GITHUB_OUTPUT
+          fi
 
       - name: Cache Maven packages
         uses: actions/cache@v4
@@ -34,14 +70,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y fonts-nanum
 
+      # 파일이 루트에 있으므로 경로 없이 파일명만 바로 사용
       - name: Run Tests with Maven
-        run: mvn test -Dmaven.test.failure.ignore=true
+        run: mvn test -DsuiteXmlFile=${{ steps.suite_selector.outputs.suite }} -Dmaven.test.failure.ignore=true
 
       - name: Upload Test Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Extent-Report-Run-${{ github.run_number }}
+          name: Extent-Report-${{ steps.suite_selector.outputs.suite }}-${{ github.run_number }}
           path: |
             target/ExtentReports/
             **/index.html
@@ -49,7 +86,6 @@ jobs:
       - name: Prepare Report for GitHub Pages
         if: always()
         run: |
-          # test-output 폴더가 있는지 확인 후 복사 (오류 방지)
           mkdir -p ./test-output
           cp ./test-output/Report_*.html ./test-output/index.html || true
 
