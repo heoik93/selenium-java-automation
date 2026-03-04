@@ -69,7 +69,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>testng-full-regression.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <shutdown>exit</shutdown>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
