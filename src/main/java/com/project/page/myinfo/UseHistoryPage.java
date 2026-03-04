@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -326,10 +327,13 @@ public class UseHistoryPage extends BasePage {
     }
 
     public int[] foundOrderStatus(String status) {
-        int totalPages = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li")).size();
+        String findStatus = status.replace("\"", "");
+        int currentPageNum = 1;
 
-        for (int p = 0; p < totalPages; p++) {
-            String findStatus = status.replace("\"", "");
+        // 다음 페이지 번호가 존재할 때까지만 무한 반복
+        while (true) {
+            waitForPageLoad();
+
             List<WebElement> currentStatusList = driver.findElements(By.xpath("//td[7]"));
             List<WebElement> currentOrderNumList = driver.findElements(By.xpath("//td[1]"));
             List<WebElement> currentDetailBtnList = driver.findElements(By.xpath("//td[2]"));
@@ -337,30 +341,70 @@ public class UseHistoryPage extends BasePage {
             for (int i = 0; i < currentStatusList.size(); i++) {
                 if (currentStatusList.get(i).getText().trim().equals(findStatus)) {
                     int orderNum = Integer.parseInt(currentOrderNumList.get(i).getText().trim());
-
-                    System.out.println("[INFO] " + (p + 1) + "페이지에서 주문번호 " + orderNum + " 발견");
+                    System.out.println("[INFO] " + currentPageNum + "페이지에서 주문번호 " + orderNum + " 발견");
                     click(currentDetailBtnList.get(i));
-
-                    return new int[]{p, i, orderNum};
+                    return new int[]{currentPageNum, i, orderNum};
                 }
             }
 
-            if (p < totalPages - 1) {
-                System.out.println("[INFO] " + (p + 1) + "페이지에 없음. 다음 페이지로 이동.");
-                List<WebElement> currentNavi = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
-                click(currentNavi.get(p + 1));
-                waitForPageLoad();
+            int nextPageNum = currentPageNum + 1;
+            List<WebElement> nextPageBtn = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li/a[text()='" + nextPageNum + "']"));
+
+            if (!nextPageBtn.isEmpty() && nextPageBtn.get(0).isDisplayed()) {
+                System.out.println("[INFO] " + currentPageNum + "페이지에 없음. " + nextPageNum + "페이지로 이동.");
+                click(nextPageBtn.get(0));
+                currentPageNum++;
+            } else {
+                System.out.println("[INFO] " + nextPageNum + "페이지 버튼이 없습니다. 탐색을 종료합니다.");
+                break;
             }
         }
+
         System.out.println("[WARN] " + status + " 상태의 주문을 찾을 수 없습니다.");
         return new int[]{-1, -1};
     }
 
-    public void movePage(int pageIndex) {
-        List<WebElement> pages = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
-        if (pageIndex < pages.size()) {
-            click(pages.get(pageIndex));
-            waitForPageLoad();
+    public void movePage(int targetPage) {
+        if (targetPage <= 1) return;
+
+        int currentPage = 1;
+        while (currentPage < targetPage) {
+            List<WebElement> targetPageBtn = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li[text()='" + targetPage + "']"));
+
+            if (!targetPageBtn.isEmpty() && targetPageBtn.get(0).isDisplayed()) {
+                click(targetPageBtn.get(0));
+                waitForPageLoad();
+                System.out.println("[INFO] 목표 페이지(" + targetPage + ") 도달 완료");
+                return;
+            } else {
+                List<WebElement> pageButtons = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+                List<WebElement> numericButtons = new ArrayList<>();
+
+                for (WebElement btn : pageButtons) {
+                    String text = btn.getText().trim();
+                    if (text.matches("\\d+")) { // 자바 코드로 숫자 여부 판별
+                        numericButtons.add(btn);
+                    }
+                }
+
+                if (numericButtons.isEmpty()) {
+                    System.out.println("[ERROR] 페이지 번호 버튼을 찾을 수 없습니다.");
+                    break;
+                }
+
+                WebElement lastVisiblePageBtn = numericButtons.get(numericButtons.size() - 1);
+                int lastVisibleNum = Integer.parseInt(lastVisiblePageBtn.getText().trim());
+
+                if (lastVisibleNum > currentPage) {
+                    System.out.println("[INFO] " + targetPage + "번이 안 보여서 현재 최대치인 " + lastVisibleNum + "번으로 이동");
+                    click(lastVisiblePageBtn);
+                    waitForPageLoad();
+                    currentPage = lastVisibleNum;
+                } else {
+                    System.out.println("[INFO] 더 이상 전진할 수 없습니다. 탐색 종료.");
+                    break;
+                }
+            }
         }
     }
 
