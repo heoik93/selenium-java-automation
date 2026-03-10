@@ -2,6 +2,7 @@ package com.project.page.myinfo;
 
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -220,7 +221,7 @@ public class AdminUseHistoryPage extends BasePage {
         Select select = new Select(status_Option);
         select.selectByIndex(index);
         String selectedText = select.getFirstSelectedOption().getText().trim();
-        System.out.println("[INFO] 검색조건을 "+selectedText+" (으)로 변경했습니다.");
+        System.out.println("[INFO] 상태를 "+selectedText+" (으)로 변경했습니다.");
         click(status_ChangeButton);
         return selectedText;
     }
@@ -239,7 +240,7 @@ public class AdminUseHistoryPage extends BasePage {
     public void RecoverStatus() {
         click(status_modifyButton);
         waitForVisible(status_CancelButton);
-        click(status_ChangeButton);
+        changeStatus(1);
     }
 
     public void clickModifyButton() {
@@ -407,6 +408,26 @@ public class AdminUseHistoryPage extends BasePage {
         Select select = new Select(delivery_Company);
         select.selectByIndex(index);
         return select.getFirstSelectedOption().getText().trim();
+    }
+
+    public void clickCheckButtonByOrderNum(String targetOrderNum) {
+        List<WebElement> orderNumList = driver.findElements(By.xpath("//td[2]")); // 주문번호가 있는 열
+        List<WebElement> checkBoxes = driver.findElements(By.xpath("//td//input"));
+
+        boolean found = false;
+        for (int i = 0; i < orderNumList.size(); i++) {
+            String currentNum = orderNumList.get(i).getText().trim();
+            if (currentNum.equals(targetOrderNum)) {
+                click(checkBoxes.get(i));
+                System.out.println("[INFO] 주문번호 " + targetOrderNum + "의 체크박스를 클릭했습니다.");
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            throw new RuntimeException("[ERROR] 검색 결과에서 주문번호 " + targetOrderNum + "를 찾을 수 없어 체크박스를 클릭하지 못했습니다.");
+        }
     }
 
 

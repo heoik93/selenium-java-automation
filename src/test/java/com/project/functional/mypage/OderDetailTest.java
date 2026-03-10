@@ -156,23 +156,26 @@ public class OderDetailTest extends BaseTest {
 
         AdminUseHistoryPage adminUseHistoryPage = new AdminUseHistoryPage(driver);
         String targetOderNum = String.valueOf(lastOrderInfo[2]);
-        adminUseHistoryPage.searchKeyword(targetOderNum);
+        adminUseHistoryPage.changeStatusFilter(2);
+
 
         AdminUseHistoryPage adminUseHistoryPage_search = new AdminUseHistoryPage(driver);
         adminUseHistoryPage_search.waitForPageLoad();
 
-        int targetOder = adminUseHistoryPage_search.checkSearchResult();
-        if (targetOder==1) {
-            adminUseHistoryPage_search.RecoverStatus();
-            adminUseHistoryPage_search.alertAccept();
-            adminUseHistoryPage_search.alertAccept();
-            System.out.println("[INFO] 해당 주문번호의 상태를 '결제완료'로 원복완료하였습니다.");
-        }
-        if(targetOder==0||targetOder>1){
-            System.out.println("[FAIL] 해당 주문번호의 리스트가 "+targetOder+"건 입니다.");
-        }
+        adminUseHistoryPage_search.searchKeyword(targetOderNum);
 
-        adminUseHistoryPage_search.navi.clickLogoutLink();
+        AdminUseHistoryPage adminUseHistoryPage_search2 = new AdminUseHistoryPage(driver);
+        adminUseHistoryPage_search2.waitForPageLoad();
+
+        adminUseHistoryPage_search2.checkSearchResult();
+
+        adminUseHistoryPage_search2.clickCheckButtonByOrderNum(targetOderNum);
+        adminUseHistoryPage_search2.RecoverStatus();
+        adminUseHistoryPage_search2.alertAccept();
+        adminUseHistoryPage_search2.alertAccept();
+        System.out.println("[INFO] 해당 주문번호의 상태를 '결제완료'로 원복완료하였습니다.");
+
+        adminUseHistoryPage_search2.navi.clickLogoutLink();
     }
 
     @AfterMethod(onlyForGroups = "DefaultTest")

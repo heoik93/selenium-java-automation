@@ -367,45 +367,36 @@ public class UseHistoryPage extends BasePage {
     public void movePage(int targetPage) {
         if (targetPage <= 1) return;
 
-        int currentPage = 1;
-        while (currentPage < targetPage) {
-            List<WebElement> targetPageBtn = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li[text()='" + targetPage + "']"));
+        List<WebElement> pageButtons = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+        int totalAvailableButtons = pageButtons.size();
 
-            if (!targetPageBtn.isEmpty() && targetPageBtn.get(0).isDisplayed()) {
-                click(targetPageBtn.get(0));
+        for (int p = 0; p < totalAvailableButtons; p++) {
+            List<WebElement> currentNavi = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+            String btnText = currentNavi.get(p).getText().trim();
+
+            if (!btnText.matches("\\d+")) continue;
+
+            int currentNum = Integer.parseInt(btnText);
+
+            // 현재 클릭하려는 버튼이 목표 페이지 번호와 일치하면 클릭 후 종료
+            if (currentNum == targetPage) {
+                System.out.println("[INFO] 목표 페이지(" + targetPage + ") 버튼 발견. 클릭합니다.");
+                click(currentNavi.get(p));
                 waitForPageLoad();
-                System.out.println("[INFO] 목표 페이지(" + targetPage + ") 도달 완료");
                 return;
-            } else {
-                List<WebElement> pageButtons = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
-                List<WebElement> numericButtons = new ArrayList<>();
+            }
 
-                for (WebElement btn : pageButtons) {
-                    String text = btn.getText().trim();
-                    if (text.matches("\\d+")) { // 자바 코드로 숫자 여부 판별
-                        numericButtons.add(btn);
-                    }
-                }
+            if (currentNum < targetPage) {
+                System.out.println("[INFO] " + targetPage + "번으로 가기 위해 현재 " + currentNum + "번 페이지 통과 중...");
+                click(currentNavi.get(p));
+                waitForPageLoad();
 
-                if (numericButtons.isEmpty()) {
-                    System.out.println("[ERROR] 페이지 번호 버튼을 찾을 수 없습니다.");
-                    break;
-                }
-
-                WebElement lastVisiblePageBtn = numericButtons.get(numericButtons.size() - 1);
-                int lastVisibleNum = Integer.parseInt(lastVisiblePageBtn.getText().trim());
-
-                if (lastVisibleNum > currentPage) {
-                    System.out.println("[INFO] " + targetPage + "번이 안 보여서 현재 최대치인 " + lastVisibleNum + "번으로 이동");
-                    click(lastVisiblePageBtn);
-                    waitForPageLoad();
-                    currentPage = lastVisibleNum;
-                } else {
-                    System.out.println("[INFO] 더 이상 전진할 수 없습니다. 탐색 종료.");
-                    break;
-                }
+                pageButtons = driver.findElements(By.xpath("//div[@class='page-ui my-4']//li"));
+                totalAvailableButtons = pageButtons.size();
             }
         }
+
+        System.out.println("[WARN] 사용 가능한 범위 내에서 " + targetPage + "페이지를 찾을 수 없습니다.");
     }
 
     public boolean checkTargetStatus(int index, String status) {
