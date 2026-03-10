@@ -330,7 +330,6 @@ public class UseHistoryPage extends BasePage {
         String findStatus = status.replace("\"", "");
         int currentPageNum = 1;
 
-        // 다음 페이지 번호가 존재할 때까지만 무한 반복
         while (true) {
             waitForPageLoad();
 
@@ -378,7 +377,6 @@ public class UseHistoryPage extends BasePage {
 
             int currentNum = Integer.parseInt(btnText);
 
-            // 현재 클릭하려는 버튼이 목표 페이지 번호와 일치하면 클릭 후 종료
             if (currentNum == targetPage) {
                 System.out.println("[INFO] 목표 페이지(" + targetPage + ") 버튼 발견. 클릭합니다.");
                 click(currentNavi.get(p));
