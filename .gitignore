@@ -1,6 +1,5 @@
 # 테스트 결과물 제외
 /test-output/
-src/main/resources/config/config.properties
 
 # 인텔리제이 설정 파일 제외
 .idea/
