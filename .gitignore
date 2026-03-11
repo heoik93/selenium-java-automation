@@ -1,5 +1,7 @@
 # 테스트 결과물 제외
 /test-output/
+
+#config파일 민감정보 가리기
 src/main/resources/config/config.properties
 
 # 인텔리제이 설정 파일 제외
