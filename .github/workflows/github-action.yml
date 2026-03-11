@@ -60,16 +60,13 @@ jobs:
           cache: maven
 
       - name: Replace Secrets in Config
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: 'src/main/resources/config/config.properties'
-        env:
-          password: ${{ secrets.DB_PASSWORD }}
-          anotheruserpassword: ${{ secrets.ANOTHER_USER_PWD }}
-          adminpassword2: ${{ secrets.ADMIN_PWD }}
-          testpwd: ${{ secrets.TEST_PWD }}
-          email.password: ${{ secrets.EMAIL_PWD }}
-          email.to: ${{ secrets.EMAIL_TO }}
+        run: |
+          sed -i "s|^password=.*|password=${{ secrets.DB_PASSWORD }}|" src/main/resources/config/config.properties
+          sed -i "s|^anotheruserpassword=.*|anotheruserpassword=${{ secrets.ANOTHER_USER_PWD }}|" src/main/resources/config/config.properties
+          sed -i "s|^adminpassword2=.*|adminpassword2=${{ secrets.ADMIN_PWD }}|" src/main/resources/config/config.properties
+          sed -i "s|^testpwd=.*|testpwd=${{ secrets.TEST_PWD }}|" src/main/resources/config/config.properties
+          sed -i "s|^email.password=.*|email.password=${{ secrets.EMAIL_PWD }}|" src/main/resources/config/config.properties
+          sed -i "s|^email.to=.*|email.to=${{ secrets.EMAIL_TO }}|" src/main/resources/config/config.properties
 
       - name: Install Korean Fonts
         run: |
