@@ -47,7 +47,7 @@ public class JiraClient {
             RestAssured.given()
                     .auth().preemptive().basic(jiraEmail, jiraToken)
                     .contentType(ContentType.JSON)
-                    .body(payload) 
+                    .body(payload)
                     .when()
                     .post("/rest/api/2/issue")
                     .then()
@@ -59,5 +59,4 @@ public class JiraClient {
             System.out.println("[ERROR] Jira 연동 실패: " + e.getMessage());
         }
     }
-}
 }
