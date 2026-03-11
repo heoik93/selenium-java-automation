@@ -2,6 +2,10 @@ package com.project.utils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
 
 public class JiraClient {
@@ -13,37 +17,47 @@ public class JiraClient {
         String projectKey = System.getenv("JIRA_PROJECT_KEY");
 
         if (jiraDomain == null || jiraToken == null) {
-            System.out.println("[SKIP] Jira 설정이 활성화되지 않아 티켓을 생성하지 않습니다.");
+            System.out.println("[INFO] Jira 환경변수가 없어 실행을 건너뜁니다.");
             return;
         }
 
         RestAssured.baseURI = "https://" + jiraDomain;
 
-        String issueBody = String.format(
-                "{\n" +
-                        "  \"fields\": {\n" +
-                        "    \"project\": { \"key\": \"%s\" },\n" +
-                        "    \"summary\": \"%s\",\n" +
-                        "    \"description\": \"%s\",\n" +
-                        "    \"issuetype\": { \"name\": \"버그\" }\n" +
-                        "  }\n" +
-                        "}", projectKey, summary, description
-        );
+        // 1. JSON 구조를 Map으로 생성 (Parsing 에러 방지)
+        Map<String, Object> fields = new HashMap<>();
 
+        // 프로젝트 키 설정
+        Map<String, String> project = new HashMap<>();
+        project.put("key", projectKey);
+        fields.put("project", project);
+
+        // 제목 및 내용 (특수문자 자동 치환됨)
+        fields.put("summary", summary);
+        fields.put("description", description);
+
+        Map<String, String> issuetype = new HashMap<>();
+        issuetype.put("name", "버그");
+        fields.put("issuetype", issuetype);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("fields", fields);
+
+        // 2. 전송
         try {
             RestAssured.given()
                     .auth().preemptive().basic(jiraEmail, jiraToken)
                     .contentType(ContentType.JSON)
-                    .body(issueBody)
+                    .body(payload) 
                     .when()
                     .post("/rest/api/2/issue")
                     .then()
                     .log().all()
                     .statusCode(201);
 
-            System.out.println("[SUCCESS] Jira 버그 티켓 생성 완료!");
+            System.out.println("[SUCCESS] Jira 티켓 생성 성공!");
         } catch (Exception e) {
-            System.out.println("[ERROR] Jira 연동 중 오류 발생: " + e.getMessage());
+            System.out.println("[ERROR] Jira 연동 실패: " + e.getMessage());
         }
     }
+}
 }
