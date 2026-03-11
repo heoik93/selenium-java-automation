@@ -59,6 +59,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Replace Secrets in Config
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: 'src/main/resources/config/config.properties'
+        env:
+          password: ${{ secrets.DB_PASSWORD }}
+          anotheruserpassword: ${{ secrets.ANOTHER_USER_PWD }}
+          adminpassword2: ${{ secrets.ADMIN_PWD }}
+          testpwd: ${{ secrets.TEST_PWD }}
+          email.password: ${{ secrets.EMAIL_PWD }}
+          email.to: ${{ secrets.EMAIL_TO }}
+
       - name: Install Korean Fonts
         run: |
           sudo apt-get update
