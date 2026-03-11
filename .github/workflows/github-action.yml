@@ -17,6 +17,7 @@ on:
           - full-regression
           - functional
           - ui
+          - debug
 
 jobs:
   test:
