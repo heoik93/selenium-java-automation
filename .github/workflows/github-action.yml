@@ -42,6 +42,7 @@ jobs:
               "full-regression") echo "suite=testng-full-regression.xml" >> $GITHUB_OUTPUT ;;
               "functional") echo "suite=testng-functional.xml" >> $GITHUB_OUTPUT ;;
               "ui") echo "suite=testng-ui.xml" >> $GITHUB_OUTPUT ;;
+              "debug") echo "suite=testng-debug.xml" >> $GITHUB_OUTPUT ;;
             esac
             echo "mode=${{ github.event.inputs.test_type }} (Manual)" >> $GITHUB_OUTPUT
           fi
