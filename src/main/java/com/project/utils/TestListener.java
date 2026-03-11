@@ -58,6 +58,14 @@ public class TestListener implements ITestListener {
             String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
             test.get().addScreenCaptureFromBase64String(base64Screenshot, "[최종 실패] 테스트 종료 시점 화면");
         }
+
+        // 지라 연동추가
+        String methodName = result.getMethod().getMethodName();
+        String errorMsg = result.getThrowable().getMessage();
+
+        JiraClient.createJiraIssue(
+                "[Automation] 실패: " + methodName,
+                "상세 에러: " + errorMsg);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.project.testutils;
+package com.project.utils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -31,7 +31,7 @@ public class JiraClient {
         );
 
         try {
-            given()
+            RestAssured.given()
                     .auth().preemptive().basic(jiraEmail, jiraToken)
                     .contentType(ContentType.JSON)
                     .body(issueBody)
