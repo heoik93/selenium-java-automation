@@ -15,6 +15,7 @@ public class JiraClient {
         String jiraEmail = System.getenv("JIRA_EMAIL");
         String jiraToken = System.getenv("JIRA_API_TOKEN");
         String projectKey = System.getenv("JIRA_PROJECT_KEY");
+        String epicKey = System.getenv("JIRA_EPIC_KEY");
 
         if (jiraDomain == null || jiraToken == null) {
             System.out.println("[INFO] Jira 환경변수가 없어 실행을 건너뜁니다.");
@@ -30,6 +31,13 @@ public class JiraClient {
         Map<String, String> project = new HashMap<>();
         project.put("key", projectKey);
         fields.put("project", project);
+
+        //에픽 연결 (부모 이슈 지정)
+        if (epicKey != null && !epicKey.isEmpty()) {
+            Map<String, String> parent = new HashMap<>();
+            parent.put("key", epicKey);
+            fields.put("parent", parent); // 이 부분이 에픽 아래로 들어가게 만듭니다.
+        }
 
         // 제목 및 내용 (특수문자 자동 치환됨)
         fields.put("summary", summary);

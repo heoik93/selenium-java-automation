@@ -64,7 +64,7 @@ public class TestListener implements ITestListener {
         String errorMsg = result.getThrowable().getMessage();
 
         JiraClient.createJiraIssue(
-                "[Automation] 실패: " + methodName,
+                "[GitHub_Action] 자동화 테스트실패 (테스트 메서드명 : " + methodName + ")",
                 "상세 에러: " + errorMsg);
     }
 
