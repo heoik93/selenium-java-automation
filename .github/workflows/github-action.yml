@@ -63,7 +63,7 @@ jobs:
         run: |
           sed -i "s|^password=.*|password=${{ secrets.DB_PASSWORD }}|" src/main/resources/config/config.properties
           sed -i "s|^anotheruserpassword=.*|anotheruserpassword=${{ secrets.ANOTHER_USER_PWD }}|" src/main/resources/config/config.properties
-          sed -i "s|^adminpassword=.*|anotheruserpassword=${{ secrets.ADMINDB_PWD }}|" src/main/resources/config/config.properties
+          sed -i "s|^adminpassword=.*|adminpassword=${{ secrets.ADMINDB_PWD }}|" src/main/resources/config/config.properties
           sed -i "s|^adminpassword2=.*|adminpassword2=${{ secrets.ADMIN_PWD }}|" src/main/resources/config/config.properties
           sed -i "s|^testpwd=.*|testpwd=${{ secrets.TEST_PWD }}|" src/main/resources/config/config.properties
           sed -i "s|^email.password=.*|email.password=${{ secrets.EMAIL_PWD }}|" src/main/resources/config/config.properties
