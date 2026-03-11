@@ -38,6 +38,7 @@ public class JiraClient {
                     .when()
                     .post("/rest/api/2/issue")
                     .then()
+                    .log().all()
                     .statusCode(201);
 
             System.out.println("[SUCCESS] Jira 버그 티켓 생성 완료!");
