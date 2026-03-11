@@ -1,8 +1,8 @@
 name: Selenium Automated Test
 
 on:
-  push:
-    branches: [ "main", "develop" ]
+  #push:
+  #  branches: [ "main", "develop" ]
   repository_dispatch:
     types: [ dev-push-event ]
   workflow_dispatch:
