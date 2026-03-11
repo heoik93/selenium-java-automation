@@ -15,6 +15,11 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TestListener implements ITestListener {
     private static ExtentReports extent = ExtentManager.getInstance();
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
@@ -62,10 +67,14 @@ public class TestListener implements ITestListener {
         // 지라 연동추가
         String methodName = result.getMethod().getMethodName();
         String errorMsg = result.getThrowable().getMessage();
+        ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        String timestamp = nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         JiraClient.createJiraIssue(
                 "[GitHub_Action] 자동화 테스트실패 (테스트 메서드명 : " + methodName + ")",
-                "상세 에러: " + errorMsg);
+                "📅 발생 시간 (KST): " + timestamp + "\n\n" +
+                          "❗ 상세 에러 메시지:\n" + "```\n" + errorMsg + "\n```"
+        );
     }
 
     @Override
