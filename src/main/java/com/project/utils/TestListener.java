@@ -81,7 +81,7 @@ public class TestListener implements ITestListener {
             int passed = context.getPassedTests().size();
             int failed = context.getFailedTests().size();
             int skipped = context.getSkippedTests().size();
-            
+
             //디버깅용 xml은 메일스킵
             if ("Debug Suite".equals(suiteName)) {
                 System.out.println("디버그 모드이므로 메일 전송을 건너뜁니다.");

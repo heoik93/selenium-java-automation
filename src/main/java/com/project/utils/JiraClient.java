@@ -25,7 +25,7 @@ public class JiraClient {
                         "    \"project\": { \"key\": \"%s\" },\n" +
                         "    \"summary\": \"%s\",\n" +
                         "    \"description\": \"%s\",\n" +
-                        "    \"issuetype\": { \"name\": \"Bug\" }\n" +
+                        "    \"issuetype\": { \"name\": \"버그\" }\n" +
                         "  }\n" +
                         "}", projectKey, summary, description
         );
