@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestListener implements ITestListener {
     private static ExtentReports extent = ExtentManager.getInstance();
@@ -60,32 +62,41 @@ public class TestListener implements ITestListener {
         Object currentClass = result.getInstance();
         WebDriver driver = ((BaseTest) currentClass).getDriver();
 
-        String screenshotPath = null;
+        // 1. 모든 스크린샷 경로를 담을 리스트 준비
+        List<String> allScreenshotPaths = new ArrayList<>();
+
+        // 2. SoftAssert에서 모아둔 경로 리스트가 있다면 가져오기
+        List<String> softPaths = (List<String>) result.getAttribute("screenshotPaths");
+        if (softPaths != null) {
+            allScreenshotPaths.addAll(softPaths);
+        }
 
         if (driver != null) {
+            // ExtentReport용 (Base64)
             String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
             test.get().addScreenCaptureFromBase64String(base64Screenshot, "[최종 실패] 테스트 종료 시점 화면");
 
+            //최종 실패 스크린샷 파일 저장
             try {
                 File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                screenshotPath = "target/screenshots/" + result.getName() + "_" + System.currentTimeMillis() + ".png";
-                File destFile = new File(screenshotPath);
-
-                // 디렉토리가 없으면 생성 후 파일 복사
+                String finalPath = "target/screenshots/FINAL_" + result.getName() + "_" + System.currentTimeMillis() + ".png";
+                File destFile = new File(finalPath);
                 destFile.getParentFile().mkdirs();
                 org.apache.commons.io.FileUtils.copyFile(srcFile, destFile);
+
+                // 리스트에 최종 경로 추가
+                allScreenshotPaths.add(finalPath);
             } catch (Exception e) {
                 System.out.println("[ERROR] 스크린샷 파일 저장 실패: " + e.getMessage());
             }
         }
 
-        // 3. 지라 연동 데이터 준비
+        //지라 티켓 생성
         String methodName = result.getMethod().getMethodName();
         String errorMsg = result.getThrowable().getMessage();
         ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         String timestamp = nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        // 4. 지라 티켓 생성 및 Key 수신
         String issueKey = JiraClient.createJiraIssue(
                 "[GitHub_Action] 자동화 테스트실패 (테스트 메서드명 : " + methodName + ")",
                 "📅 발생 시간 (KST): " + timestamp + "\n\n" +
@@ -93,9 +104,11 @@ public class TestListener implements ITestListener {
                         "{code:java}\n" + errorMsg + "\n{code}"
         );
 
-        // 5. 생성된 티켓에 스크린샷 파일 첨부
-        if (issueKey != null && screenshotPath != null) {
-            JiraClient.addAttachment(issueKey, screenshotPath);
+        //리스트에 담긴 모든 파일을 Jira에 업로드
+        if (issueKey != null && !allScreenshotPaths.isEmpty()) {
+            for (String path : allScreenshotPaths) {
+                JiraClient.addAttachment(issueKey, path);
+            }
         }
     }
 
