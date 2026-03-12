@@ -53,7 +53,8 @@ public class TestListener implements ITestListener {
         test.get().skip(MarkupHelper.createLabel("TEST SKIPPED (Retrying...)", ExtentColor.ORANGE));
         test.get().skip(result.getThrowable());
     }
-
+    
+    @SuppressWarnings("unchecked")
     @Override
     public void onTestFailure(ITestResult result) {
         test.get().fail(MarkupHelper.createLabel("TEST FAILED", ExtentColor.RED));
@@ -62,36 +63,52 @@ public class TestListener implements ITestListener {
         Object currentClass = result.getInstance();
         WebDriver driver = ((BaseTest) currentClass).getDriver();
 
-        // 1. 모든 스크린샷 경로를 담을 리스트 준비
+        //데이터 준비
         List<String> allScreenshotPaths = new ArrayList<>();
+        StringBuilder tableBuilder = new StringBuilder("\n\n*📸 스크린샷 상세 정보 (SoftAssert 포함)*\n");
+        tableBuilder.append("|| 순서 || 파일명 || 에러 내용 ||\n"); // 지라 표 헤더
+        int rowNum = 1;
 
-        // 2. SoftAssert에서 모아둔 경로 리스트가 있다면 가져오기
-        List<String> softPaths = (List<String>) result.getAttribute("screenshotPaths");
-        if (softPaths != null) {
-            allScreenshotPaths.addAll(softPaths);
+        //SoftAssert 정보 불러와서 표 작성
+        List<String[]> softFailureInfos = (List<String[]>) result.getAttribute("softFailureInfos");
+        if (softFailureInfos != null) {
+            for (String[] info : softFailureInfos) {
+                String path = info[0];
+                String msg = info[1];
+                String fileName = new File(path).getName();
+
+                // 지라 표 행 추가
+                tableBuilder.append("| ").append(rowNum++).append(" | ").append(fileName)
+                        .append(" | ").append(msg).append(" |\n");
+                allScreenshotPaths.add(path);
+            }
         }
 
         if (driver != null) {
-            // ExtentReport용 (Base64)
+            // ExtentReport용 (Base64) - 기존 유지
             String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
             test.get().addScreenCaptureFromBase64String(base64Screenshot, "[최종 실패] 테스트 종료 시점 화면");
 
             //최종 실패 스크린샷 파일 저장
             try {
                 File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                String finalPath = "target/screenshots/FINAL_" + result.getName() + "_" + System.currentTimeMillis() + ".png";
+                String finalFileName = "FINAL_" + result.getName() + "_" + System.currentTimeMillis() + ".png";
+                String finalPath = "target/screenshots/" + finalFileName;
                 File destFile = new File(finalPath);
                 destFile.getParentFile().mkdirs();
                 org.apache.commons.io.FileUtils.copyFile(srcFile, destFile);
 
-                // 리스트에 최종 경로 추가
+                // 표에 최종 실패 행 추가
+                tableBuilder.append("| ").append(rowNum).append(" (최종) | ")
+                        .append(finalFileName).append(" | 테스트 중단 시점 스크린샷 |\n");
+
                 allScreenshotPaths.add(finalPath);
             } catch (Exception e) {
                 System.out.println("[ERROR] 스크린샷 파일 저장 실패: " + e.getMessage());
             }
         }
 
-        //지라 티켓 생성
+        //지라 티켓 생성 (표 내용 포함)
         String methodName = result.getMethod().getMethodName();
         String errorMsg = result.getThrowable().getMessage();
         ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
@@ -101,10 +118,11 @@ public class TestListener implements ITestListener {
                 "[GitHub_Action] 자동화 테스트실패 (테스트 메서드명 : " + methodName + ")",
                 "📅 발생 시간 (KST): " + timestamp + "\n\n" +
                         "❗ 상세 에러 메시지:\n" +
-                        "{code:java}\n" + errorMsg + "\n{code}"
+                        "{code:java}\n" + errorMsg + "\n{code}" +
+                        tableBuilder.toString()
         );
 
-        //리스트에 담긴 모든 파일을 Jira에 업로드
+        // 5. 모든 파일 업로드 - 기존 유지
         if (issueKey != null && !allScreenshotPaths.isEmpty()) {
             for (String path : allScreenshotPaths) {
                 JiraClient.addAttachment(issueKey, path);
