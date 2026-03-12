@@ -53,7 +53,7 @@ public class TestListener implements ITestListener {
         test.get().skip(MarkupHelper.createLabel("TEST SKIPPED (Retrying...)", ExtentColor.ORANGE));
         test.get().skip(result.getThrowable());
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public void onTestFailure(ITestResult result) {
