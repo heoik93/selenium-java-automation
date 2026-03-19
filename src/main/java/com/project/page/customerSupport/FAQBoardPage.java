@@ -240,6 +240,7 @@ public class FAQBoardPage extends BasePage {
 
     public void clickFilterServiceButton() {
         click(boardFilterServiceButton);
+        try { Thread.sleep(500); } catch (InterruptedException e) {}
         waitForVisible(FAQBorad);
     }
 
@@ -301,7 +302,7 @@ public class FAQBoardPage extends BasePage {
                 String actualText = element.getText().trim();
 
                 if (!actualText.equals(expectedTag)) {
-                    System.out.println("[FAIL] 일치하지 않음: " + actualText);
+                    System.out.println("[FAIL]일치하지 않음: " + actualText);
                     return false;
                 }
             }
@@ -350,12 +351,12 @@ public class FAQBoardPage extends BasePage {
                     }
                     
                 } else {
-                    System.out.println("[FAIL] 내용 불일치! 기대값: " + content + " / 실제값: " + actualContent);
+                    System.out.println("[FAIL]내용 불일치! 기대값: " + content + " / 실제값: " + actualContent);
                 }
                 return isMatch;
             }
         }
-        System.out.println("[FAIL] 리스트에서 작성한 FAQ(제목: " + title + ")를 찾을 수 없습니다.");
+        System.out.println("[FAIL]리스트에서 작성한 FAQ(제목: " + title + ")를 찾을 수 없습니다.");
         return false;
     }
 

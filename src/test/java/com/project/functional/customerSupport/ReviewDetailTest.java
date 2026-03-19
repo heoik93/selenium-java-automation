@@ -7,12 +7,12 @@ import com.project.page.HomePage;
 import com.project.page.customerSupport.ReviewBoardPage;
 import com.project.page.customerSupport.ReviewDetailPage;
 import com.project.page.myinfo.UseHistoryPage;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.util.Objects;
 
@@ -60,8 +60,8 @@ public class ReviewDetailTest extends BaseTest {
 
         ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        softAssert.assertFalse(reviewDetailPage.check_OderNumberFiledEnable());
-        softAssert.assertFalse(reviewDetailPage.check_ItemFiledEnable());
+        softAssert.assertFalse(reviewDetailPage.check_OderNumberFiledEnable(),"[FAIL]후기상세 페이지의 주문번호 필드가 활성화 되어있습니다.");
+        softAssert.assertFalse(reviewDetailPage.check_ItemFiledEnable(),"[FAIL]후기상세 페이지의 품목 필드가 활성화 되어있습니다.");
 
         softAssert.assertAll();
     }
@@ -88,11 +88,13 @@ public class ReviewDetailTest extends BaseTest {
         //권한별 수정/비표시 체크
         if(Objects.equals(loginUser, "Default")||Objects.equals(loginUser, "Admin")){
             reviewDetailPage.clickModifyButton();
-            softAssert.assertEquals(reviewDetailPage.alertGetText(), AppMessages.reviewDetailPage_Modify_AlertMsg);
+            softAssert.assertEquals(reviewDetailPage.alertGetText(), AppMessages.reviewDetailPage_Modify_AlertMsg,
+                    "[FAIL]후기상세페이지의 수정버튼 클릭시 표시되는 Alert메세지가 올바르지 않습니다.");
             reviewDetailPage.alertAccept();
         }
         if(Objects.equals(loginUser, "Another")){
-            softAssert.assertTrue(reviewDetailPage.ModifyButton_hiddenCheck());
+            softAssert.assertTrue(reviewDetailPage.ModifyButton_hiddenCheck(),
+                    "[FAIL]후기상세페이지의 수정버튼이 일반유저임에도 표시되어있습니다.");
         }
 
         reviewDetailPage.waitForPageLoad();
@@ -105,8 +107,8 @@ public class ReviewDetailTest extends BaseTest {
         String currentTitle = reviewBoardPage_2nd.getPageTitle();
 
         //목록버튼클릭후 정상이동확인
-        softAssert.assertEquals(currentUrl,config.getProperty("ReviewBoardPageURL"));
-        softAssert.assertEquals(currentTitle,PageLabels.reviewBoardPageTitle);
+        softAssert.assertEquals(currentUrl,config.getProperty("ReviewBoardPageURL"),"[FAIL]후기상세페이지에서 목록버튼 클릭후의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(currentTitle,PageLabels.reviewBoardPageTitle,"[FAIL]후기상세페이지에서 목록버튼 클릭후의 페이지타이틀이 올바르지 않습니다.");
 
         softAssert.assertAll();
     }
@@ -139,16 +141,18 @@ public class ReviewDetailTest extends BaseTest {
             System.out.println("[INFO] 삭제할 후기 정보 : 제목-"+reviewTitle+", 내용-"+reviewContent+", 평점-"+reviewStar);
 
             if (reviewOderNumber == null || reviewOderNumber.isEmpty()) {
-                softAssert.fail("[CRITICAL] 주문번호를 가져오지 못했습니다. 테스트를 중단합니다.");
+                softAssert.fail("[FAIL] 주문번호를 가져오지 못했습니다. 테스트를 중단합니다.");
                 softAssert.assertAll();
                 return;}
 
             reviewDetailPage.clickDeleteButton();
-            softAssert.assertEquals(reviewDetailPage.alertGetText(), AppMessages.reviewDetailPage_Delect_AlertMsg);
+            softAssert.assertEquals(reviewDetailPage.alertGetText(), AppMessages.reviewDetailPage_Delect_AlertMsg,
+                    "[FAIL] 후기상세페이지에서 삭제버튼 클릭시의 삭제확인 Alert메세지가 올바르지 않습니다.");
             reviewDetailPage.alertAccept();
 
             ReviewBoardPage reviewBoardPage_2nd = new ReviewBoardPage(driver);
-            softAssert.assertEquals(reviewBoardPage_2nd.alertGetText(), AppMessages.reviewDetailPage_Delect_Success_AlertMsg);
+            softAssert.assertEquals(reviewBoardPage_2nd.alertGetText(), AppMessages.reviewDetailPage_Delect_Success_AlertMsg,
+                    "[FAIL] 후기상세페이지에서 삭제버튼 클릭시의 삭제완료 Alert메세지가 올바르지 않습니다.");
             reviewBoardPage_2nd.alertAccept();
             reviewBoardPage_2nd.waitForPageLoad();
 
@@ -185,18 +189,19 @@ public class ReviewDetailTest extends BaseTest {
                 reviewDetailPage_Create.waitForPageLoad();
 
                 reviewDetailPage_Create.CreateReview(reviewTitle, reviewStar, reviewContent);
-                softAssert.assertEquals(reviewDetailPage_Create.alertGetText(), AppMessages.reviewDetailPage_Create_AlertMsg);
+                softAssert.assertEquals(reviewDetailPage_Create.alertGetText(), AppMessages.reviewDetailPage_Create_AlertMsg,
+                        "[FAIL]후기작성페이지에서 저장시의 Alert메세지가 올바르지 않습니다.");
                 reviewDetailPage_Create.alertAccept();
 
         }
 
         if (Objects.equals(loginUser, "Another")) {
-            softAssert.assertTrue(reviewDetailPage.DeleteButton_hiddenCheck());
+            softAssert.assertTrue(reviewDetailPage.DeleteButton_hiddenCheck(),"[FAIL]일반유저임에도 후기삭제버튼이 표시되어있습니다.");
             reviewDetailPage.clickListButton();
         }
 
         if (Objects.equals(loginUser, "Admin")) {
-            softAssert.assertTrue(reviewDetailPage.DeleteButton_displayCheck());
+            softAssert.assertTrue(reviewDetailPage.DeleteButton_displayCheck(),"[FAIL]관리자유저임에도 후기삭제버튼이 비표시되어있습니다.");
             reviewDetailPage.clickListButton();
         }
 

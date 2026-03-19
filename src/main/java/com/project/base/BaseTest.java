@@ -7,7 +7,6 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
 
 public class BaseTest {
 
@@ -15,16 +14,12 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        // 1) 브라우저 선택 (나중에는 config 파일에서 읽도록 확장 가능)
         String browser = "chrome";
 
         driver = DriverFactory.createDriver(browser);
 
         driver.manage().window().setSize(new Dimension(1920, 1080));
         driver.manage().deleteAllCookies();
-
-
-
     }
 
     public void loginAsDefaultUser() {
@@ -77,7 +72,7 @@ public class BaseTest {
     }
 
     public void debugResult(String expected, String result) {
-        System.out.println("기대값: " + expected+"   실제값: " + result);
+        System.out.println("[Debug] 기대값: " + expected + "   실제값: " + result);
     }
 
     @AfterMethod

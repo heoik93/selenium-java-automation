@@ -3,7 +3,6 @@ package com.project.page.customerSupport;
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
 import config.ConfigReader;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -159,7 +158,7 @@ public class NoticePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfAllElements(Notice_List));
 
         if (Notice_List.isEmpty()) {
-            throw new RuntimeException("[FAIL] 게시글 리스트를 찾을 수 없습니다.");
+            throw new RuntimeException("[FAIL]게시글 리스트를 찾을 수 없습니다.");
         }
 
         Random random = new Random();

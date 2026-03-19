@@ -5,6 +5,7 @@ import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.useguide.AreaGuidePage;
 import com.project.page.useguide.PriceGuidePage;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -19,71 +20,91 @@ public class UseGuidePageTabTest extends BaseTest {
         connectToUrl();
     }
 
-    @Test(testName = "AreaPage Tab Test1")
-    public void AreaPageTabTest1() {
+    //탭테스트(지역안내페이지 : 가격안내탭)
+    @Test(testName = "AreaPage PriceGuideTab Test")
+    public void AreaPage_PriceGuideTabTest() {
         HomePage homePage = new HomePage(driver);
         homePage.navi.goToAreaGuidePage();
         homePage.navi.waitForPageLoad();
 
-        AreaGuidePage areaGuiedPage = new AreaGuidePage(driver);
-        areaGuiedPage.waitForPageLoad();
-        areaGuiedPage.clickPriceGuideTab();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        String currentUrl = areaGuiedPage.getCurrentUrl();
-        String PageTittle = areaGuiedPage.getPageTitle();
+        AreaGuidePage areaGuidePage = new AreaGuidePage(driver);
+        areaGuidePage.waitForPageLoad();
+        areaGuidePage.clickPriceGuideTab();
 
-        Assert.assertEquals(currentUrl, config.getProperty("PriceGuidePAgeURL"));
-        Assert.assertEquals(PageTittle, PageLabels.priceGuidePageTitle);
+        String currentUrl = areaGuidePage.getCurrentUrl();
+        String PageTittle = areaGuidePage.getPageTitle();
+
+        softAssert.assertEquals(currentUrl, config.getProperty("PriceGuidePAgeURL"),"[FAIL]지역안내페이지에서 가격안내탭 클릭시의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(PageTittle, PageLabels.priceGuidePageTitle,"[FAIL]지역안내페이지에서 가격안내탭 클릭시의 페이지타이틀이 올바르지 않습니다.");
+
+        softAssert.assertAll();
     }
 
-    @Test(testName = "AreaPage Tab Test2")
-    public void AreaPageTabTest2() {
+    //탭테스트(지역안내페이지 : 지역안내탭)
+    @Test(testName = "AreaPage AreaGuideTab Test")
+    public void AreaPage_AreaGuideTabTest() {
         HomePage homePage = new HomePage(driver);
         homePage.navi.goToAreaGuidePage();
         homePage.navi.waitForPageLoad();
 
-        AreaGuidePage areaGuiedPage = new AreaGuidePage(driver);
-        areaGuiedPage.waitForPageLoad();
-        areaGuiedPage.clickAreaGuideTab();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        String currentUrl = areaGuiedPage.getCurrentUrl();
-        String PageTittle = areaGuiedPage.getPageTitle();
+        AreaGuidePage areaGuidePage = new AreaGuidePage(driver);
+        areaGuidePage.waitForPageLoad();
+        areaGuidePage.clickAreaGuideTab();
 
-        Assert.assertEquals(currentUrl, config.getProperty("AreaGuidePageURL"));
-        Assert.assertEquals(PageTittle, PageLabels.areaGuidePageTitle);
+        String currentUrl = areaGuidePage.getCurrentUrl();
+        String PageTittle = areaGuidePage.getPageTitle();
+
+        softAssert.assertEquals(currentUrl, config.getProperty("AreaGuidePageURL"),"[FAIL]지역안내페이지에서 지역안내탭 클릭시의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(PageTittle, PageLabels.areaGuidePageTitle,"[FAIL]지역안내페이지에서 지역안내탭 클릭시의 페이지타이틀이 올바르지 않습니다.");
+
+        softAssert.assertAll();
     }
 
-    @Test(testName = "PricePage Tab Test1")
-    public void PricePageTabTest1() {
+    //탭테스트(가격안내페이지 : 가격안내탭)
+    @Test(testName = "PricePage PriceGuideTab Test")
+    public void PricePage_PriceGuideTabTest() {
         HomePage homePage = new HomePage(driver);
         homePage.navi.goToPriceGuidePage();
         homePage.navi.waitForPageLoad();
 
-        PriceGuidePage priceGuiedPage = new PriceGuidePage(driver);
-        priceGuiedPage.waitForPageLoad();
-        priceGuiedPage.clickPriceGuideTab();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        String currentUrl = priceGuiedPage.getCurrentUrl();
-        String PageTittle = priceGuiedPage.getPageTitle();
+        PriceGuidePage priceGuidePage = new PriceGuidePage(driver);
+        priceGuidePage.waitForPageLoad();
+        priceGuidePage.clickPriceGuideTab();
 
-        Assert.assertEquals(currentUrl, config.getProperty("PriceGuidePAgeURL"));
-        Assert.assertEquals(PageTittle, PageLabels.priceGuidePageTitle);
+        String currentUrl = priceGuidePage.getCurrentUrl();
+        String PageTittle = priceGuidePage.getPageTitle();
+
+        softAssert.assertEquals(currentUrl, config.getProperty("PriceGuidePAgeURL"),"[FAIL]가격안내페이지에서 가격안내탭 클릭시의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(PageTittle, PageLabels.priceGuidePageTitle,"[FAIL]가격안내페이지에서 가격안내탭 클릭시의 페이지타이틀이 올바르지 않습니다.");
+
+        softAssert.assertAll();
     }
 
-    @Test(testName = "PricePage Tab Test2")
-    public void PricePageTabTest2() {
+    //탭테스트(가격안내페이지 : 지역안내탭)
+    @Test(testName = "PricePage AreaGuideTab Test")
+    public void PricePage_AreaGuideTabTest() {
         HomePage homePage = new HomePage(driver);
         homePage.navi.goToPriceGuidePage();
         homePage.navi.waitForPageLoad();
 
-        PriceGuidePage priceGuiedPage = new PriceGuidePage(driver);
-        priceGuiedPage.waitForPageLoad();
-        priceGuiedPage.clickAreaGuideTab();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        String currentUrl = priceGuiedPage.getCurrentUrl();
-        String PageTittle = priceGuiedPage.getPageTitle();
+        PriceGuidePage priceGuidePage = new PriceGuidePage(driver);
+        priceGuidePage.waitForPageLoad();
+        priceGuidePage.clickAreaGuideTab();
 
-        Assert.assertEquals(currentUrl, config.getProperty("AreaGuidePageURL"));
-        Assert.assertEquals(PageTittle, PageLabels.areaGuidePageTitle);
+        String currentUrl = priceGuidePage.getCurrentUrl();
+        String PageTittle = priceGuidePage.getPageTitle();
+
+        softAssert.assertEquals(currentUrl, config.getProperty("AreaGuidePageURL"),"[FAIL]가격안내페이지에서 지역안내탭 클릭시의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(PageTittle, PageLabels.areaGuidePageTitle,"[FAIL]가격안내페이지에서 지역안내탭 클릭시의 페이지타이틀이 올바르지 않습니다.");
+
+        softAssert.assertAll();
     }
 }

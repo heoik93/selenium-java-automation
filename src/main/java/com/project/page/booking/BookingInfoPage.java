@@ -67,13 +67,11 @@ public class BookingInfoPage extends BasePage {
     @FindBy(xpath = "//img[@alt='리빙']")
     private WebElement living_Img;
 
-    //클릭 매서드
     public void clickClothesBox(){  click(clothes_SelectBox); }
     public void clickBeddingBox(){  click(bedding_SelectBox); }
     public void clickShoesBox(){  click(shoes_SelectBox); }
     public void clickLivingBox(){  click(living_SelectBox); }
 
-    //텍스트 매서드
     public String getBookingPageTitleText(){  return getText(bookingPageTitleText); }
     public String getClothesText(){  return getText(clothes_TextBox); }
     public String getBeddingText(){  return getText(bedding_TextBox); }
@@ -85,7 +83,6 @@ public class BookingInfoPage extends BasePage {
     public String getShoesTitleText(){  return getText(shoes_TitleText); }
     public String getLivingTitleText(){  return getText(living_TitleText); }
 
-    //src획득 매서드
     public String getClothesImgSrc(){  return clothes_Img.getAttribute("src"); }
     public String getBeddingImgSrc(){  return bedding_Img.getAttribute("src"); }
     public String getShoesImgSrc(){  return shoes_Img.getAttribute("src"); }

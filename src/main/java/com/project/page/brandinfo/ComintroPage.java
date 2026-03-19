@@ -71,15 +71,12 @@ public class ComintroPage extends BasePage {
     public String getComintro_2h3p_LabelText() {
         return getText(comintro_2h3p_Label);
     }
-
     public String getComintroTabText() {
         return getText(comintroTab);
     }
-
     public String getHistoryTabText() {
         return getText(historyTab);
     }
-
     public String getStartupTabText() {
         return getText(startupTab);
     }
@@ -89,7 +86,7 @@ public class ComintroPage extends BasePage {
         click(tab);
     }
 
-    //기타
+
     public boolean activeTabText() {
        return isTabActive(comintroTab);
     }

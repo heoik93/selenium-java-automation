@@ -155,7 +155,7 @@ public class ReviewBoardPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfAllElements(reviewBoardList));
 
         if (reviewBoardList.isEmpty()) {
-            throw new RuntimeException("[FAIL] 게시글 리스트를 찾을 수 없습니다. (Size 0)");
+            throw new RuntimeException("[FAIL]게시글 리스트를 찾을 수 없습니다. (Size 0)");
         }
 
         Random random = new Random();
@@ -176,16 +176,12 @@ public class ReviewBoardPage extends BasePage {
     public String getReviewTitle(int index){
         return reviewBoardList_Title.get(index).getText();
     }
-
     public String getReviewStar(int index){
         return reviewBoardList_Star.get(index).getText();
     }
-
     public void clickReview(int index) {
         click(reviewBoardList.get(index));
     }
-
-
 
     //검색
     public void searchKeyword(String keyword){

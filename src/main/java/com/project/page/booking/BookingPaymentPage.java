@@ -15,8 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Set;
 
-import static org.openqa.selenium.devtools.v117.domstorage.DOMStorage.clear;
-
 public class BookingPaymentPage extends BasePage {
 
     public NavigationBar navi;
@@ -147,7 +145,6 @@ public class BookingPaymentPage extends BasePage {
     //placeholder 및 inputbox 텍스트 추출메서드
     public String getPlaceholder_requestInputBox() {  return requestInputBox.getAttribute("placeholder");  }
     public String getPlaceholder_emailInputBox(){  return emailInputBox.getAttribute("placeholder");   }
-
     public String getInputbox_userIdInputBox(){  return userIdInputBox.getAttribute("value");  }
     public String getInputbox_productCountInputBox(){  return productCountInputBox.getAttribute("value");  }
     public String getInputbox_amountInputBox(){  return amountInputBox.getAttribute("value");  }

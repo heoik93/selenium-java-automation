@@ -167,7 +167,7 @@ public class NavigationBar extends BasePage {
     public void goToFAQBoardPage(){
         hover(customerSupportMenuLink);
         click(customerSupportMenuLink);
-        click(FAQBoardLink);  //현재 버그로 해당요소 없음
+        click(FAQBoardLink);
     }
 
     public void goToNoticePage(){
@@ -176,8 +176,6 @@ public class NavigationBar extends BasePage {
         click(NoticeLink);
     }
 
-
-    //네이게이션 바로 각 페이지로 이동시 url/타이틀이 유효한지 테스트를 추가할 것
 
 }
 

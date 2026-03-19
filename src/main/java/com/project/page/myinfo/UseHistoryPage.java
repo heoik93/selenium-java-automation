@@ -3,14 +3,12 @@ package com.project.page.myinfo;
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
 import config.ConfigReader;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -208,12 +206,12 @@ public class UseHistoryPage extends BasePage {
             //룰체크
             if (status.equals("반환완료")) {
                 if (!hasButton) {
-                    System.out.println("[FAIL] " + (i + 1) + "번 게시물: 상태는 '반환완료'인데 버튼이 안 보임");
+                    System.out.println("[FAIL]" + (i + 1) + "번 게시물: 상태는 '반환완료'인데 버튼이 안 보임");
                     isAllMatch = false;
                 }
             } else {
                 if (hasButton) {
-                    System.out.println("[FAIL] " + (i + 1) + "번 게시물: 상태가 '" + status + "'인데 버튼이 노출됨");
+                    System.out.println("[FAIL]" + (i + 1) + "번 게시물: 상태가 '" + status + "'인데 버튼이 노출됨");
                     isAllMatch = false;
                 }
             }
@@ -403,7 +401,7 @@ public class UseHistoryPage extends BasePage {
             return true;
         }
         String actual = statusList.get(index).getText().trim();
-        System.out.println("[FAIL] 상태 불일치 - 기대값: " + findStatus + ", 실제값: " + actual);
+        System.out.println("[FAIL]상태 불일치 - 기대값: " + findStatus + ", 실제값: " + actual);
         return false;
     }
 

@@ -14,7 +14,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Collections;
 import java.util.Map;
 
 public class OderDetailTest extends BaseTest {
@@ -51,11 +50,13 @@ public class OderDetailTest extends BaseTest {
         oderDetailPage.clickRefundButton();
 
         String refundAlertMsg_1 =  oderDetailPage.alertGetText();
-        softAssert.assertEquals(refundAlertMsg_1, AppMessages.oderDetailPage_Refund_AlertMsg_1,"[FAIL]환불요청 확인 메세지의 텍스트가 올바르지 않습니다.");
+        softAssert.assertEquals(refundAlertMsg_1, AppMessages.oderDetailPage_Refund_AlertMsg_1,
+                "[FAIL]환불요청 확인 메세지의 텍스트가 올바르지 않습니다.");
         oderDetailPage.alertAccept();
 
         String refundAlertMsg_2 =  oderDetailPage.alertGetText();
-        softAssert.assertEquals(refundAlertMsg_2, AppMessages.oderDetailPage_Refund_AlertMsg_2,"[FAIL]환불요청 완료 메세지의 텍스트가 올바르지 않습니다.");
+        softAssert.assertEquals(refundAlertMsg_2, AppMessages.oderDetailPage_Refund_AlertMsg_2,
+                "[FAIL]환불요청 완료 메세지의 텍스트가 올바르지 않습니다.");
         oderDetailPage.alertAccept();
 
         UseHistoryPage useHistoryPage_afterRefund = new UseHistoryPage(driver);
@@ -63,7 +64,8 @@ public class OderDetailTest extends BaseTest {
 
         useHistoryPage_afterRefund.movePage(targetPage);
         String OderStatus_After = "환불완료";
-        softAssert.assertTrue(useHistoryPage_afterRefund.checkTargetStatus(targetIndex,OderStatus_After),"[FAIL]해당 리스트의 처리상태가 '환불완료'로 갱신되지 않았습니다");
+        softAssert.assertTrue(useHistoryPage_afterRefund.checkTargetStatus(targetIndex,OderStatus_After),
+                "[FAIL]해당 리스트의 처리상태가 '환불완료'로 갱신되지 않았습니다");
 
         softAssert.assertAll();
     }

@@ -8,7 +8,7 @@ import org.testng.annotations.ITestAnnotation;
 public class AnnotationTransformer implements IAnnotationTransformer {
     @Override
     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
-        // 모든 테스트 메서드에 자동으로 Retry 클래스를 설정함
+        // 모든 테스트 메서드에 자동으로 Retry 클래스를 설정
         annotation.setRetryAnalyzer(Retry.class);
     }
 }

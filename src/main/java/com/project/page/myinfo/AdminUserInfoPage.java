@@ -2,8 +2,6 @@ package com.project.page.myinfo;
 
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
-import com.project.page.customerSupport.NoticeCreatePage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +10,6 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AdminUserInfoPage extends BasePage {
 
@@ -167,13 +164,9 @@ public class AdminUserInfoPage extends BasePage {
     public boolean isMyInfoTabActive(){
         return isTabActive(myInfoTab);
     }
-
     public void clickUseHistoryTab(){ click(useHistoryTab);}
-
     public void clickMyInfoTab(){ click(myInfoTab); }
-
     public void clickAllCheckButton(){ click(allCheckButton); }
-
     public int getCheckBoxCount(){ return CheckButton.size();}
 
     public int getCheckedCheckBoxCount(){
@@ -198,7 +191,7 @@ public class AdminUserInfoPage extends BasePage {
     public boolean checkUserTypeFilterResult(String userType) {
         for (WebElement type : userTypeList) {
             if (!type.getText().trim().equals(userType)) {
-                System.out.println("[FAIL] 유저타입 필터링 결과에 '"+userType+"'이(가) 아닌 항목이 포함되어 있습니다: " + type.getText().trim());
+                System.out.println("[FAIL]유저타입 필터링 결과에 '"+userType+"'이(가) 아닌 항목이 포함되어 있습니다: " + type.getText().trim());
                 return false;
             }
         }

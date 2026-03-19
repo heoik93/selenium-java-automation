@@ -3,13 +3,13 @@ package com.project.ui.useGuide;
 import com.project.base.BaseTest;
 import com.project.constants.PageLabels;
 import com.project.page.HomePage;
-import com.project.page.useguide.AreaGuidePage.AreaLabel;
 import com.project.page.useguide.AreaGuidePage;
+import com.project.page.useguide.AreaGuidePage.AreaLabel;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 public class AreaGuidePageTest extends BaseTest {
 

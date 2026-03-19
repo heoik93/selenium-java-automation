@@ -2,12 +2,10 @@ package com.project.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.project.base.BaseTest;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +14,6 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -100,7 +97,7 @@ public class TestListener implements ITestListener {
 
                 // 표에 최종 실패 행 추가
                 tableBuilder.append("| ").append(rowNum).append(" (최종) | ")
-                        .append(finalFileName).append(" | 테스트 중단 시점 스크린샷 |\n");
+                        .append(finalFileName).append(" | 테스트 실패후 종료 시점 스크린샷 |\n");
 
                 allScreenshotPaths.add(finalPath);
             } catch (Exception e) {

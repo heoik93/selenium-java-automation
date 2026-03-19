@@ -16,7 +16,6 @@ public class SignupPage extends BasePage {
     public SignupPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        // scroll = new ScrollUtil(driver);
     }
 
     @FindBy(id = "chk_all")
@@ -75,13 +74,6 @@ public class SignupPage extends BasePage {
 
     public void agreeSignup() {
         click(agreeAllCheckbox);
-        scroll.scrollToBottom();
-        click(confirmButton);
-    }
-
-    //테스트중
-    public void setAgreeTermsCheckbox() {
-        click(agreeTermsCheckbox);
         scroll.scrollToBottom();
         click(confirmButton);
     }
@@ -159,8 +151,6 @@ public class SignupPage extends BasePage {
     public void enterAddress(String zipcode, String address, String detail, String extra) {
         js.setValue(postcodeInputBox, zipcode);
         js.setValue(addressInputBox, address);
-        // 자바스크립트로 직접입력하면 NG가 되는 버그
-        // js.setValue(detailAddressInputBox, detail);
         inputDetailAddress("상세주소123");
         js.setValue(extraAddressInputBox, extra);
     }

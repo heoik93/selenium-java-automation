@@ -1,13 +1,13 @@
 package com.project.ui.brandInfo;
 
 import com.project.base.BaseTest;
+import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.brandinfo.ComintroPage;
-import com.project.constants.PageLabels;
+import com.project.utils.ScreenshotSoftAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 public class ComintroPageTest extends BaseTest {
 

@@ -71,7 +71,7 @@
             <class name="com.project.functional.mypage.MyinfoTest">
                 <methods>
                     <include name="MyinfoUpdateFlowTest"/>
-                    <include name="ChangePasswordFlowTest"/>   <!--버스수정확인-->
+                    <include name="ChangePasswordFlowTest"/>
                 </methods>
             </class>
 

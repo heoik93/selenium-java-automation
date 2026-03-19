@@ -116,6 +116,7 @@ public class MyinfoPage  extends BasePage {
     }
 
     public Map<String, String> getAllUserInfo() {
+        waitForVisible(useridField);
         Map<String, String> info = new HashMap<>();
         info.put("userId", getUserId());
         info.put("address", getAddress());

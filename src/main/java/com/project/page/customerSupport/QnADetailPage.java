@@ -140,11 +140,9 @@ public class QnADetailPage extends BasePage {
     public void clickAnswerSubmitButton(){
         click(QnADetail_AdminAnswerSubmitButton);
     }
-
     public void clickAnswerModifyButton(){
         click(QnADetail_AnswerArea_ModifyButton);
     }
-
     public void clickAnswerDeleteButton(){
         click(QnADetail_AnswerArea_DeleteButton);
     }

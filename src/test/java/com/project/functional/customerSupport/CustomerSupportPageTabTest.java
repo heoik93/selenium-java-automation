@@ -7,11 +7,11 @@ import com.project.page.customerSupport.FAQBoardPage;
 import com.project.page.customerSupport.NoticePage;
 import com.project.page.customerSupport.QnABoardPage;
 import com.project.page.customerSupport.ReviewBoardPage;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.lang.reflect.Method;
 
@@ -24,8 +24,8 @@ public class CustomerSupportPageTabTest extends BaseTest {
         String currentUrl = driver.getCurrentUrl();
         String pageTitle = driver.getTitle();
 
-        softAssert.assertEquals(currentUrl, config.getProperty(expectedUrlKey));
-        softAssert.assertEquals(pageTitle, expectedTitle);
+        softAssert.assertEquals(currentUrl, config.getProperty(expectedUrlKey),"[FAIL]탭클릭 후의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(pageTitle, expectedTitle,"[FAIL]탭클릭 후의 페이지타이틀이 올바르지 않습니다.");
         System.out.println("[INFO] URL: " + currentUrl + " | Title: " + pageTitle);
         softAssert.assertAll();
     }
@@ -67,9 +67,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         System.out.println("[INFO] ===== Setup Completed: " + methodName + " =====");
     }
 
-    //ReviewBoard
-    @Test(testName = "ReviewBoardPage Tab Test1", groups = {"ReviewBoardPage"})
-    public void reviewBoardPage_TabTest1() {
+    //탭테스트 (후기게시판페이지 : 후기게시판탭)
+    @Test(testName = "ReviewBoardPage ReviewBoardTabTest", groups = {"ReviewBoardPage"})
+    public void reviewBoardPage_ReviewBoardTabTest() {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
@@ -80,8 +80,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("ReviewBoardPageURL",PageLabels.reviewBoardPageTitle);
     }
 
-    @Test(testName = "ReviewBoardPage Tab Test2", groups = {"FAQBoardPage"})
-    public void reviewBoardPage_TabTest2() {
+    //탭테스트 (후기게시판페이지 : 질문게시판탭)
+    @Test(testName = "ReviewBoardPage FAQBoardTabTest", groups = {"FAQBoardPage"})
+    public void reviewBoardPage_FAQBoardTabTest() {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
@@ -92,8 +93,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("FAQBoardPageURL",PageLabels.FAQBoardPageTitle);
     }
 
-    @Test(testName = "ReviewBoardPage Tab Test3", groups = {"QnABoardPage"})
-    public void reviewBoardPage_TabTest3() {
+    //탭테스트 (후기게시판페이지 : 1:1 문의탭)
+    @Test(testName = "ReviewBoardPage QnABoardTabTest", groups = {"QnABoardPage"})
+    public void reviewBoardPage_QnABoardTabTest() {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
@@ -104,8 +106,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("QnABoardPageURL",PageLabels.QnABoardPageTitle);
     }
 
-    @Test(testName = "ReviewBoardPage Tab Test4", groups = {"NoticePage"})
-    public void reviewBoardPage_TabTest4() {
+    //탭테스트 (후기게시판페이지 : 공지사항탭)
+    @Test(testName = "ReviewBoardPage NoticeTabTest", groups = {"NoticePage"})
+    public void reviewBoardPage_NoticeTabTest() {
         ReviewBoardPage reviewBoardPage = new ReviewBoardPage(driver);
         reviewBoardPage.waitForPageLoad();
 
@@ -116,9 +119,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("NoticePageURL",PageLabels.noticePageTitle);
     }
 
-    //FAQBoard
-    @Test(testName = "FAQBoardPage Tab Test1", groups = {"ReviewBoardPage"})
-    public void faqBoardPage_TabTest1() {
+    //탭테스트 (질문게시판페이지 : 후기게시판탭)
+    @Test(testName = "FAQBoardPage ReviewBoardTabTest", groups = {"ReviewBoardPage"})
+    public void faqBoardPage_ReviewBoardTabTest() {
         FAQBoardPage faqBoardPage = new FAQBoardPage(driver);
         faqBoardPage.waitForPageLoad();
 
@@ -129,8 +132,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("ReviewBoardPageURL",PageLabels.reviewBoardPageTitle);
     }
 
-    @Test(testName = "FAQBoardPage Tab Test2", groups = {"FAQBoardPage"})
-    public void faqBoardPage_TabTest2() {
+    //탭테스트 (질문게시판페이지 : 질문게시판탭)
+    @Test(testName = "FAQBoardPage FAQBoardTabTest", groups = {"FAQBoardPage"})
+    public void faqBoardPage_FAQBoardTabTest() {
         FAQBoardPage faqBoardPage = new FAQBoardPage(driver);
         faqBoardPage.waitForPageLoad();
 
@@ -141,8 +145,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("FAQBoardPageURL",PageLabels.FAQBoardPageTitle);
     }
 
-    @Test(testName = "FAQBoardPage Tab Test3", groups = {"QnABoardPage"})
-    public void faqBoardPage_TabTest3() {
+    //탭테스트 (질문게시판페이지 : 1:1 문의탭)
+    @Test(testName = "FAQBoardPage QnABoardTabTest", groups = {"QnABoardPage"})
+    public void faqBoardPage_QnABoardTabTest() {
         FAQBoardPage faqBoardPage = new FAQBoardPage(driver);
         faqBoardPage.waitForPageLoad();
 
@@ -153,8 +158,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("QnABoardPageURL",PageLabels.QnABoardPageTitle);
     }
 
-    @Test(testName = "FAQBoardPage Tab Test4", groups = {"NoticePage"})
-    public void faqBoardPage_TabTest4() {
+    //탭테스트 (질문게시판페이지 : 공지사항탭)
+    @Test(testName = "FAQBoardPage NoticeTabTest", groups = {"NoticePage"})
+    public void faqBoardPage_NoticeTabTest() {
         FAQBoardPage faqBoardPage = new FAQBoardPage(driver);
         faqBoardPage.waitForPageLoad();
 
@@ -165,9 +171,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("NoticePageURL",PageLabels.noticePageTitle);
     }
 
-    //QnABoard
-    @Test(testName = "QnABoardPage Tab Test1", groups = {"ReviewBoardPage"})
-    public void qnaBoardPage_TabTest1() {
+    //탭테스트 (1:1 문의페이지 : 후기게시판탭)
+    @Test(testName = "QnABoardPage ReviewBoardTabTest", groups = {"ReviewBoardPage"})
+    public void qnaBoardPage_ReviewBoardTabTest() {
         QnABoardPage qnaBoardPage = new QnABoardPage(driver);
         qnaBoardPage.waitForPageLoad();
 
@@ -178,8 +184,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("ReviewBoardPageURL",PageLabels.reviewBoardPageTitle);
     }
 
-    @Test(testName = "QnABoardPage Tab Test2", groups = {"FAQBoardPage"})
-    public void qnaBoardPage_TabTest2() {
+    //탭테스트 (1:1 문의페이지 : 질문게시판탭)
+    @Test(testName = "QnABoardPage FAQBoardTabTest", groups = {"FAQBoardPage"})
+    public void qnaBoardPage_FAQBoardTabTest() {
         QnABoardPage qnaBoardPage = new QnABoardPage(driver);
         qnaBoardPage.waitForPageLoad();
 
@@ -190,8 +197,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("FAQBoardPageURL",PageLabels.FAQBoardPageTitle);
     }
 
-    @Test(testName = "QnABoardPage Tab Test3", groups = {"QnABoardPage"})
-    public void qnaBoardPage_TabTest3() {
+    //탭테스트 (1:1 문의페이지 : 1:1 문의탭)
+    @Test(testName = "QnABoardPage QnABoardTabTest", groups = {"QnABoardPage"})
+    public void qnaBoardPage_QnABoardTabTest() {
         QnABoardPage qnaBoardPage = new QnABoardPage(driver);
         qnaBoardPage.waitForPageLoad();
 
@@ -202,8 +210,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("QnABoardPageURL",PageLabels.QnABoardPageTitle);
     }
 
-    @Test(testName = "QnABoardPage Tab Test4", groups = {"NoticePage"})
-    public void qnaBoardPage_TabTest4() {
+    //탭테스트 (1:1 문의페이지 : 공지사항탭)
+    @Test(testName = "QnABoardPage NoticeTabTest", groups = {"NoticePage"})
+    public void qnaBoardPage_NoticeTabTest() {
         QnABoardPage qnaBoardPage = new QnABoardPage(driver);
         qnaBoardPage.waitForPageLoad();
 
@@ -214,9 +223,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("NoticePageURL",PageLabels.noticePageTitle);
     }
 
-    //Notice
-    @Test(testName = "NoticePage Tab Test1", groups = {"ReviewBoardPage"})
-    public void noticePage_TabTest1() {
+    //탭테스트 (공지사항페이지 : 후기게시판탭)
+    @Test(testName = "NoticePage ReviewBoardTabTest", groups = {"ReviewBoardPage"})
+    public void noticePage_ReviewBoardTabTest() {
         NoticePage noticePage = new NoticePage(driver);
         noticePage.waitForPageLoad();
 
@@ -227,8 +236,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("ReviewBoardPageURL",PageLabels.reviewBoardPageTitle);
     }
 
-    @Test(testName = "NoticePage Tab Test2", groups = {"FAQBoardPage"})
-    public void noticePage_TabTest2() {
+    //탭테스트 (공지사항페이지 : 질문게시판탭)
+    @Test(testName = "NoticePage FAQBoardTabTest", groups = {"FAQBoardPage"})
+    public void noticePage_FAQBoardTabTest() {
         NoticePage noticePage = new NoticePage(driver);
         noticePage.waitForPageLoad();
 
@@ -239,8 +249,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("FAQBoardPageURL",PageLabels.FAQBoardPageTitle);
     }
 
-    @Test(testName = "NoticePage Tab Test3", groups = {"QnABoardPage"})
-    public void noticePage_TabTest3() {
+    //탭테스트 (공지사항페이지 : 1:1 문의탭)
+    @Test(testName = "NoticePage QnABoardTabTest", groups = {"QnABoardPage"})
+    public void noticePage_QnABoardTabTest() {
         NoticePage noticePage = new NoticePage(driver);
         noticePage.waitForPageLoad();
 
@@ -251,8 +262,9 @@ public class CustomerSupportPageTabTest extends BaseTest {
         verifyTabPage("QnABoardPageURL",PageLabels.QnABoardPageTitle);
     }
 
-    @Test(testName = "NoticePage Tab Test4", groups = {"NoticePage"})
-    public void noticePage_TabTest4() {
+    //탭테스트 (공지사항페이지 : 공지사항탭)
+    @Test(testName = "NoticePage NoticeTabTest", groups = {"NoticePage"})
+    public void noticePage_NoticeTabTest() {
         NoticePage noticePage = new NoticePage(driver);
         noticePage.waitForPageLoad();
 

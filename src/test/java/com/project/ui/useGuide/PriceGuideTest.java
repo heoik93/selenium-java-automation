@@ -5,12 +5,12 @@ import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.useguide.PriceGuidePage;
 import com.project.utils.ExcelUtil;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;

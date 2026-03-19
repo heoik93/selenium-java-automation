@@ -3,7 +3,6 @@ package com.project.page.customerSupport;
 import com.project.constants.PageLabels;
 import com.project.page.BasePage;
 import com.project.page.NavigationBar;
-import config.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -169,7 +168,7 @@ public class FAQCreatePage extends BasePage {
             }
         }
 
-        throw new NoSuchElementException("[FAIL] 모든 프레임을 탐색하였지만 'se2_inputarea' 를 찾지 못했습니다.");
+        throw new NoSuchElementException("[FAIL]모든 프레임을 탐색하였지만 'se2_inputarea' 를 찾지 못했습니다.");
     }
 
 
@@ -269,11 +268,9 @@ public class FAQCreatePage extends BasePage {
     public void clickCancelButton(){
         click(cancelButton);
     }
-
     public void clickSubmitButton(){
         click(submitButton);
     }
-
     public void clickModifyButton(){
         click(modifyButton);
     }

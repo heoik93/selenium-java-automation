@@ -4,12 +4,12 @@ import com.project.base.BaseTest;
 import com.project.page.HomePage;
 import com.project.page.customerSupport.ReviewBoardPage;
 import com.project.page.customerSupport.ReviewDetailPage;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 public class ReviewBoardTest extends BaseTest {
 
@@ -34,7 +34,7 @@ public class ReviewBoardTest extends BaseTest {
         afterSearchPage.waitForPageLoad();
 
         int ReviewList_noCountList = afterSearchPage.checkResult();
-        softAssert.assertTrue(ReviewList_noCountList == 0);
+        softAssert.assertTrue(ReviewList_noCountList == 0,"[FAIL]검색결과가 올바르지 않습니다(잘못된 검색어)");
 
         afterSearchPage.clickReviewBoardTab();
         ReviewBoardPage reviewBoardPage_2rd = new ReviewBoardPage(driver);
@@ -46,7 +46,7 @@ public class ReviewBoardTest extends BaseTest {
         afterSearchPage_2nd.waitForPageLoad();
 
         int ReviewList = afterSearchPage_2nd.checkResult();
-        softAssert.assertTrue(ReviewList > 0);
+        softAssert.assertTrue(ReviewList > 0,"[FAIL]검색결과가 올바르지 않습니다(올바른 검색어)");
 
         softAssert.assertAll();
     }
@@ -66,7 +66,7 @@ public class ReviewBoardTest extends BaseTest {
         afterSearchPage.waitForPageLoad();
 
         int ReviewList_noCountList = afterSearchPage.checkResult();
-        softAssert.assertTrue(ReviewList_noCountList > 0);
+        softAssert.assertTrue(ReviewList_noCountList > 0,"[FAIL]검색결과가 올바르지 않습니다(올바른 검색어/제목검색필터)");
 
         afterSearchPage.clickReviewBoardTab();
         ReviewBoardPage reviewBoardPage_2rd = new ReviewBoardPage(driver);
@@ -79,7 +79,7 @@ public class ReviewBoardTest extends BaseTest {
         afterSearchPage_2nd.waitForPageLoad();
 
         int ReviewList = afterSearchPage_2nd.checkResult();
-        softAssert.assertTrue(ReviewList > 0);
+        softAssert.assertTrue(ReviewList > 0,"[FAIL]검색결과가 올바르지 않습니다(올바른 검색어/작성자검색필터)");
 
         softAssert.assertAll();
     }
@@ -104,7 +104,7 @@ public class ReviewBoardTest extends BaseTest {
 
         int afterCount = reviewBoardPage_after.getReviewCount(index);
 
-        softAssert.assertTrue(beforeCount+1 == afterCount);
+        softAssert.assertTrue(beforeCount+1 == afterCount,"[FAIL]조회수 카운트가 올라가지 않았습니다.");
         softAssert.assertAll();
     }
 
@@ -125,8 +125,8 @@ public class ReviewBoardTest extends BaseTest {
         String actualTitle = reviewDetailPage.getTitle();
         String actualStar = reviewDetailPage.getStar();
 
-        softAssert.assertEquals(actualTitle,expectTitle);
-        softAssert.assertEquals(expectStar,actualStar);
+        softAssert.assertEquals(actualTitle,expectTitle,"[FAIL]후기 상세페이지와 후기제목이 동일하지 않습니다.");
+        softAssert.assertEquals(expectStar,actualStar,"[FAIL]후기 상세페이지와 평점이 동일하지 않습니다.");
 
         softAssert.assertAll();
     }
@@ -140,17 +140,17 @@ public class ReviewBoardTest extends BaseTest {
         int currentListNumber = reviewBoardPage.ListNumber();
         if (currentListNumber == 0) {
             System.out.println("[INFO]테스트할 데이터가 없습니다.");
-            throw new SkipException("테스트할 데이터가 없습니다.");
+            throw new SkipException("[INFO]테스트할 데이터가 없습니다.");
         }
         else {
             if(currentListNumber<5) {
                 System.out.println("[INFO]테스트할 게시물 수가 부족합니다.(5개 미만)");
-                throw new SkipException("테스트할 게시물 수가 부족합니다.(5개 미만)");
+                throw new SkipException("[INFO]테스트할 게시물 수가 부족합니다.(5개 미만)");
             }
         }
 
-        softAssert.assertFalse(currentListNumber > 5, "한 페이지에 표시되는 게시물 수가 5개를 초과합니다.");
-        softAssert.assertTrue(reviewBoardPage.pageNaviDisplayCheck(), "게시물 수가 5개를 넘어도 페이지 네비게이션이 표시되지 않습니다.");
+        softAssert.assertFalse(currentListNumber > 5, "[FAIL]한 페이지에 표시되는 게시물 수가 5개를 초과합니다.");
+        softAssert.assertTrue(reviewBoardPage.pageNaviDisplayCheck(), "[FAIL]게시물 수가 5개를 넘어도 페이지 네비게이션이 표시되지 않습니다.");
 
         softAssert.assertAll();
     }

@@ -7,15 +7,16 @@ import com.project.page.booking.BookingCategoryPage;
 import com.project.page.booking.BookingInfoPage;
 import com.project.page.booking.BookingPaymentPage;
 import com.project.utils.ExcelUtil;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BookingPaymentPageTest extends BaseTest {

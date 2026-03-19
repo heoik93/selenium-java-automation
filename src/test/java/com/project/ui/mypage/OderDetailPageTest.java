@@ -5,12 +5,12 @@ import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.myinfo.OderDetailPage;
 import com.project.page.myinfo.UseHistoryPage;
+import com.project.utils.ScreenshotSoftAssert;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 public class OderDetailPageTest extends BaseTest {
 

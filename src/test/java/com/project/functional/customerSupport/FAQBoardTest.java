@@ -7,11 +7,11 @@ import com.project.page.HomePage;
 import com.project.page.customerSupport.FAQBoardPage;
 import com.project.page.customerSupport.FAQCreatePage;
 import com.project.page.customerSupport.QnABoardPage;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 public class FAQBoardTest extends BaseTest {
 
@@ -46,7 +46,7 @@ public class FAQBoardTest extends BaseTest {
             faqBoardPage.clickFoldButton(i);
             Thread.sleep(500);
             String dataNum = faqBoardPage.getDataNum(i);
-            softAssert.assertTrue(faqBoardPage.checkFold(dataNum),"[FAIL] 펼치기 버튼 클릭시 내용이 펼쳐지지 않았습니다. : "+i+"번쨰 게시물");
+            softAssert.assertTrue(faqBoardPage.checkFold(dataNum),"[FAIL]펼치기 버튼 클릭시 내용이 펼쳐지지 않았습니다. : "+i+"번쨰 게시물");
         }
         driver.navigate().refresh();
         FAQBoardPage faqBoardPage_2nd = new FAQBoardPage(driver);
@@ -57,25 +57,29 @@ public class FAQBoardTest extends BaseTest {
         faqBoardPage_2nd.clickFilterServiceButton();
         FAQBoardPage faqBoardPage_Service = new FAQBoardPage(driver);
         faqBoardPage_Service.waitForPageLoad();
-        softAssert.assertTrue(faqBoardPage_Service.checkCategory(PageLabels.faqBoardPage_boardFilterServiceButton));
+        softAssert.assertTrue(faqBoardPage_Service.checkCategory(PageLabels.faqBoardPage_boardFilterServiceButton),
+                "[FAIL]질문게시판의 서비스이용 카테고리버튼 클릭시, 리스트에 해당 카테고리 이외의 게시물이 존재합니다.");
 
         //주문·결제·배송
         faqBoardPage_Service.clickFilterOrderButton();
         FAQBoardPage faqBoardPage_Oder = new FAQBoardPage(driver);
         faqBoardPage_Oder.waitForPageLoad();
-        softAssert.assertTrue(faqBoardPage_Oder.checkCategory(PageLabels.faqBoardPage_boardFilterOrderButton));
+        softAssert.assertTrue(faqBoardPage_Oder.checkCategory(PageLabels.faqBoardPage_boardFilterOrderButton),
+                "[FAIL]질문게시판의 주문·결제·배송 카테고리버튼 클릭시, 리스트에 해당 카테고리 이외의 게시물이 존재합니다.");
 
         //회원정보
         faqBoardPage_Oder.clickFilterMemberButton();
         FAQBoardPage faqBoardPage_Member = new FAQBoardPage(driver);
         faqBoardPage_Member.waitForPageLoad();
-        softAssert.assertTrue(faqBoardPage_Member.checkCategory(PageLabels.faqBoardPage_boardFilterMemberButton));
+        softAssert.assertTrue(faqBoardPage_Member.checkCategory(PageLabels.faqBoardPage_boardFilterMemberButton),
+                "[FAIL]질문게시판의 회원정보 카테고리버튼 클릭시, 리스트에 해당 카테고리 이외의 게시물이 존재합니다.");
 
         //기타
         faqBoardPage_Member.clickFilterEtcButton();
         FAQBoardPage faqBoardPage_Etc = new FAQBoardPage(driver);
         faqBoardPage_Etc.waitForPageLoad();
-        softAssert.assertTrue(faqBoardPage_Etc.checkCategory(PageLabels.faqBoardPage_boardFilterEtcButton));
+        softAssert.assertTrue(faqBoardPage_Etc.checkCategory(PageLabels.faqBoardPage_boardFilterEtcButton),
+                "[FAIL]질문게시판의 기타 카테고리버튼 클릭시, 리스트에 해당 카테고리 이외의 게시물이 존재합니다.");
 
         //1:1문의하기버튼
         driver.navigate().refresh();
@@ -89,8 +93,8 @@ public class FAQBoardTest extends BaseTest {
         String currentUrl = qnaBoardPage.getCurrentUrl();
         String PageTitle = qnaBoardPage.getPageTitle();
 
-        softAssert.assertEquals(currentUrl, config.getProperty("QnABoardPageURL"));
-        softAssert.assertEquals(PageTitle, PageLabels.QnABoardPageTitle);
+        softAssert.assertEquals(currentUrl, config.getProperty("QnABoardPageURL"),"[FAIL]문의하기 버튼 클릭시후의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(PageTitle, PageLabels.QnABoardPageTitle,"[FAIL]문의하기 버튼 클릭시후의 페이지 타이틀이 올바르지 않습니다.");
 
         softAssert.assertAll();
     }
@@ -155,14 +159,16 @@ public class FAQBoardTest extends BaseTest {
         faqCreatePage.CreateFAQ(Title,Category,Content);
         faqCreatePage.clickSubmitButton();
 
-        softAssert.assertEquals(faqCreatePage.alertGetText(), AppMessages.faqCreatePage_Create_AlertMsg_1);
+        softAssert.assertEquals(faqCreatePage.alertGetText(), AppMessages.faqCreatePage_Create_AlertMsg_1,
+                "[FAIL]질문게시판 작성버튼 클릭시, Alert메세지1 이 올바르지 않습니다.");
         faqCreatePage.alertAccept();
-        softAssert.assertEquals(faqCreatePage.alertGetText(), AppMessages.faqCreatePage_Create_AlertMsg_2);
+        softAssert.assertEquals(faqCreatePage.alertGetText(), AppMessages.faqCreatePage_Create_AlertMsg_2,
+                "[FAIL]질문게시판 작성버튼 클릭시, Alert메세지2 가 올바르지 않습니다.");
         faqCreatePage.alertAccept();
 
         FAQBoardPage faqBoardPage_2nd = new FAQBoardPage(driver);
         faqBoardPage_2nd.waitForPageLoad();
-        softAssert.assertTrue(faqBoardPage_2nd.checkTestFAQ(Title, Category, Content,"modify"), "[FAIL] 작성한 FAQ를 찾을 수 없습니다.");
+        softAssert.assertTrue(faqBoardPage_2nd.checkTestFAQ(Title, Category, Content,"modify"), "[FAIL]작성한 FAQ를 찾을 수 없습니다.");
 
         FAQCreatePage faqModifyPage = new FAQCreatePage(driver);
         faqModifyPage.waitForPageLoad();
@@ -192,9 +198,11 @@ public class FAQBoardTest extends BaseTest {
         FAQBoardPage faqBoardPage_3rd = new FAQBoardPage(driver);
         faqBoardPage_3rd.waitForPageLoad();
 
-        softAssert.assertTrue(faqBoardPage_2nd.checkTestFAQ(Title_Modify, Category_Modify, Content_Modify,"delete"), "[FAIL]수정한 FAQ를 찾을 수 없습니다.");
+        softAssert.assertTrue(faqBoardPage_2nd.checkTestFAQ(Title_Modify, Category_Modify, Content_Modify,"delete"),
+                "[FAIL]수정한 FAQ를 찾을 수 없습니다.");
+        softAssert.assertEquals(faqBoardPage_3rd.alertGetText(),AppMessages.faqCreatePage_Delete_AlertMsg_1,
+                "[FAIL]삭제확인 메세지의 문구가 일치하지 않습니다.");
 
-        softAssert.assertEquals(faqBoardPage_3rd.alertGetText(),AppMessages.faqCreatePage_Delete_AlertMsg_1,"[FAIL]삭제확인 메세지의 문구가 일치하지 않습니다.");
         faqBoardPage_3rd.alertAccept();
 
         softAssert.assertEquals(faqBoardPage_3rd.alertGetText().replace("\"", ""),
@@ -218,8 +226,8 @@ public class FAQBoardTest extends BaseTest {
         afterSearchPage.waitForPageLoad();
 
         int FaqList_noCountList = afterSearchPage.checkResult();
-        softAssert.assertTrue(FaqList_noCountList == 0);
-        softAssert.assertFalse(afterSearchPage.checkPageNavi(),"[FAIL]페이지 네비게이션이 기대치보다 많이 존재합니다.(검색결과 없음)"); //현재DF
+        softAssert.assertTrue(FaqList_noCountList == 0,"[FAIL]질문게시판의 검색결과가 올바르지 않습니다.(잘못된 검색어)");
+        softAssert.assertFalse(afterSearchPage.checkPageNavi(),"[FAIL]페이지 네비게이션이 기대치보다 많이 존재합니다.(검색결과 없음)");
 
         afterSearchPage.clickFAQBoardTab();
         FAQBoardPage reviewBoardPage_2rd = new FAQBoardPage(driver);
@@ -231,7 +239,7 @@ public class FAQBoardTest extends BaseTest {
         afterSearchPage_2nd.waitForPageLoad();
 
         int FaqList = afterSearchPage_2nd.checkResult();
-        softAssert.assertTrue(FaqList > 0);
+        softAssert.assertTrue(FaqList > 0,"[FAIL]질문게시판의 검색결과가 올바르지 않습니다.(올바른 검색어)");
         if(FaqList <5){  softAssert.assertFalse(afterSearchPage_2nd.checkPageNavi(),"[FAIL]페이지 네비게이션이 기대치보다 많이 존재합니다.(검색결과 있음)");  }
 
         softAssert.assertAll();
@@ -252,8 +260,8 @@ public class FAQBoardTest extends BaseTest {
         afterSearchPage.waitForPageLoad();
 
         int ReviewList_noCountList = afterSearchPage.checkResult();
-        softAssert.assertTrue(ReviewList_noCountList == 0);
-        softAssert.assertFalse(afterSearchPage.checkPageNavi(),"[FAIL]페이지 네비게이션이 기대치보다 많이 존재합니다.(검색결과 없음)"); //현재DF
+        softAssert.assertTrue(ReviewList_noCountList == 0,"[FAIL]질문게시판의 검색결과가 올바르지 않습니다.(잘못된 검색어/제목검색필터)");
+        softAssert.assertFalse(afterSearchPage.checkPageNavi(),"[FAIL]페이지 네비게이션이 기대치보다 많이 존재합니다.(검색결과 없음)");
 
         afterSearchPage.clickFAQBoardTab();
         FAQBoardPage reviewBoardPage_2rd = new FAQBoardPage(driver);
@@ -267,7 +275,7 @@ public class FAQBoardTest extends BaseTest {
         afterSearchPage_2nd.waitForPageLoad();
 
         int ReviewList = afterSearchPage_2nd.checkResult();
-        softAssert.assertTrue(ReviewList > 0);
+        softAssert.assertTrue(ReviewList > 0,"[FAIL]질문게시판의 검색결과가 올바르지 않습니다.(올바른 검색어/제목검색필터)");
         if(ReviewList<5){  softAssert.assertFalse(afterSearchPage_2nd.checkPageNavi(),"[FAIL]페이지 네비게이션이 기대치보다 많이 존재합니다.(검색결과 있음)");  }
 
         softAssert.assertAll();

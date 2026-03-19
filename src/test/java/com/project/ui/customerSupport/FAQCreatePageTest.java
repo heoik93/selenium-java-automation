@@ -5,10 +5,10 @@ import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.customerSupport.FAQBoardPage;
 import com.project.page.customerSupport.FAQCreatePage;
+import com.project.utils.ScreenshotSoftAssert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.util.List;
 

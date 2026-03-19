@@ -36,6 +36,5 @@ public class ConfigReader {
         return getProperty("password");
     }
     public String getUrl() { return getProperty("url");  }
-    public String MyinfoupdatePageURL() { return getProperty("MyinfoupdatePageURL");  }
     public String ChangePasswordPageURL() { return getProperty("ChangePasswordPageURL");  }
 }

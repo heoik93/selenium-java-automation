@@ -90,7 +90,6 @@ public class AreaGuidePage extends BasePage {
     public void clickPriceGuideTab() {
         click(priceGuideTab);
     }
-
     public void clickAreaGuideTab() {
         click(areaGuideTab);
     }
@@ -102,12 +101,9 @@ public class AreaGuidePage extends BasePage {
     public String getAreaGuideTabText() {
         return getText(areaGuideTab);
     }
-
     public  String getPriceGuideTabText() {
         return getText(priceGuideTab);
     }
-
-    //이미지src획득
     public String getSrcAreaImage(){
         return serviceAreaImage.getAttribute("src");
     }

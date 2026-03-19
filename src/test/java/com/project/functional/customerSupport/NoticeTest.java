@@ -44,7 +44,7 @@ public class NoticeTest extends BaseTest {
         afterSearchPage.waitForPageLoad();
 
         int NoticeList_noCountList = afterSearchPage.checkResult();
-        softAssert.assertTrue(NoticeList_noCountList == 0);
+        softAssert.assertTrue(NoticeList_noCountList == 0,"[FAIL]공지사항의 검색결과가 올바르지 않습니다.(잘못된 검색어)");
 
         afterSearchPage.clickNoticeTab();
         NoticePage noticePage_2rd = new NoticePage(driver);
@@ -56,7 +56,7 @@ public class NoticeTest extends BaseTest {
         afterSearchPage_2nd.waitForPageLoad();
 
         int ReviewList = afterSearchPage_2nd.checkResult();
-        softAssert.assertTrue(ReviewList > 0);
+        softAssert.assertTrue(ReviewList > 0,"[FAIL]공지사항의 검색결과가 올바르지 않습니다.(올바른 검색어)");
 
         softAssert.assertAll();
     }
@@ -76,7 +76,7 @@ public class NoticeTest extends BaseTest {
         afterSearchPage.waitForPageLoad();
 
         int NoticeList_noCountList = afterSearchPage.checkResult();
-        softAssert.assertTrue(NoticeList_noCountList > 0);
+        softAssert.assertTrue(NoticeList_noCountList > 0,"[FAIL]공지사항의 검색결과가 올바르지 않습니다.(올바른 검색어/제목검색)");
 
         afterSearchPage.clickNoticeTab();
         NoticePage noticePage_2rd = new NoticePage(driver);
@@ -89,11 +89,12 @@ public class NoticeTest extends BaseTest {
         afterSearchPage_2nd.waitForPageLoad();
 
         int NoticeList = afterSearchPage_2nd.checkResult();
-        softAssert.assertTrue(NoticeList > 0);
+        softAssert.assertTrue(NoticeList > 0,"[FAIL]공지사항의 검색결과가 올바르지 않습니다.(올바른 검색어/작성자검색)");
 
         softAssert.assertAll();
     }
 
+    //공지사항 조회수 테스트
     @Test(testName = "Notice ListCount Test",groups = "Default")
     public void noticePage_ListCountTest(){
         NoticePage noticePage = new NoticePage(driver);
@@ -117,7 +118,7 @@ public class NoticeTest extends BaseTest {
 
         int afterCount = noticeDetailPage_2nd.getNoticeCount();
 
-        softAssert.assertTrue(beforeCount+1 == afterCount);
+        softAssert.assertTrue(beforeCount+1 == afterCount,"[FAIL]공지사항의 조회수가 증가하지 않았습니다.");
 
         softAssert.assertAll();
     }
@@ -131,17 +132,17 @@ public class NoticeTest extends BaseTest {
         int currentListNumber = noticePage.ListNumber();
         if (currentListNumber == 0) {
             System.out.println("[INFO]테스트할 데이터가 없습니다.");
-            throw new SkipException("테스트할 데이터가 없습니다.");
+            throw new SkipException("[INFO]테스트할 데이터가 없습니다.");
         }
         else {
             if(currentListNumber<5) {
                 System.out.println("[INFO]테스트할 게시물 수가 부족합니다.(5개 미만)");
-                throw new SkipException("테스트할 게시물 수가 부족합니다.(5개 미만)");
+                throw new SkipException("[INFO]테스트할 게시물 수가 부족합니다.(5개 미만)");
             }
         }
 
-        softAssert.assertFalse(currentListNumber > 5, "한 페이지에 표시되는 게시물 수가 5개를 초과합니다.");
-        softAssert.assertTrue(noticePage.pageNaviDisplayCheck(), "게시물 수가 5개를 넘어도 페이지 네비게이션이 표시되지 않습니다.");
+        softAssert.assertFalse(currentListNumber > 5, "[FAIL]한 페이지에 표시되는 게시물 수가 5개를 초과합니다.");
+        softAssert.assertTrue(noticePage.pageNaviDisplayCheck(), "[FAIL]게시물 수가 5개를 넘어도 페이지 네비게이션이 표시되지 않습니다.");
 
         softAssert.assertAll();
     }

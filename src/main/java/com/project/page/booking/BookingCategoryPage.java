@@ -5,14 +5,11 @@ import com.project.page.NavigationBar;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class BookingCategoryPage extends BasePage {
@@ -142,7 +139,6 @@ public class BookingCategoryPage extends BasePage {
         }
     }
 
-    //이미지src취득
     public String getImgSrc_productImg(){ return productImg.getAttribute("src"); }
     public String getImgSrc_explainImg_1(){ return explainImg_1.getAttribute("src"); }
     public String getImgSrc_explainImg_2(){ return explainImg_2.getAttribute("src"); }
@@ -150,19 +146,18 @@ public class BookingCategoryPage extends BasePage {
     public String getImgSrc_explainImg_4(){ return explainImg_4.getAttribute("src"); }
 
 
-
-    //클릿 및 값입력
     public void clickBookingButton(){  click(productBookingButton); }
     public void clickSelectBox(){  click(productOptionSelectBox); }
-    public void inputBookingDate(String date){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("$(arguments[0]).val('" + date + "').change();", productBookingdateInputbox);
-        System.out.println("[INFO] JS 주입을 통해 날짜 입력 완료: " + date);
-    }
     public void clickDeleteButton(int index){
         if(index >= 0 && index < itemDeleteButton.size()){
             click(itemDeleteButton.get(index));
         }
+    }
+
+    public void inputBookingDate(String date){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("$(arguments[0]).val('" + date + "').change();", productBookingdateInputbox);
+        System.out.println("[INFO] JS 주입을 통해 날짜 입력 완료: " + date);
     }
 
 

@@ -75,7 +75,6 @@ public class StartupPage extends BasePage {
         click(tab);
     }
 
-
     public boolean activeTabText() {
         return isTabActive(startupTab);
     }

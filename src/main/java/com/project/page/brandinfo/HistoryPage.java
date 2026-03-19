@@ -108,19 +108,15 @@ public class HistoryPage extends BasePage {
     public boolean activeTabText() {
         return isTabActive(historyTab);
     }
-
     public String getComintroTabText() {
         return getText(comintroTab);
     }
-
     public String getHistoryTabText() {
         return getText(historyTab);
     }
-
     public String getStartupTabText() {
         return getText(startupTab);
     }
-
     public String getLabelText(WebElement labelName) {
         return getText(labelName);
     }

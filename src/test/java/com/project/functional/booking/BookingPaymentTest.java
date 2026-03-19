@@ -10,12 +10,11 @@ import com.project.page.booking.BookingPaymentPage;
 import com.project.page.myinfo.MyinfoPage;
 import com.project.page.myinfo.UseHistoryPage;
 import com.project.utils.ExcelUtil;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -185,6 +184,7 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingCategoryPage.clickBookingButton();
     }
 
+    //결제화면 상품관련 데이터 일치확인
     @Test(testName = "Booking Payment Page ExistProductData Test", groups = {"ExistProductData"})
     public void bookingPaymentPage_ExistProductDataTest() {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
@@ -207,13 +207,14 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         long actualTotalAmount = Long.parseLong(actualTotalAmountRaw.replaceAll("[^0-9]", ""));
 
 
-        softAssert.assertEquals(actualProductString, expectedProductString);
-        softAssert.assertEquals(actualTotalAmount, expectedTotalAmount);
-        softAssert.assertEquals(actualBookingDate, expectedBookingDate);
+        softAssert.assertEquals(actualProductString, expectedProductString,"[FAIL]결제화면 페이지의 상품명, 수량이 올바르지 않습니다.");
+        softAssert.assertEquals(actualTotalAmount, expectedTotalAmount,"[FAIL]결제화면 페이지의 총 주문가격이 올바르지 않습니다.");
+        softAssert.assertEquals(actualBookingDate, expectedBookingDate,"[FAIL]결제화면 페이지의 수거날짜가 올바르지 않습니다.");
 
         softAssert.assertAll();
     }
 
+    //결제화면 유저관련 데이터 일치확인
     @Test(testName = "Booking Payment Page ExistUserData Test", groups = {"ExistUserData"})
     public void bookingPaymentPage_ExistUserDataTest() {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
@@ -224,26 +225,26 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         String actualUserId = bookingPaymentPage.getInputbox_userIdInputBox();
         String actualAddress = bookingPaymentPage.getInputbox_addressInputBox();
 
-        softAssert.assertEquals(actualUserId, expectedUserId);
-        softAssert.assertEquals(actualAddress, expectedAddress);
-
+        softAssert.assertEquals(actualUserId, expectedUserId,"[FAIL]결제화면 페이지의 주문자 아이디가 올바르지 않습니다.");
+        softAssert.assertEquals(actualAddress, expectedAddress,"[FAIL]결제화면 페이지의 기존 배송지의 주소가 올바르지 않습니다.");
 
         softAssert.assertAll();
     }
 
+    //다음주소찾기 API결제창 표시여부
     @Test(testName = "Booking Payment Page NewAddress SearchButton Test", groups = {"Default"})
     public void bookingPaymentPage_NewAddressSearchButtonTest() {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
         bookingPaymentPage.waitForPageLoad();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         bookingPaymentPage.clickNewAddressCheckbox();
         bookingPaymentPage.clickNewAddressSearchButton();
 
         boolean result = bookingPaymentPage.isDaumPostcodePopupDisplayed();
 
-        Assert.assertTrue(result,"[FAIL] 다음 주소 찾기 API 창이 정상적으로 표시되지 않았습니다.");
-
-
+        softAssert.assertTrue(result,"[FAIL]다음 주소 찾기 API 창이 정상적으로 표시되지 않았습니다.");
+        softAssert.assertAll();
     }
 
     //결제버튼테스트
@@ -260,7 +261,8 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.waitForAlert();
         String addressAlertMsg = bookingPaymentPage.alertGetText();
 
-        softAssert.assertEquals(addressAlertMsg, AppMessages.bookingPaymentPage_AddressEmpty_AlertMsg);
+        softAssert.assertEquals(addressAlertMsg, AppMessages.bookingPaymentPage_AddressEmpty_AlertMsg,
+                "[FAIL]배송지 미기입후, 결제버튼 클릭시의 Alert메세지가 올바르지 않습니다.");
         bookingPaymentPage.alertAccept();
 
         //2. 이메일 미기입시 alert 테스트
@@ -270,10 +272,11 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.waitForAlert();
         String emailAlertMsg = bookingPaymentPage.alertGetText();
 
-        softAssert.assertEquals(emailAlertMsg, AppMessages.bookingPaymentPage_EmailEmpty_AlertMsg);
+        softAssert.assertEquals(emailAlertMsg, AppMessages.bookingPaymentPage_EmailEmpty_AlertMsg,
+                "[FAIL]이메일 미기입후, 결제버튼 클릭시의 Alert메세지가 올바르지 않습니다.");
         bookingPaymentPage.alertAccept();
 
-        //3. 이메일 미기입시 alert 테스트
+        //3. 이메일 잘못된 alert 테스트
         driver.navigate().refresh();
         bookingPaymentPage.waitForPageLoad();
         bookingPaymentPage.inputEmailInputBox("abc");
@@ -281,7 +284,8 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.waitForAlert();
         String noEmail_AlertMsg = bookingPaymentPage.alertGetText();
 
-        softAssert.assertEquals(noEmail_AlertMsg, AppMessages.bookingPaymentPage_NoEmail_AlertMsg);
+        softAssert.assertEquals(noEmail_AlertMsg, AppMessages.bookingPaymentPage_NoEmail_AlertMsg,
+                "[FAIL]잘못된 이메일 기입후, 결제버튼 클릭시의 Alert메세지가 올바르지 않습니다.");
         bookingPaymentPage.alertAccept();
 
         //4. 팝업 표시테스트
@@ -293,12 +297,12 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.clickPaymentButton();
         boolean result = bookingPaymentPage.isInicisPaymentPopupDisplayed();
 
-        softAssert.assertTrue(result,"[FAIL] KG이니시스 API 창이 정상적으로 표시되지 않았습니다.");
-
+        softAssert.assertTrue(result,"[FAIL]KG이니시스 API 창이 정상적으로 표시되지 않았습니다.");
 
         softAssert.assertAll();
     }
 
+    //결제성공 테스트
     @Test(testName = "Booking Payment Page PaymentSuccess Test", groups = {"Default"})
     public void bookingPaymentPage_PaymentSuccessTest()  {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
@@ -320,14 +324,15 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         String currentUrl = useHistoryPage.getCurrentUrl();
         String PageTittle = useHistoryPage.getPageTitle();
 
-        softAssert.assertTrue(PaymentSuccessMsg.contains(AppMessages.bookingPaymentPage_PaymentSuccessMsg));
-        debugResult(PaymentSuccessMsg,AppMessages.bookingPaymentPage_PaymentSuccessMsg);
-        softAssert.assertEquals(currentUrl, config.getProperty("UseHistoryPageURL"));
-        softAssert.assertEquals(PageTittle, PageLabels.useHistoryPageTittle);
+        softAssert.assertTrue(PaymentSuccessMsg.contains(AppMessages.bookingPaymentPage_PaymentSuccessMsg),
+                "[FAIL]결제페이지의 결제성공시의 Alert메세지가 올바르지 않습니다.");
+        softAssert.assertEquals(currentUrl, config.getProperty("UseHistoryPageURL"),"[FAIL]결제성공후의 페이지의 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(PageTittle, PageLabels.useHistoryPageTittle,"[FAIL]결제성공후의 페이지의 타이틀이 올바르지 않습니다.");
 
         softAssert.assertAll();
     }
 
+    //결제실패 테스트
     @Test(testName = "Booking Payment Page PaymentFail Test", groups = {"Default"})
     public void bookingPaymentPage_PaymentFailTest()  {
         BookingPaymentPage bookingPaymentPage = new BookingPaymentPage(driver);
@@ -344,7 +349,8 @@ public class BookingPaymentTest extends BaseTest {private List<Map<String, Objec
         bookingPaymentPage.alertAccept();
         bookingPaymentPage.closePopupIfPresent();
 
-        softAssert.assertTrue(PaymentFailMsg.contains(AppMessages.bookingPaymentPage_PaymentFailMsg));
+        softAssert.assertTrue(PaymentFailMsg.contains(AppMessages.bookingPaymentPage_PaymentFailMsg),
+                "[FAIL]결제페이지의 결제실패시의 Alert메세지가 올바르지 않습니다.");
 
         softAssert.assertAll();
     }

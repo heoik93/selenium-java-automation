@@ -8,12 +8,12 @@ import com.project.page.booking.BookingCategoryPage;
 import com.project.page.booking.BookingInfoPage;
 import com.project.page.booking.BookingPaymentPage;
 import com.project.utils.ExcelUtil;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 import java.util.Collections;
 import java.util.List;
@@ -178,14 +178,14 @@ public class BookingCategoryTest extends BaseTest {
 
         //검증
         softAssert.assertEquals(actualTotalAmount, expectedTotalAmount,
-                "[FAIL] 계산된 총 금액과 화면의 총 금액이 일치하지 않습니다.");
+                "[FAIL]계산된 총 금액과 화면의 총 금액이 일치하지 않습니다.");
 
         System.out.println(">>> 결과 검증 | 기대값: " + expectedTotalAmount + " | 실제값: " + actualTotalAmount);
 
         softAssert.assertAll();
     }
 
-    //예약하기버튼 (Alert)
+    //예약하기버튼 (Alert확인)
     @Test(testName = "Booking Category Page BookingButton Test", dataProvider = "categoryProvider")
     public void bookingCategoryPage_BookingButtonTest(String categoryName, String configKey){
         BookingInfoPage bookingInfoPage = new BookingInfoPage(driver);

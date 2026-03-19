@@ -9,7 +9,6 @@ import com.project.page.SignupPage;
 import com.project.page.myinfo.MyinfoPage;
 import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class SignupTest extends BaseTest {
         SignupPage.clickSignupSubmit();
 
         softAssert.assertEquals(SignupPage.alertGetText(), AppMessages.singUpPage_singUp_AlertMsg,
-                "[FAIL] 회원가입 성공 Alert 메세지가 올바르지 않습니다." );
+                "[FAIL]회원가입 성공 Alert 메세지가 올바르지 않습니다." );
         SignupPage.alertAccept();
         System.out.println("[INFO] 회원가입이 완료되었습니다.");
         
@@ -51,11 +50,11 @@ public class SignupTest extends BaseTest {
 
         myInfoPage.clickWithdrawButton();
         softAssert.assertEquals(myInfoPage.alertGetText(),RandomUser.get(0)+AppMessages.singUpPage_Withdraw_AlertMsg1,
-                "[FAIL] 회원탈퇴 확인 Alert 메세지1이 올바르지 않습니다.");
+                "[FAIL]회원탈퇴 확인 Alert 메세지1이 올바르지 않습니다.");
         myInfoPage.alertAccept();
 
         softAssert.assertEquals(myInfoPage.alertGetText(),AppMessages.singUpPage_Withdraw_AlertMsg2,
-                "[FAIL] 회원탈퇴 Alert 메세지2가 올바르지 않습니다.");
+                "[FAIL]회원탈퇴 Alert 메세지2가 올바르지 않습니다.");
         myInfoPage.alertAccept();
         System.out.println("[INFO] 회원탈퇴가 완료되었습니다.");
 
@@ -63,8 +62,8 @@ public class SignupTest extends BaseTest {
         homepage_after.waitForPageLoad();
 
 
-        softAssert.assertEquals(homepage_after.getPageTitle(), PageLabels.homePageTitle,"[FAIL] 회원탈퇴후의 홈페이지 페이지타이틀이 올바르지 않습니다.");
-        softAssert.assertEquals(homepage_after.getCurrentUrl(),config.getProperty("url"),"[FAIL] 회원탈퇴후의 홈페이지 URL이 올바르지 않습니다.");
+        softAssert.assertEquals(homepage_after.getPageTitle(), PageLabels.homePageTitle,"[FAIL]회원탈퇴후의 홈페이지 페이지타이틀이 올바르지 않습니다.");
+        softAssert.assertEquals(homepage_after.getCurrentUrl(),config.getProperty("url"),"[FAIL]회원탈퇴후의 홈페이지 URL이 올바르지 않습니다.");
 
         softAssert.assertAll();
     }

@@ -7,8 +7,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
-
 public class JiraClient {
 
     public static String createJiraIssue(String summary, String description) {
@@ -47,7 +45,7 @@ public class JiraClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("fields", fields);
 
-        // 2. 전송 및 Key 추출
+        //전송 및 Key 추출
         try {
             io.restassured.response.Response response = RestAssured.given()
                     .auth().preemptive().basic(jiraEmail, jiraToken)

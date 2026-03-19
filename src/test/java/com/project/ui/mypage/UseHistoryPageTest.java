@@ -4,10 +4,10 @@ import com.project.base.BaseTest;
 import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.myinfo.UseHistoryPage;
+import com.project.utils.ScreenshotSoftAssert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 public class UseHistoryPageTest extends BaseTest {
 
@@ -58,8 +58,6 @@ public class UseHistoryPageTest extends BaseTest {
 
         softAssert.assertAll();
     }
-
-    //결제가능하게 되면 추가예정
 
     @AfterMethod
     private void Logout() {

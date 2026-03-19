@@ -123,10 +123,8 @@ public class NoticeDetailPage extends BasePage {
     public void clickListButton(){
         click(Detail_ListButton);
     }
-
     public void clickDeleteButton(){
         click(Detail_DeleteButton);
     }
-
 
 }

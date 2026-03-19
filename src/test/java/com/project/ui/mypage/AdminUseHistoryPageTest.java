@@ -4,7 +4,6 @@ import com.project.base.BaseTest;
 import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.myinfo.AdminUseHistoryPage;
-import com.project.page.myinfo.AdminUserInfoPage;
 import com.project.utils.ScreenshotSoftAssert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -29,7 +28,7 @@ public class AdminUseHistoryPageTest extends BaseTest {
 
         ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        //탭 (현재DF)
+        //탭
         String myInfoTab = adminUseHistoryPage.getLabel(AdminUseHistoryPage.AdminUseHistoryPageLabel.MYINFOTAB);
         softAssert.assertEquals(myInfoTab, PageLabels.adminUserPage_userInfoTab);
 

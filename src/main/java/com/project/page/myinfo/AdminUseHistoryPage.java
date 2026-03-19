@@ -294,7 +294,7 @@ public class AdminUseHistoryPage extends BasePage {
 
         } catch (TimeoutException e) {
             String actualStatus = table_StatusList.get(index).getText().trim();
-            System.out.println("[FAIL] 상태 변경 타임아웃! 기대값: [" + status + "], 실제값: [" + actualStatus + "]");
+            System.out.println("[FAIL]상태 변경 타임아웃! 기대값: [" + status + "], 실제값: [" + actualStatus + "]");
             return false;
         }
     }

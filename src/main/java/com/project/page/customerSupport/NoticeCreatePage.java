@@ -130,7 +130,7 @@ public class NoticeCreatePage extends BasePage {
             }
         }
 
-        throw new NoSuchElementException("[FAIL] 모든 프레임을 탐색하였지만 'se2_inputarea' 를 찾지 못했습니다.");
+        throw new NoSuchElementException("[FAIL]모든 프레임을 탐색하였지만 'se2_inputarea' 를 찾지 못했습니다.");
     }
 
 

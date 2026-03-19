@@ -31,13 +31,10 @@ public class ScreenshotSoftAssert extends SoftAssert {
             );
 
             String rawMessage = assertCommand.getMessage() != null ? assertCommand.getMessage() : "SoftAssert 실패";
-            String cleanMsg = rawMessage.replaceAll("[^a-zA-Z0-9가-힣]", "_")
-                                        .replaceAll("_{2,}", "_")
-                                        .replaceAll("^_|_$", "");
 
             File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             String methodName = Reporter.getCurrentTestResult().getName();
-            String fileName = methodName + "_" + System.currentTimeMillis() + "_" + cleanMsg + ".png";
+            String fileName = methodName + "_" + System.currentTimeMillis() + ".png";
             String filePath = "target/screenshots/" + fileName;
             File destFile = new File(filePath);
             org.apache.commons.io.FileUtils.copyFile(srcFile, destFile);

@@ -4,11 +4,11 @@ import com.project.base.BaseTest;
 import com.project.constants.PageLabels;
 import com.project.page.HomePage;
 import com.project.page.booking.BookingInfoPage;
+import com.project.utils.ScreenshotSoftAssert;
 import config.ConfigReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.project.utils.ScreenshotSoftAssert;
 
 
 public class BookingInfoPageTest extends BaseTest {

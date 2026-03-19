@@ -34,7 +34,7 @@
             <class name="com.project.functional.mypage.AdminUserHistoryTest"/>
             <class name="com.project.functional.mypage.AdminUserInfoTest"/>
             <class name="com.project.functional.mypage.MyinfoTest"/>
-            <class name="com.project.functional.mypage.MypageButtonTest"/>
+            <class name="com.project.functional.mypage.MyinfopageButtonTest"/>
             <class name="com.project.functional.mypage.OderDetailTest"/>
             <class name="com.project.functional.useGuide.UseGuidePageTabTest"/>
 

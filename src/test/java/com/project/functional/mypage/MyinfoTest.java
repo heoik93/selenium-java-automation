@@ -41,12 +41,15 @@ public class MyinfoTest extends BaseTest {
     public void MyinfoPage_TabActiveTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.waitForPageLoad();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
-        Assert.assertTrue(myinfoPage.isMyInfoTabActive(), "회원정보 탭이 활성화 되어 있지 않습니다.");
+        softAssert.assertTrue(myinfoPage.isMyInfoTabActive(), "[FAIL]회원정보 탭이 활성화 되어 있지 않습니다.");
+        softAssert.assertAll();
     }
 
-    @Test(testName = "MyinfoPage tab test1")
-    public void MyinfoPage_TabTest1() {
+    //탭 테스트(회원정보탭)
+    @Test(testName = "MyinfoPage MyInfo tab test")
+    public void MyinfoPage_MyInfoTabTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.waitForPageLoad();
 
@@ -57,14 +60,15 @@ public class MyinfoTest extends BaseTest {
         String currentUrl = myinfoPage.getCurrentUrl();
         String pageTitle = myinfoPage.getPageTitle();
 
-        softAssert.assertEquals(currentUrl, config.getProperty("MyInfoPageURL"), "MyinfoPage URL이 일치하지 않습니다.");
-        softAssert.assertEquals(pageTitle, PageLabels.myinfoPageTitle, "MyinfoPage 타이틀이 일치하지 않습니다.");
+        softAssert.assertEquals(currentUrl, config.getProperty("MyInfoPageURL"), "[FAIL]회원정보페이지에서 회원정보탭 클릭후의 URL이 일치하지 않습니다.");
+        softAssert.assertEquals(pageTitle, PageLabels.myinfoPageTitle, "[FAIL]회원정보페이지에서 회원정보탭 클릭후의 페이지타이틀이 일치하지 않습니다.");
 
         softAssert.assertAll();
     }
 
-    @Test(testName = "MyinfoPage tab test2")
-    public void MyinfoPage_TabTest2() {
+    //탭 테스트(신청내역확인탭)
+    @Test(testName = "MyinfoPage UseHistory tab test")
+    public void MyinfoPage_UseHistoryTabTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.waitForPageLoad();
 
@@ -75,18 +79,20 @@ public class MyinfoTest extends BaseTest {
         String currentUrl = myinfoPage.getCurrentUrl();
         String pageTitle = myinfoPage.getPageTitle();
 
-        softAssert.assertEquals(currentUrl, config.getProperty("UseHistoryPageURL"), "UseHistoryPag URL이 일치하지 않습니다.");
-        softAssert.assertEquals(pageTitle, PageLabels.useHistoryPageTittle, "UseHistoryPag 타이틀이 일치하지 않습니다."); //현재 DF있음
+        softAssert.assertEquals(currentUrl, config.getProperty("UseHistoryPageURL"), "[FAIL]회원정보페이지에서 신청내역확인탭 클릭후의 URL이 일치하지 않습니다.");
+        softAssert.assertEquals(pageTitle, PageLabels.useHistoryPageTittle, "[FAIL]회원정보페이지에서 신청내역확인탭 클릭후의 페이지타이틀이 일치하지 않습니다.");
 
         softAssert.assertAll();
     }
 
 
 
-    @Test(testName = "Myinfo updateFlow test")
-    public void MyinfoUpdateFlowTest() {
+    @Test(testName = "Myinfopage updateFlow test")
+    public void myInfoPage_UpdateFlowTest() {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.waitForPageLoad();
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
+
         beforeInfo = myinfoPage.getAllUserInfo();
 
         myinfoPage.clickModifyButton();
@@ -95,19 +101,16 @@ public class MyinfoTest extends BaseTest {
         backupInfo = MyinfoupdatePage.getAllUserInfo();
 
         //수정전 정보 일치확인
-        Assert.assertEquals(beforeInfo.get("userId"), backupInfo.get("userId"), "조회 페이지와 수정 페이지의 아이디가 불일치합니다.");
-        Assert.assertEquals(beforeInfo.get("email"), backupInfo.get("email"), "조회 페이지와 수정 페이지의 이메일이 불일치합니다.");
-        Assert.assertEquals(beforeInfo.get("phone"), backupInfo.get("phone"), "조회 페이지와 수정 페이지의 전화번호가 불일치합니다.");
-        //버그수정후 활성화예정
-        // Assert.assertEquals(beforeInfo.get("address"), backupInfo.get("address"), "조회 페이지와 수정 페이지의 주소가 불일치합니다.");
+        softAssert.assertEquals(beforeInfo.get("userId"), backupInfo.get("userId"), "[FAIL]조회 페이지와 수정 페이지의 아이디가 불일치합니다.");
+        softAssert.assertEquals(beforeInfo.get("email"), backupInfo.get("email"), "[FAIL]조회 페이지와 수정 페이지의 이메일이 불일치합니다.");
+        softAssert.assertEquals(beforeInfo.get("phone"), backupInfo.get("phone"), "[FAIL]조회 페이지와 수정 페이지의 전화번호가 불일치합니다.");
+        softAssert.assertEquals(beforeInfo.get("address"), backupInfo.get("address"), "[FAIL]조회 페이지와 수정 페이지의 주소가 불일치합니다.");
 
         //비활성 필드 확인
-        Assert.assertFalse(MyinfoupdatePage.isEnableuserIdField(), "아이디 필드가 활성화 되어 있습니다.");
+        softAssert.assertFalse(MyinfoupdatePage.isEnableuserIdField(), "[FAIL]아이디 필드가 활성화 되어 있습니다.");
 
         //유저정보 수정 및 저장
         MyinfoupdatePage.chageUserinfo01("testemail@test.com", "08011112222");
-        //버그수정후 활성화예정
-        //MyinfoupdatePage.chageUserinfo02("12345", "테스트주소", "상세주소", "참고항목");
         MyinfoupdatePage.clickSaveButton();
         MyinfoupdatePage.alertAccept();
 
@@ -116,10 +119,10 @@ public class MyinfoTest extends BaseTest {
         Map<String, String> afterInfo = resultPage.getAllUserInfo();
 
         //수정후 정보 일치확인
-        Assert.assertEquals(afterInfo.get("email"), "testemail@test.com");
-        Assert.assertEquals(afterInfo.get("phone"), "08011112222");
-        //버그수정후 활성화예정
-        //Assert.assertEquals(afterInfo.get("address"), "12345_테스트주소_상세주소_참고항목");
+        softAssert.assertEquals(afterInfo.get("email"), "testemail@test.com", "[FAIL]회원정보 수정후의 이메일 올바르지 않습니다.");
+        softAssert.assertEquals(afterInfo.get("phone"), "08011112222", "[FAIL]회원정보 수정후의 전화번호가 올바르지 않습니다.");
+
+        softAssert.assertAll();
     }
 
     @Test(testName = "chagepasswordFlow test")
@@ -127,28 +130,34 @@ public class MyinfoTest extends BaseTest {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.clickChangePasswordButton();
         ChangePasswordPage ChangePasswordPage = new ChangePasswordPage(driver);
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
 
         //잘못된 비밀번호변경
         //1.현재비밀번호오류
         ChangePasswordPage.changePassword(config.getProperty("wrongpwd"), config.getProperty("testpwd"), config.getProperty("testpwd"));
         ChangePasswordPage.clickSaveButton();
-        Assert.assertEquals(ChangePasswordPage.alertGetText(), AppMessages.exiPasswordAlertMsg);
+        softAssert.assertEquals(ChangePasswordPage.alertGetText(), AppMessages.exiPasswordAlertMsg,
+                "[FAIL]비밀번호 변경시, 기존비밀번호 불일치의 Alert메세지가 올바르지 않습니다.");
         ChangePasswordPage.alertAccept();
         ChangePasswordPage.clickClearButton();
 
         //2.새비밀번호불일치
         ChangePasswordPage.changePassword(config.getPassword(), config.getProperty("testpwd"), config.getProperty("mismatchpwd"));
         ChangePasswordPage.clickSaveButton();
-        Assert.assertEquals(ChangePasswordPage.alertGetText(), AppMessages.chagePasswordFailAlertMsg);
+        softAssert.assertEquals(ChangePasswordPage.alertGetText(), AppMessages.chagePasswordFailAlertMsg,
+                "[FAIL]비밀번호 변경시, 새비밀번호 불일치의 Alert메세지가 올바르지 않습니다.");
         ChangePasswordPage.alertAccept();
         ChangePasswordPage.clickClearButton();
 
         //3.올바른 비밀번호변경
         ChangePasswordPage.changePassword(config.getPassword(), config.getProperty("testpwd"), config.getProperty("testpwd"));
         ChangePasswordPage.clickSaveButton();
-        Assert.assertEquals(ChangePasswordPage.alertGetText(), AppMessages.chagePasswordSuccessAlertMsg);
+        softAssert.assertEquals(ChangePasswordPage.alertGetText(), AppMessages.chagePasswordSuccessAlertMsg,
+                "[FAIL]비밀번호 변경후 Alert메세지가 올바르지 않습니다.");
         ChangePasswordPage.alertAccept();
+
+        softAssert.assertAll();
     }
 
     @Test(testName = "Myinfo profile updateFlow test")
@@ -156,6 +165,7 @@ public class MyinfoTest extends BaseTest {
         MyinfoPage myinfoPage = new MyinfoPage(driver);
         myinfoPage.clickModifyButton();
         MyinfoupdatePage MyinfoupdatePage = new MyinfoupdatePage(driver);
+        ScreenshotSoftAssert softAssert = new ScreenshotSoftAssert(driver);
 
         String befoeSrc = MyinfoupdatePage.getProfileImageSrc();
         MyinfoupdatePage.uploadProfileImage();
@@ -172,8 +182,11 @@ public class MyinfoTest extends BaseTest {
             throw e; }
 
         String afterSrc = MyinfoupdatePage.getProfileImageSrc();
-        Assert.assertNotEquals(befoeSrc, afterSrc,"파일이 업데이트되지 않고 이전 URL과 동일합니다.");
-        Assert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4]);
+        softAssert.assertNotEquals(befoeSrc, afterSrc,"[FAIL]회원정보 프로필사진이 업데이트되지 않고 이전과 동일합니다.");
+        softAssert.assertEquals(afterSrc.split("_")[1],config.getProperty("profileImagePath").split("/")[4],
+                "[FAIL]회원정보의 업데이트된 프로필사진의 파일명이 올바르지 않습니다.");
+
+        softAssert.assertAll();
     }
 
 
@@ -210,13 +223,12 @@ public class MyinfoTest extends BaseTest {
 
             MyinfoupdatePage updatePage = new MyinfoupdatePage(driver);
             updatePage.chageUserinfo01(backupInfo.get("backupEmail"), backupInfo.get("backupPhone"));
-            /*버그수정후 활성화예정
             updatePage.chageUserinfo02(
                     backupInfo.get("backupPostcode"),
                     backupInfo.get("backupAddress"),
                     backupInfo.get("backupDetailAddress"),
                     backupInfo.get("backupExtraAddress")
-            );*/
+            );
             updatePage.clickSaveButton();
             updatePage.alertAccept();
         }
