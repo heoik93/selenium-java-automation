@@ -9,7 +9,9 @@
     <test name="Debug">
         <classes>
 
-            <class name="com.project.ui.mypage.AdminUseHistoryPageTest"/>
+            <class name="com.project.functional.LoginTest"/>
+            <class name="com.project.functional.LogoutTest"/>
+            <class name="com.project.functional.SignupTest"/>
 
         </classes>
     </test>
